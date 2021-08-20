@@ -15,22 +15,7 @@ void Key::checkKeyboard()
 
 void Key::idChange()
 {
-    if (spec)
-    {
-        if (id >= UV && id < CXB)
-        {
-            id += 2;
-        }
-        else if (id == CXB)
-        {
-            id++;
-        }
-    }
-
-    else
-    {
-        id++;
-    }
+    id++;
 
     if (id > idLast)
     {
@@ -53,7 +38,6 @@ boolean Key::navigation()
 {
     if (onHold() || justPressed())
     {
-        // if (getNum == 13)
         if (getNum == 8)
         {
             direction = FORWARD;
@@ -125,10 +109,7 @@ void Key::manualChangeScreen(Timer &timer)
                 autoMove = false;
 
                 id--;
-                if (id < idFirst)
-                {
-                    id = idLast;
-                }
+                id = constrain(id, 0, idLast);
             }
 
             else if (direction == FORWARD)
@@ -287,7 +268,6 @@ boolean Key::changeMaxBright()
 
 boolean Key::dayReduration()
 {
-    // if (justPressed() && getNum == 11)
     if (justPressed() && getNum == 2)
     {
         return checkSet(dayDuration);

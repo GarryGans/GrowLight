@@ -17,17 +17,6 @@ class Key : public AmperkaKB
     friend class Bright;
 
 private:
-    boolean spec;
-
-    enum Spectr
-    {
-        UV = 0,
-        BL = 2,
-        RED = 4,
-        FR = 6,
-        CXB = 8
-    } spectr;
-
     enum Screen
     {
         start,
@@ -73,7 +62,6 @@ private:
     boolean setTime;
 
     byte id;
-    byte specID;
     byte idFirst = 0;
     byte idLast = lampAmount - 1;
 
