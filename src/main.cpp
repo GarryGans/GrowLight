@@ -10,32 +10,32 @@
 #include <Pot.h>
 // #include <Bright.h>
 
-// byte startPinBright = 2;
-byte startPinLamp = 22;
-byte keyPin[] = {32, 34, 36, 38, 40, 42, 44, 46};
+byte startPinBright = 2;
+// byte startPinLamp = 22;
+// byte keyPin[] = {32, 34, 36, 38, 40, 42, 44, 46};
 
 //SINGLE VERSION
 
-// byte startPinLamp = 10;
-// byte keyPin[] = {9, 8, 7, 6, 5, 4, 3, 2};
+byte startPinLamp = 10;
+byte keyPin[] = {9, 8, 7, 6, 5, 4, 3, 2};
 
-// String WavelengthSMD[] = {"3500k"};
+String WavelengthSMD[] = {"3500k"};
 
-// String lightColor[] = {"LED"};
+String lightColor[] = {"LED"};
 
 // DigiPot potent[] = {
 //     DigiPot(11, 12, 13)};
 
 // VERSION PEPPER
-#define lampAmount 2
-String WavelengthSMD[] = {"3500k+6500k",
-                          "385nm+660nm+730nm+WC"};
+// #define lampAmount 2
+// String WavelengthSMD[] = {"3500k+6500k",
+//                           "385nm+660nm+730nm+WC"};
 
-String lightColor[] = {"WC", "UFR"};
+// String lightColor[] = {"WC", "UFR"};
 
-DigiPot potent[] = {
-    DigiPot(2, 3, 4),
-    DigiPot(5, 6, 7)};
+// DigiPot potent[] = {
+//     DigiPot(2, 3, 4),
+//     DigiPot(5, 6, 7)};
 
 // SQUARE 250 Led //
 
@@ -94,12 +94,12 @@ Screen screen;
 Timer timer;
 Key key(keyPin);
 Memory memory;
-Pot pot;
-// Bright bright;
+// Pot pot;
+Bright bright;
 
 void setup()
 {
-    Serial.begin(9600);
+    // Serial.begin(9600);
 
     screen.begin(SSD1306_SWITCHCAPVCC, 0x3C);
     screen.display();
@@ -116,14 +116,15 @@ void setup()
 
     key.begin(KB4x4, 500);
 
-    pot.setPot(potent);
-    pot.resetAllPots();
+    // pot.setPot(potent);
+    // pot.resetAllPots();
 
-    // bright.begin(startPinBright);
+    bright.begin(startPinBright);
 
     switchers.begin(startPinLamp);
 
-    memory.begin(watch, pot);
+    // memory.begin(watch, pot);
+    memory.begin(watch, bright);
 
     delay(500);
 }
@@ -137,26 +138,26 @@ void loop()
     key.manualSwitchLight();
     watch.autoSwitcher(key);
     switchers.switcher(watch, key);
-    pot.autoBright(watch, key, timer);
-    // bright.autoBright(watch, key, timer);
+    // pot.autoBright(watch, key, timer);
+    bright.autoBright(watch, key, timer);
 
     screen.showStartScreen(watch, key, timer);
     watch.dayReduration(key, timer);
     watch.setWatch(key, timer);
 
-    screen.showLampScreen(watch, switchers, timer, key, pot);
-    // screen.showLampScreen(watch, switchers, timer, key, bright);
+    // screen.showLampScreen(watch, switchers, timer, key, pot);
+    screen.showLampScreen(watch, switchers, timer, key, bright);
 
     key.autoScreenMove(timer);
     key.manualChangeScreen(timer);
     watch.spectrumReDuration(key, timer);
-    pot.manualChangeBright(key, timer);
-    pot.changeMaxBright(key, watch, timer);
-    // bright.manualChangeBright(key, timer);
-    // bright.changeMaxBright(key, watch, timer);
+    // pot.manualChangeBright(key, timer);
+    // pot.changeMaxBright(key, watch, timer);
+    bright.manualChangeBright(key, timer);
+    bright.changeMaxBright(key, watch, timer);
 
-    memory.writeChanges(watch, pot, key);
-    // memory.writeChanges(watch, bright, key);
+    // memory.writeChanges(watch, pot, key);
+    memory.writeChanges(watch, bright, key);
 
     key.resetToAuto();
 }

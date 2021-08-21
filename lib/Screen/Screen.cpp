@@ -172,6 +172,8 @@ void Screen::showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Ke
 {
     if (key.screen == key.lamp || key.screen == key.bright || key.screen == key.duration || key.screen == key.manual)
     {
+        setTextColor(1);
+
         clearDisplay();
         headerTime(watch);
         lampInfo(watch, key);
@@ -184,6 +186,8 @@ void Screen::showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Ke
 {
     if (key.screen == key.lamp || key.screen == key.bright || key.screen == key.duration || key.screen == key.manual)
     {
+        setTextColor(1);
+
         clearDisplay();
         headerTime(watch);
         lampInfo(watch, key);
@@ -451,6 +455,8 @@ void Screen::showStartScreen(Watch &watch, Key &key, Timer &timer)
 {
     if (key.screen == key.start || key.screen == key.watch || key.screen == key.dayDuration)
     {
+        setTextColor(1);
+
         clearDisplay();
 
         setTextColor(1);
