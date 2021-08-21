@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-// #include <ScreenU8G2.h>
+#include <ScreenU8G2.h>
 #include <Screen.h>
 #include <Switchers.h>
 #include <Timer.h>
@@ -8,7 +8,7 @@
 #include <Key.h>
 #include <Memory.h>
 #include <Pot.h>
-// #include <Bright.h>
+#include <Bright.h>
 
 byte startPinBright = 2;
 // byte startPinLamp = 22;
@@ -16,8 +16,8 @@ byte startPinBright = 2;
 
 //SINGLE VERSION
 
-byte startPinLamp = 10;
-byte keyPin[] = {9, 8, 7, 6, 5, 4, 3, 2};
+byte startPinLamp = 11;
+byte keyPin[] = {10, 9, 8, 7, 6, 5, 4, 3};
 
 String WavelengthSMD[] = {"3500k"};
 
@@ -89,8 +89,8 @@ String lightColor[] = {"LED"};
 
 Watch watch;
 Switchers switchers;
-// ScreenU8G2 screen(WavelengthSMD, lightColor);
-Screen screen;
+ScreenU8G2 screen;
+// Screen screen;
 Timer timer;
 Key key(keyPin);
 Memory memory;
@@ -101,11 +101,12 @@ void setup()
 {
     // Serial.begin(9600);
 
-    screen.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-    screen.display();
-    delay(500);
-    screen.clearDisplay();
+    // screen.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+    // screen.display();
+    // delay(500);
+    // screen.clearDisplay();
 
+    screen.begin();
     screen.setStrings(WavelengthSMD, lightColor);
 
     // screen.iGorLogo();

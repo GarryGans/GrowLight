@@ -7,7 +7,6 @@
 
 Screen::Screen() : Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET)
 {
-    
 }
 
 Screen::~Screen()
@@ -44,8 +43,6 @@ void Screen::headerTime(Watch &watch)
 {
     Time now = watch.time();
 
-    setTextSize(1);
-
     setCursor(79, 2);
     showStringWatch(now.hour(), now.minute(), now.second());
 }
@@ -53,8 +50,6 @@ void Screen::headerTime(Watch &watch)
 void Screen::headerDate(Watch &watch)
 {
     Date now = watch.date();
-
-    setTextSize(1);
 
     setCursor(0, 0);
     print(daysOfTheWeek[now.dayOfTheWeek()]);

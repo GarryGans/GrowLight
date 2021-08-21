@@ -1,20 +1,20 @@
 #include "ScreenU8G2.h"
 
-ScreenU8G2::ScreenU8G2(String *WavelengthSMD, String *lightColor) : U8G2_SH1106_128X64_NONAME_1_HW_I2C(U8G2_R0, /* reset=*/U8X8_PIN_NONE)
-{
-    for (byte i = 0; i < lampAmount; i++)
-    {
-        this->WavelengthSMD[i] = WavelengthSMD[i];
-        this->lightColor[i] = lightColor[i];
-    }
-}
-
 ScreenU8G2::ScreenU8G2() : U8G2_SH1106_128X64_NONAME_1_HW_I2C(U8G2_R0, /* reset=*/U8X8_PIN_NONE)
 {
 }
 
 ScreenU8G2::~ScreenU8G2()
 {
+}
+
+void ScreenU8G2::setStrings(String *WavelengthSMD, String *lightColor)
+{
+    for (byte i = 0; i < lampAmount; i++)
+    {
+        this->WavelengthSMD[i] = WavelengthSMD[i];
+        this->lightColor[i] = lightColor[i];
+    }
 }
 
 void ScreenU8G2::align(byte W, byte H, PositionX position_x, PositionY position_y)
@@ -314,6 +314,10 @@ void ScreenU8G2::bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright
 
     else
     {
+        setFont(u8g2_font_courB08_tn);
+
+        setCursor(5, 57);
+        
         showBlinkSpectrumTime(watch, timer, key);
 
         brightInfo(bright, key, timer);
@@ -482,7 +486,7 @@ void ScreenU8G2::lampInfo(Watch &watch, Key &key)
 
     print(WavelengthSMD[key.id]);
 
-    setFont(u8g2_font_courB18_tr);
+    setFont(u8g2_font_courB08_tf);
     setCursor(5, 38);
 
     print(lightColor[key.id]);
