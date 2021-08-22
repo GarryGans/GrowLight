@@ -116,19 +116,22 @@ void Watch::cursorChange(Key &key, byte &cursor)
 {
     if (key.navigation())
     {
-        if (key.direction == key.FORWARD)
+        switch (key.direction)
         {
+        case key.FORWARD:
             cursor++;
             if (cursor > 3)
             {
                 cursor = 0;
             }
-        }
-
-        if (key.direction == key.BACK)
-        {
+            break;
+        case key.BACK:
             cursor--;
             cursor = constrain(cursor, 0, 3);
+            break;
+
+        default:
+            break;
         }
     }
 }
@@ -255,7 +258,10 @@ void Watch::dtCursor(Key &key)
         {
         case key.FORWARD:
             cursorDateTime++;
-            cursorDateTime = constrain(cursorDateTime, 0, 5);
+            if (cursorDateTime > 5)
+            {
+                cursorDateTime = 0;
+            }
             break;
 
         case key.BACK:

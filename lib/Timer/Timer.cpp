@@ -35,8 +35,6 @@ void Timer::minusCounter(byte &counter)
         {
             counter--;
         }
-        // Serial.print("counter");
-        // Serial.println(counter);
     }
 }
 
