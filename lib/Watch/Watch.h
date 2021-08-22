@@ -82,8 +82,9 @@ public:
     void spectrumReDuration(Key &key, Timer &timer);
     void dayReduration(Key &key, Timer &timer);
 
-    void timeChange(byte &dt, Key &key, Timer &timer);
-    void dataChange(int &dt, Key &key, Timer &timer);
+    void timeChange(byte &time, Key &key, Timer &timer);
+    void yearChange(int &year, Key &key, Timer &timer);
+    void dateChange(int &date, Key &key, Timer &timer);
     void setWatch(Key &key, Timer &timer);
 };
 
