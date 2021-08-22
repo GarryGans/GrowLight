@@ -147,11 +147,10 @@ void Key::reset()
     }
 }
 
-void Key::resetToAuto()
+void Key::home()
 {
     if (justPressed() && getNum == 10)
     {
-        reset();
         screen = start;
     }
 }

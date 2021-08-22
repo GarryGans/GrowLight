@@ -85,7 +85,7 @@ public:
     boolean changeMaxBright();
     boolean dayReduration();
     void reset();
-    void resetToAuto();
+    void home();
     void resetToLamp();
     void setMode();
     boolean checkSet(Screen set);

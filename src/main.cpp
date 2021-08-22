@@ -154,5 +154,5 @@ void loop()
     // memory.writeChanges(watch, pot, key);
     memory.writeChanges(watch, bright, key);
 
-    key.resetToAuto();
+    key.home();
 }
