@@ -114,19 +114,22 @@ void Watch::autoSwitcher(Key &key)
 
 void Watch::cursorChange(Key &key, byte &cursor)
 {
-    if (key.direction == key.FORWARD)
+    if (key.navigation())
     {
-        cursor++;
-        if (cursor > 3)
+        if (key.direction == key.FORWARD)
         {
-            cursor = 0;
+            cursor++;
+            if (cursor > 3)
+            {
+                cursor = 0;
+            }
         }
-    }
 
-    if (key.direction == key.BACK)
-    {
-        cursor--;
-        cursor = constrain(cursor, 0, 3);
+        if (key.direction == key.BACK)
+        {
+            cursor--;
+            cursor = constrain(cursor, 0, 3);
+        }
     }
 }
 
@@ -161,10 +164,7 @@ void Watch::hmsChange(Key &key, byte &hms, byte &cursor, Timer &timer)
         }
     }
 
-    if (key.navigation())
-    {
-        cursorChange(key, cursor);
-    }
+    cursorChange(key, cursor);
 }
 
 void Watch::spectrumReDuration(Key &key, Timer &timer)
