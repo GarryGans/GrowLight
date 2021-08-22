@@ -26,8 +26,8 @@ private:
     boolean leapYear;
 
     int year;
-    int month;
-    int day;
+    byte month;
+    byte day;
     byte hour;
     byte min;
     byte sec;
@@ -82,9 +82,10 @@ public:
     void spectrumReDuration(Key &key, Timer &timer);
     void dayReduration(Key &key, Timer &timer);
 
+    void dtCursor(Key &key);
     void timeChange(byte &time, Key &key, Timer &timer);
     void yearChange(int &year, Key &key, Timer &timer);
-    void dateChange(int &date, Key &key, Timer &timer);
+    void dateChange(byte &date, Key &key, Timer &timer);
     void setWatch(Key &key, Timer &timer);
 };
 

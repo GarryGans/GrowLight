@@ -247,6 +247,28 @@ void Watch::dayReduration(Key &key, Timer &timer)
     }
 }
 
+void Watch::dtCursor(Key &key)
+{
+    if (key.navigation())
+    {
+        switch (key.direction)
+        {
+        case key.FORWARD:
+            cursorDateTime++;
+            cursorDateTime = constrain(cursorDateTime, 0, 5);
+            break;
+
+        case key.BACK:
+            cursorDateTime--;
+            cursorDateTime = constrain(cursorDateTime, 0, 5);
+            break;
+
+        default:
+            break;
+        }
+    }
+}
+
 void Watch::timeChange(byte &time, Key &key, Timer &timer)
 {
     if (key.valChange(timer))
@@ -281,32 +303,30 @@ void Watch::timeChange(byte &time, Key &key, Timer &timer)
             }
         }
     }
-
-    if (key.navigation())
-    {
-        switch (key.direction)
-        {
-        case key.FORWARD:
-            cursorDateTime++;
-            cursorDateTime = constrain(cursorDateTime, 0, 5);
-            break;
-
-        case key.BACK:
-            cursorDateTime--;
-            cursorDateTime = constrain(cursorDateTime, 0, 5);
-            break;
-
-        default:
-            break;
-        }
-    }
 }
 
 void Watch::yearChange(int &year, Key &key, Timer &timer)
 {
+    if (key.valChange(timer))
+    {
+        if (key.act == key.MINUS)
+        {
+            year--;
+
+            if (cursorDateTime == 2 && year < 2021)
+            {
+                year = 2021;
+            }
+        }
+
+        if (key.act == key.PLUS)
+        {
+            year++;
+        }
+    }
 }
 
-void Watch::dateChange(int &date, Key &key, Timer &timer)
+void Watch::dateChange(byte &date, Key &key, Timer &timer)
 {
     if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
     {
@@ -346,11 +366,6 @@ void Watch::dateChange(int &date, Key &key, Timer &timer)
             if (cursorDateTime == 1 && date < 1)
             {
                 date = 12;
-            }
-
-            if (cursorDateTime == 2 && date < 2021)
-            {
-                date = 2021;
             }
         }
 
@@ -397,25 +412,6 @@ void Watch::dateChange(int &date, Key &key, Timer &timer)
     {
         day = 28;
     }
-
-    if (key.navigation())
-    {
-        switch (key.direction)
-        {
-        case key.FORWARD:
-            cursorDateTime++;
-            cursorDateTime = constrain(cursorDateTime, 0, 5);
-            break;
-
-        case key.BACK:
-            cursorDateTime--;
-            cursorDateTime = constrain(cursorDateTime, 0, 5);
-            break;
-
-        default:
-            break;
-        }
-    }
 }
 
 void Watch::setWatch(Key &key, Timer &timer)
@@ -425,6 +421,7 @@ void Watch::setWatch(Key &key, Timer &timer)
         cursorDateTime = 0;
 
         DateTime time = now();
+        
         dow = time.dayOfTheWeek();
 
         if (time.year() < 2021)
@@ -445,6 +442,8 @@ void Watch::setWatch(Key &key, Timer &timer)
 
     if (key.screen == key.watch)
     {
+        dtCursor(key);
+
         if (cursorDateTime == 0)
         {
             dateChange(day, key, timer);
@@ -455,7 +454,7 @@ void Watch::setWatch(Key &key, Timer &timer)
         }
         else if (cursorDateTime == 2)
         {
-            dateChange(year, key, timer);
+            yearChange(year, key, timer);
         }
         else if (cursorDateTime == 3)
         {
