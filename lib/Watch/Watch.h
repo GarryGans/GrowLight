@@ -28,9 +28,9 @@ private:
     int year;
     int month;
     int day;
-    int hour;
-    int min;
-    int sec;
+    byte hour;
+    byte min;
+    byte sec;
     byte dow;
 
     int start[lampAmount];
@@ -82,9 +82,8 @@ public:
     void spectrumReDuration(Key &key, Timer &timer);
     void dayReduration(Key &key, Timer &timer);
 
-    void timeChange(int &dt, Key &key, Timer &timer);
+    void timeChange(byte &dt, Key &key, Timer &timer);
     void dataChange(int &dt, Key &key, Timer &timer);
-    void clockChange(int &dt, Key &key, Timer &timer);
     void setWatch(Key &key, Timer &timer);
 };
 

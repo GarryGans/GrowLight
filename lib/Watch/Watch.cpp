@@ -247,7 +247,7 @@ void Watch::dayReduration(Key &key, Timer &timer)
     }
 }
 
-void Watch::timeChange(int &dt, Key &key, Timer &timer)
+void Watch::timeChange(byte &dt, Key &key, Timer &timer)
 {
     if (key.valChange(timer))
     {
@@ -414,138 +414,6 @@ void Watch::dataChange(int &dt, Key &key, Timer &timer)
     }
 }
 
-void Watch::clockChange(int &dt, Key &key, Timer &timer)
-{
-    if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
-    {
-        leapYear = true;
-    }
-    else
-    {
-        leapYear = false;
-    }
-
-    if (key.valChange(timer))
-    {
-        if (key.act == key.MINUS)
-        {
-            dt--;
-
-            if (cursorDateTime == 0 && dt < 1)
-            {
-                if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
-                {
-                    dt = 31;
-                }
-                else if (month == 4 || month == 6 || month == 9 || month == 11)
-                {
-                    dt = 30;
-                }
-                else if (month == 2 && leapYear)
-                {
-                    dt = 29;
-                }
-                else if (month == 2 && !leapYear)
-                {
-                    dt = 28;
-                }
-            }
-
-            if (cursorDateTime == 1 && dt < 1)
-            {
-                dt = 12;
-            }
-
-            if (cursorDateTime == 2 && dt < 2000)
-            {
-                dt = 2000;
-            }
-
-            if (cursorDateTime == 3 && dt < 0)
-            {
-                dt = 23;
-            }
-
-            if ((cursorDateTime == 4 || cursorDateTime == 5) && dt < 0)
-            {
-                dt = 59;
-            }
-        }
-
-        if (key.act == key.PLUS)
-        {
-            dt++;
-
-            if (cursorDateTime == 0)
-            {
-                if (dt > 31 && (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12))
-                {
-                    dt = 1;
-                }
-
-                else if (dt > 30 && (month == 4 || month == 6 || month == 9 || month == 11))
-                {
-                    dt = 1;
-                }
-
-                else if (dt > 29 && month == 2 && leapYear)
-                {
-                    dt = 1;
-                }
-
-                else if (dt > 28 && month == 2 && !leapYear)
-                {
-                    dt = 1;
-                }
-            }
-
-            if (cursorDateTime == 1 && dt > 12)
-            {
-                dt = 1;
-            }
-
-            if (cursorDateTime == 3 && dt > 23)
-            {
-                dt = 0;
-            }
-
-            if ((cursorDateTime == 4 || cursorDateTime == 5) && dt > 59)
-            {
-                dt = 0;
-            }
-        }
-    }
-
-    if (day > 29 && month == 2 && leapYear)
-    {
-        day = 29;
-    }
-
-    if (day > 28 && month == 2 && !leapYear)
-    {
-        day = 28;
-    }
-
-    if (key.navigation())
-    {
-        switch (key.direction)
-        {
-        case key.FORWARD:
-            cursorDateTime++;
-            cursorDateTime = constrain(cursorDateTime, 0, 5);
-            break;
-
-        case key.BACK:
-            cursorDateTime--;
-            cursorDateTime = constrain(cursorDateTime, 0, 5);
-            break;
-
-        default:
-            break;
-        }
-    }
-}
-
 void Watch::setWatch(Key &key, Timer &timer)
 {
     if (key.setWatch())
@@ -575,27 +443,27 @@ void Watch::setWatch(Key &key, Timer &timer)
     {
         if (cursorDateTime == 0)
         {
-            clockChange(day, key, timer);
+            dataChange(day, key, timer);
         }
         else if (cursorDateTime == 1)
         {
-            clockChange(month, key, timer);
+            dataChange(month, key, timer);
         }
         else if (cursorDateTime == 2)
         {
-            clockChange(year, key, timer);
+            dataChange(year, key, timer);
         }
         else if (cursorDateTime == 3)
         {
-            clockChange(hour, key, timer);
+            timeChange(hour, key, timer);
         }
         else if (cursorDateTime == 4)
         {
-            clockChange(min, key, timer);
+            timeChange(min, key, timer);
         }
         else if (cursorDateTime == 5)
         {
-            clockChange(sec, key, timer);
+            timeChange(sec, key, timer);
         }
     }
 
