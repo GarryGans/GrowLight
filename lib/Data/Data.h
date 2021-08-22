@@ -8,5 +8,3 @@
 
 // #define lampAmount 9
 
-#define specAmount 5
-

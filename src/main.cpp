@@ -11,23 +11,23 @@
 #include <Bright.h>
 
 byte startPinBright = 2;
-// byte startPinLamp = 22;
-// byte keyPin[] = {32, 34, 36, 38, 40, 42, 44, 46};
+
+// byte startPinLamp = 11;
+byte startPinLamp = 22;
+
+// byte keyPin[] = {10, 9, 8, 7, 6, 5, 4, 3};
+byte keyPin[] = {32, 34, 36, 38, 40, 42, 44, 46};
 
 //SINGLE VERSION
-
-byte startPinLamp = 11;
-byte keyPin[] = {10, 9, 8, 7, 6, 5, 4, 3};
 
 String WavelengthSMD[] = {"3500k"};
 
 String lightColor[] = {"LED"};
 
 // DigiPot potent[] = {
-//     DigiPot(11, 12, 13)};
+//     DigiPot(2, 3, 4)};
 
 // VERSION PEPPER
-// #define lampAmount 2
 // String WavelengthSMD[] = {"3500k+6500k",
 //                           "385nm+660nm+730nm+WC"};
 
@@ -38,12 +38,6 @@ String lightColor[] = {"LED"};
 //     DigiPot(5, 6, 7)};
 
 // SQUARE 250 Led //
-
-// byte startPinBright = 2;
-
-// byte startPinLamp = 22;
-
-// byte keyPin[] = {32, 34, 36, 38, 40, 42, 44, 46};
 
 // String WavelengthSMD[] = {
 //     "3500k+full",
@@ -107,6 +101,7 @@ void setup()
     // screen.clearDisplay();
 
     screen.begin();
+
     screen.setStrings(WavelengthSMD, lightColor);
 
     // screen.iGorLogo();
@@ -119,7 +114,6 @@ void setup()
 
     // pot.setPot(potent);
     // pot.resetAllPots();
-
     bright.begin(startPinBright);
 
     switchers.begin(startPinLamp);
@@ -134,11 +128,10 @@ void loop()
 {
     key.read();
 
-    // key.checkKeyboard();
-
     key.manualSwitchLight();
     watch.autoSwitcher(key);
     switchers.switcher(watch, key);
+
     // pot.autoBright(watch, key, timer);
     bright.autoBright(watch, key, timer);
 
@@ -152,6 +145,7 @@ void loop()
     key.autoScreenMove(timer);
     key.manualChangeScreen(timer);
     watch.spectrumReDuration(key, timer);
+
     // pot.manualChangeBright(key, timer);
     // pot.changeMaxBright(key, watch, timer);
     bright.manualChangeBright(key, timer);

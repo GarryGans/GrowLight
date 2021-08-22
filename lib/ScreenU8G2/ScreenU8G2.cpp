@@ -307,7 +307,7 @@ void ScreenU8G2::bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright
     else if (key.screen == key.manual)
     {
         setFont(u8g2_font_pixelmordred_tf);
-        textAlign("manual", centerX, down);
+        textAlign("manual", left, down);
 
         brightInfo(bright, key, timer);
     }
@@ -486,7 +486,7 @@ void ScreenU8G2::lampInfo(Watch &watch, Key &key)
 
     print(WavelengthSMD[key.id]);
 
-    setFont(u8g2_font_courB08_tf);
+    setFont(u8g2_font_courB18_tr);
     setCursor(5, 38);
 
     print(lightColor[key.id]);
