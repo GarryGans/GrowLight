@@ -85,7 +85,9 @@ public:
     void dtCursor(Key &key);
     void timeChange(byte &time, Key &key, Timer &timer);
     void yearChange(int &year, Key &key, Timer &timer);
-    void dateChange(byte &date, Key &key, Timer &timer);
+    void monthChange(byte &month, Key &key, Timer &timer);
+    void dayChange(byte &day, Key &key, Timer &timer);
+    void leapYearDay();
     void setWatch(Key &key, Timer &timer);
 };
 

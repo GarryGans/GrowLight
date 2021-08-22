@@ -16,14 +16,14 @@ class Bright
 private:
     byte startPinBright;
     byte pin[lampAmount];
-    int bright[lampAmount];
+    byte bright[lampAmount];
 
-    int autoMinBright = 0;
-    int maxBright[lampAmount];
-    int prewMaxBright[lampAmount];
+    byte autoMinBright = 0;
+    byte maxBright[lampAmount];
+    byte prewMaxBright[lampAmount];
 
-    int minManualBright = 0;
-    int maxManualBright = 255;
+    byte minManualBright = 0;
+    byte maxManualBright = 255;
 
 public:
     Bright(/* args */);
@@ -31,16 +31,16 @@ public:
 
     void begin(byte startBrightPin);
 
-    void setMinBright(byte pin, int &bright);
-    void resetBright(byte pin, int &bright);
+    void setMinBright(byte pin, byte &bright);
+    void resetBright(byte pin, byte &bright);
 
     void autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i);
     void autoBright(Watch &watch, Key &key, Timer &timer);
     void manualChangeBright(Key &key, Timer &timer);
     void resetAllBrights();
     void changeMaxBright(Key &key, Watch &watch, Timer &timer);
-    void correctBright(boolean brightDown, byte pin, int &bright, int maxBright, int id);
-    void changeBright(int &bright, byte pin, Key &key, Timer &timer);
+    void correctBright(boolean brightDown, byte pin, byte &bright, byte maxBright, byte id);
+    void changeBright(byte &bright, byte pin, Key &key, Timer &timer);
 };
 
 #endif

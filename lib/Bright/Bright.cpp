@@ -20,7 +20,7 @@ void Bright::begin(byte startBrightPin)
     }
 }
 
-void Bright::setMinBright(byte pin, int &bright)
+void Bright::setMinBright(byte pin, byte &bright)
 {
     if (bright < autoMinBright)
     {
@@ -29,7 +29,7 @@ void Bright::setMinBright(byte pin, int &bright)
     }
 }
 
-void Bright::resetBright(byte pin, int &bright)
+void Bright::resetBright(byte pin, byte &bright)
 {
     bright = minManualBright;
     analogWrite(pin, bright);
@@ -108,14 +108,14 @@ void Bright::manualChangeBright(Key &key, Timer &timer)
 
 void Bright::resetAllBrights()
 {
-    for (int i = 0; i < lampAmount; i++)
+    for (byte i = 0; i < lampAmount; i++)
     {
         bright[i] = minManualBright;
         analogWrite(pin[i], 0);
     }
 }
 
-void Bright::correctBright(boolean brightDown, byte pin, int &bright, int maxBright, int id)
+void Bright::correctBright(boolean brightDown, byte pin, byte &bright, byte maxBright, byte id)
 {
     if (!brightDown)
     {
@@ -185,7 +185,7 @@ void Bright::changeMaxBright(Key &key, Watch &watch, Timer &timer)
     }
 }
 
-void Bright::changeBright(int &bright, byte pin, Key &key, Timer &timer)
+void Bright::changeBright(byte &bright, byte pin, Key &key, Timer &timer)
 {
     if (key.valChange(timer))
     {

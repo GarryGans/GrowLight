@@ -141,7 +141,7 @@ void Watch::hmsChange(Key &key, byte &hms, byte &cursor, Timer &timer)
             {
                 hms = constrain(hms, 0, 23);
             }
-            if (cursor == 1 || cursor == 3)
+            else
             {
                 hms = constrain(hms, 0, 59);
             }
@@ -326,7 +326,91 @@ void Watch::yearChange(int &year, Key &key, Timer &timer)
     }
 }
 
-void Watch::dateChange(byte &date, Key &key, Timer &timer)
+void Watch::monthChange(byte &month, Key &key, Timer &timer)
+{
+    if (key.valChange(timer))
+    {
+        if (key.act == key.MINUS)
+        {
+            month--;
+
+            if (month < 1)
+            {
+                month = 12;
+            }
+        }
+
+        if (key.act == key.PLUS)
+        {
+            month++;
+
+            if (month > 12)
+            {
+                month = 1;
+            }
+        }
+    }
+}
+void Watch::dayChange(byte &day, Key &key, Timer &timer)
+{
+    if (key.valChange(timer))
+    {
+        if (key.act == key.MINUS)
+        {
+            day--;
+
+            if (day < 1)
+            {
+                if (month == 4 || month == 6 || month == 9 || month == 11)
+                {
+                    day = 30;
+                }
+
+                else if (month == 2)
+                {
+                    if (leapYear)
+                    {
+                        day = 29;
+                    }
+                    else
+                    {
+                        day = 28;
+                    }
+                }
+
+                else
+                {
+                    day = 31;
+                }
+            }
+        }
+
+        if (key.act == key.PLUS)
+        {
+            day++;
+
+            if (day > 30 && (month == 4 || month == 6 || month == 9 || month == 11))
+            {
+                day = 1;
+            }
+
+            else if (month == 2)
+            {
+                if ((day > 29 && leapYear) || (day > 28 && !leapYear))
+                {
+                    day = 1;
+                }
+            }
+
+            else if (day > 31)
+            {
+                day = 1;
+            }
+        }
+    }
+}
+
+void Watch::leapYearDay()
 {
     if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
     {
@@ -335,72 +419,6 @@ void Watch::dateChange(byte &date, Key &key, Timer &timer)
     else
     {
         leapYear = false;
-    }
-
-    if (key.valChange(timer))
-    {
-        if (key.act == key.MINUS)
-        {
-            date--;
-
-            if (cursorDateTime == 0 && date < 1)
-            {
-                if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
-                {
-                    date = 31;
-                }
-                else if (month == 4 || month == 6 || month == 9 || month == 11)
-                {
-                    date = 30;
-                }
-                else if (month == 2 && leapYear)
-                {
-                    date = 29;
-                }
-                else if (month == 2 && !leapYear)
-                {
-                    date = 28;
-                }
-            }
-
-            if (cursorDateTime == 1 && date < 1)
-            {
-                date = 12;
-            }
-        }
-
-        if (key.act == key.PLUS)
-        {
-            date++;
-
-            if (cursorDateTime == 0)
-            {
-                if (date > 31 && (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12))
-                {
-                    date = 1;
-                }
-
-                else if (date > 30 && (month == 4 || month == 6 || month == 9 || month == 11))
-                {
-                    date = 1;
-                }
-
-                else if (date > 29 && month == 2 && leapYear)
-                {
-                    date = 1;
-                }
-
-                else if (date > 28 && month == 2 && !leapYear)
-                {
-                    date = 1;
-                }
-            }
-
-            if (cursorDateTime == 1 && date > 12)
-            {
-                date = 1;
-            }
-        }
     }
 
     if (day > 29 && month == 2 && leapYear)
@@ -421,7 +439,7 @@ void Watch::setWatch(Key &key, Timer &timer)
         cursorDateTime = 0;
 
         DateTime time = now();
-        
+
         dow = time.dayOfTheWeek();
 
         if (time.year() < 2021)
@@ -446,15 +464,17 @@ void Watch::setWatch(Key &key, Timer &timer)
 
         if (cursorDateTime == 0)
         {
-            dateChange(day, key, timer);
+            dayChange(day, key, timer);
         }
         else if (cursorDateTime == 1)
         {
-            dateChange(month, key, timer);
+            monthChange(month, key, timer);
+            leapYearDay();
         }
         else if (cursorDateTime == 2)
         {
             yearChange(year, key, timer);
+            leapYearDay();
         }
         else if (cursorDateTime == 3)
         {
@@ -472,7 +492,9 @@ void Watch::setWatch(Key &key, Timer &timer)
 
     if (key.setDateTime)
     {
-        adjust(DateTime(year, month, day, hour, min, sec));
+        adjustDate(Date(year, month, day));
+        adjustTime(Time(hour, min, sec));
+
         key.setDateTime = false;
     }
 }
