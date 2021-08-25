@@ -23,7 +23,6 @@ byte keyPin[] = {32, 34, 36, 38, 40, 42, 44, 46};
 String WavelengthSMD[] = {"3500k"};
 
 String lightColor[] = {"LED"};
-
 // DigiPot potent[] = {
 //     DigiPot(2, 3, 4)};
 
