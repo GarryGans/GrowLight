@@ -10,7 +10,7 @@
 #include <Pot.h>
 #include <Bright.h>
 
-byte startPinBright = 2;
+byte startPinBright = 2; //198 ~ 24 QuantumBoard 0.30 ~ 2.70
 
 // byte startPinLamp = 11;
 byte startPinLamp = 22;
@@ -82,8 +82,8 @@ String lightColor[] = {"LED"};
 
 Watch watch;
 Switchers switchers;
-ScreenU8G2 screen;
-// Screen screen;
+// ScreenU8G2 screen;
+Screen screen;
 Timer timer;
 Key key(keyPin);
 Memory memory;
@@ -92,19 +92,14 @@ Bright bright;
 
 void setup()
 {
-    // Serial.begin(9600);
-
-    // screen.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-    // screen.display();
-    // delay(500);
-    // screen.clearDisplay();
+    Serial.begin(9600);
 
     screen.begin();
 
-    screen.setStrings(WavelengthSMD, lightColor);
-
     // screen.iGorLogo();
-    // delay(500);
+    delay(500);
+
+    screen.setStrings(WavelengthSMD, lightColor);
 
     watch.begin();
     // watch.adjust(DateTime(F(__DATE__), F(__TIME__)));

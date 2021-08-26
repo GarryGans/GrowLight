@@ -11,7 +11,6 @@
 #include <Key.h>
 #include <Pot.h>
 #include <Bright.h>
-#include <Data.h>
 
 class ScreenU8G2 : public U8G2_SH1106_128X64_NONAME_1_HW_I2C
 {

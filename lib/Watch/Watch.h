@@ -6,10 +6,9 @@
 #include <Wire.h>
 #include <Key.h>
 #include <Timer.h>
-// #include <Data.h>
 
-// class Watch : public RTC_ext_1307
-class Watch : public RTC_ext_3231
+class Watch : public RTC_ext_1307
+// class Watch : public RTC_ext_3231
 {
     friend class Memory;
     friend class ScreenU8G2;

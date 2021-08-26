@@ -12,7 +12,6 @@
 #include <Key.h>
 #include <Pot.h>
 #include <Bright.h>
-#include <Data.h>
 
 class Screen : public Adafruit_SSD1306
 {
@@ -26,6 +25,7 @@ public:
     Screen();
     ~Screen();
 
+    void begin();
     void setStrings(String *WavelengthSMD, String *lightColor);
     void iGorLogo();
 

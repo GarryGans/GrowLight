@@ -7,7 +7,6 @@
 #include <Pot.h>
 #include <Key.h>
 #include <Bright.h>
-// #include <Data.h>
 
 class Memory
 {

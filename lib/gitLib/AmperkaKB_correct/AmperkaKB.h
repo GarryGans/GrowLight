@@ -38,6 +38,7 @@ public:
     uint8_t getNum = 0;
     // буквенное обозначение номера кнопки
     char getChar = 0;
+
     // MY CORRECT
     // definition of the hold button
     bool onHold() const;
@@ -45,6 +46,7 @@ public:
 private:
     // MY CORRECT
     boolean hold;
+
     // тип подключённой клавиатуры
     uint8_t _typeKB;
     // номера выводов к которым подключена клавиатура

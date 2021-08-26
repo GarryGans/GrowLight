@@ -13,6 +13,11 @@ Screen::~Screen()
 {
 }
 
+void Screen::begin()
+{
+    Adafruit_SSD1306::begin(SSD1306_SWITCHCAPVCC, 0x3C);
+}
+
 void Screen::setStrings(String *WavelengthSMD, String *lightColor)
 {
     for (byte i = 0; i < lampAmount; i++)
@@ -450,14 +455,12 @@ void Screen::showStartScreen(Watch &watch, Key &key, Timer &timer)
 {
     if (key.screen == key.start || key.screen == key.watch || key.screen == key.dayDuration)
     {
-        setTextColor(1);
-
         clearDisplay();
 
         setTextColor(1);
 
         blinkHeaderDate(key, watch, timer);
-        blinkHeaderTime(key, watch, timer);
+        // blinkHeaderTime(key, watch, timer);
 
         showBlinkSunRise(key, timer, watch, watch.RiseHour, watch.RiseMin);
         showBlinkSunSet(key, timer, watch, watch.SetHour, watch.SetMin);

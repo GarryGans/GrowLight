@@ -5,10 +5,9 @@
 
 #include <Watch.h>
 #include <Key.h>
-// #include <Data.h>
 
-#define OFF HIGH // реле: 1 - высокого уровня (или мосфет), 0 - низкого
-#define ON LOW
+#define OFF LOW // реле: 1 - высокого уровня (или мосфет), 0 - низкого
+#define ON  HIGH
 
 class Switchers
 {

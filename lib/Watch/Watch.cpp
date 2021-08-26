@@ -3,8 +3,8 @@
 #define OFF HIGH // реле: 1 - высокого уровня (или мосфет), 0 - низкого
 #define ON LOW
 
-// Watch::Watch() : RTC_ext_1307()
-Watch::Watch() : RTC_ext_3231()
+Watch::Watch() : RTC_ext_1307()
+// Watch::Watch() : RTC_ext_3231()
 {
 }
 

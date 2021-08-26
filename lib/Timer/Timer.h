@@ -4,7 +4,6 @@
 #include <Arduino.h>
 #include <Data.h>
 
-// #define lampAmount 4
 
 class Timer
 {
