@@ -1,7 +1,15 @@
 #include "Pot.h"
 
-Pot::Pot()
+Pot::Pot(byte amount)
 {
+    lampAmount = amount;
+    
+    bright = new byte[lampAmount];
+
+    maxBright = new byte[lampAmount];
+    prewMaxBright = new byte[lampAmount];
+
+    pot = new DigiPot[lampAmount];
 }
 
 Pot::~Pot()

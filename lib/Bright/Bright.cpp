@@ -1,7 +1,14 @@
 #include <Bright.h>
 
-Bright::Bright(/* args */)
+Bright::Bright(byte amount)
 {
+    lampAmount = amount;
+
+    pin = new byte[lampAmount];
+    bright = new byte[lampAmount];
+
+    maxBright = new byte[lampAmount];
+    prewMaxBright = new byte[lampAmount];
 }
 
 Bright::~Bright()

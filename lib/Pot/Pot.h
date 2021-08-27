@@ -14,18 +14,21 @@ class Pot
     friend class Screen;
 
 private:
-    byte bright[lampAmount];
+    byte lampAmount;
+
+    byte *bright;
 
     byte autoMinBright = 0;
-    byte maxBright[lampAmount];
-    byte prewMaxBright[lampAmount];
+    byte *maxBright;
+    byte *prewMaxBright;
 
     byte minManualBright = 0;
     byte maxManualBright = 100;
-    DigiPot pot[lampAmount];
+    
+    DigiPot *pot;
 
 public:
-    Pot(/* args */);
+    Pot(byte amount);
     ~Pot();
 
     void setPot(DigiPot pot[]);

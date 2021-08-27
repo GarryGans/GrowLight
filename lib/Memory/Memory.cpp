@@ -1,7 +1,17 @@
 #include "Memory.h"
 
-Memory::Memory(/* args */)
+Memory::Memory(byte amount)
 {
+    lampAmount = amount;
+
+    maxBright_addr = new int[lampAmount];
+
+    startHour_addr = new int[lampAmount];
+    startMinute_addr = new int[lampAmount];
+    finishHour_addr = new int[lampAmount];
+    finishMinute_addr = new int[lampAmount];
+
+    skip_addr = new int[lampAmount];
 }
 
 Memory::~Memory()

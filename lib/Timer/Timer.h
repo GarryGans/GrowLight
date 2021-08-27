@@ -25,7 +25,7 @@ private:
     unsigned long prewBlinkMillis;
     unsigned long blinkMillis = 500;
 
-    unsigned long prewBrightMillis[lampAmount];
+    unsigned long *prewBrightMillis;
     
     unsigned long riseMillis = 10;
 
@@ -45,7 +45,7 @@ private:
 
 
 public:
-    Timer();
+    Timer(byte amount);
     ~Timer();
 
     void minusCounter(byte &counter);

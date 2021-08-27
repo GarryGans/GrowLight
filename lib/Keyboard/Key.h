@@ -16,6 +16,8 @@ class Key : public AmperkaKB
     friend class Bright;
 
 private:
+    byte lampAmount;
+
     enum Screen
     {
         start,
@@ -41,9 +43,9 @@ private:
 
     boolean autoMove;
 
-    boolean buttonSwitch[lampAmount];
-    boolean reduration[lampAmount];
-    boolean reBright[lampAmount];
+    boolean *buttonSwitch;
+    boolean *reduration;
+    boolean *reBright;
 
     boolean resetManualPot;
     boolean resetManualBright;
@@ -62,10 +64,10 @@ private:
 
     byte id;
     byte idFirst = 0;
-    byte idLast = lampAmount - 1;
+    byte idLast;
 
 public:
-    Key(byte pin[]);
+    Key(byte pin[], byte amount);
     ~Key();
 
     void checkKeyboard();

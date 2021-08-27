@@ -5,9 +5,12 @@
 // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
 #define OLED_RESET -1 // Reset pin # (or -1 if sharing Arduino reset pin)
 
-Screen::Screen(String *WavelengthSMD, String *lightColor) : Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET)
+Screen::Screen(String *WavelengthSMD, String *lightColor, byte amount) : Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET)
 {
-    for (byte i = 0; i < lampAmount; i++)
+    this->WavelengthSMD = new String[amount];
+    this->lightColor = new String[amount];
+
+    for (byte i = 0; i < amount; i++)
     {
         this->WavelengthSMD[i] = WavelengthSMD[i];
         this->lightColor[i] = lightColor[i];

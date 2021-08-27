@@ -13,19 +13,21 @@ class Bright
     friend class Screen;
 
 private:
+    byte lampAmount;
+
     byte startPinBright;
-    byte pin[lampAmount];
-    byte bright[lampAmount];
+    byte *pin;
+    byte *bright;
 
     byte autoMinBright = 0;
-    byte maxBright[lampAmount];
-    byte prewMaxBright[lampAmount];
+    byte *maxBright;
+    byte *prewMaxBright;
 
     byte minManualBright = 0;
     byte maxManualBright = 255;
 
 public:
-    Bright(/* args */);
+    Bright(byte amount);
     ~Bright();
 
     void begin(byte startBrightPin);

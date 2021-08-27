@@ -15,8 +15,8 @@
 class ScreenU8G2 : public U8G2_SH1106_128X64_NONAME_1_HW_I2C
 {
 private:
-    String WavelengthSMD[lampAmount];
-    String lightColor[lampAmount];
+    String *WavelengthSMD;
+    String *lightColor;
 
     char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
@@ -67,7 +67,7 @@ private:
     byte WH = 48;
 
 public:
-    ScreenU8G2(String WavelengthSMD[], String lightColor[]);
+    ScreenU8G2(String WavelengthSMD[], String lightColor[], byte amount);
     ~ScreenU8G2();
 
     byte intToChar(int value);

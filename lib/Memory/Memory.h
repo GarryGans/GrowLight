@@ -11,21 +11,23 @@
 class Memory
 {
 private:
+    byte lampAmount;
+
     int startAddr = 0;
     int start_addr_Size = 0;
 
-    int maxBright_addr[lampAmount];
+    int *maxBright_addr;
 
-    int startHour_addr[lampAmount];
-    int startMinute_addr[lampAmount];
-    int finishHour_addr[lampAmount];
-    int finishMinute_addr[lampAmount];
+    int *startHour_addr;
+    int *startMinute_addr;
+    int *finishHour_addr;
+    int *finishMinute_addr;
 
-    int skip_addr[lampAmount];
+    int *skip_addr;
     
 
 public:
-    Memory(/* args */);
+    Memory(byte amount);
     ~Memory();
 
     void begin(Watch &watch, Pot &pot);

@@ -1,7 +1,14 @@
 #include "Key.h"
 
-Key::Key(byte pin[]) : AmperkaKB(pin[0], pin[1], pin[2], pin[3], pin[4], pin[5], pin[6], pin[7])
+Key::Key(byte pin[], byte amount) : AmperkaKB(pin[0], pin[1], pin[2], pin[3], pin[4], pin[5], pin[6], pin[7])
 {
+    lampAmount = amount;
+
+    idLast = lampAmount - 1;
+    
+    buttonSwitch = new boolean[lampAmount];
+    reduration = new boolean[lampAmount];
+    reBright = new boolean[lampAmount];
 }
 
 Key::~Key()

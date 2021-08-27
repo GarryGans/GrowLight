@@ -80,15 +80,17 @@ String lightColor[] = {"WF 1", "WF 2", "WF 3", "RED", "CF 1", "CF 2", "CF 3", "U
 // String specWavelengthSMD[] = {"365nm+385nm", "440nm", "660nm", "730nm", "3000K"};
 // String speclightColor[] = {"UV", "BL", "RED", "FR", "CXB"};
 
-Watch watch;
-Switchers switchers;
-ScreenU8G2 screen(WavelengthSMD, lightColor);
-// Screen screen(WavelengthSMD, lightColor);
-Timer timer;
-Key key(keyPin);
-Memory memory;
-// Pot pot;
-Bright bright;
+byte lampAmount = sizeof(lightColor)/sizeof(String);
+
+Watch watch(lampAmount);
+Switchers switchers(lampAmount);
+ScreenU8G2 screen(WavelengthSMD, lightColor, lampAmount);
+// Screen screen(WavelengthSMD, lightColor, lampAmount);
+Timer timer(lampAmount);
+Key key(keyPin, lampAmount);
+Bright bright(lampAmount);
+// Pot pot(lampAmount);
+Memory memory(lampAmount);
 
 void setup()
 {

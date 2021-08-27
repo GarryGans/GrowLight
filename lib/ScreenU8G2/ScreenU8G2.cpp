@@ -1,8 +1,11 @@
 #include "ScreenU8G2.h"
 
-ScreenU8G2::ScreenU8G2(String WavelengthSMD[], String lightColor[]) : U8G2_SH1106_128X64_NONAME_1_HW_I2C(U8G2_R0, /* reset=*/U8X8_PIN_NONE)
+ScreenU8G2::ScreenU8G2(String WavelengthSMD[], String lightColor[], byte amount) : U8G2_SH1106_128X64_NONAME_1_HW_I2C(U8G2_R0, /* reset=*/U8X8_PIN_NONE)
 {
-    for (byte i = 0; i < lampAmount; i++)
+    this->WavelengthSMD = new String[amount];
+    this->lightColor = new String[amount];
+
+    for (byte i = 0; i < amount; i++)
     {
         this->WavelengthSMD[i] = WavelengthSMD[i];
         this->lightColor[i] = lightColor[i];
