@@ -11,7 +11,7 @@
 class Memory
 {
 private:
-    byte lampAmount;
+    byte Amount;
 
     byte startAddr = 0;
     byte start_addr_Size = 0;

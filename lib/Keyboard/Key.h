@@ -5,6 +5,8 @@
 #include <AmperkaKB.h>
 #include <Timer.h>
 
+#define lampAmount 8
+
 class Key : public AmperkaKB
 {
     friend class ScreenU8G2;
@@ -16,7 +18,7 @@ class Key : public AmperkaKB
     friend class Bright;
 
 private:
-    byte lampAmount;
+    byte Amount;
 
     enum Screen
     {
@@ -43,9 +45,13 @@ private:
 
     boolean autoMove;
 
-    boolean *buttonSwitch;
-    boolean *reduration;
-    boolean *reBright;
+    boolean buttonSwitch[lampAmount];
+    boolean reduration[lampAmount];
+    boolean reBright[lampAmount];
+
+    // boolean *buttonSwitch;
+    // boolean *reduration;
+    // boolean *reBright;
 
     boolean resetManualPot;
     boolean resetManualBright;

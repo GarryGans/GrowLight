@@ -6,13 +6,14 @@
 #include <Watch.h>
 #include <Key.h>
 
-#define OFF LOW // реле: 1 - высокого уровня (или мосфет), 0 - низкого
-#define ON  HIGH
+#define OFF HIGH // реле: 1 - высокого уровня (или мосфет), 0 - низкого
+#define ON LOW
+
 
 class Switchers
 {
 private:
-    byte lampAmount;
+    byte Amount;
     byte *lamp_pins;
 
 public:

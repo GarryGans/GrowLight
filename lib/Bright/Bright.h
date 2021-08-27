@@ -6,6 +6,8 @@
 #include <Key.h>
 #include <Watch.h>
 
+#define lampAmount 8
+
 class Bright
 {
     friend class Memory;
@@ -13,15 +15,15 @@ class Bright
     friend class Screen;
 
 private:
-    byte lampAmount;
+    // byte lampAmount;
 
     byte startPinBright;
-    byte *pin;
-    byte *bright;
+    byte pin[lampAmount];
+    byte bright[lampAmount];
 
     byte autoMinBright = 0;
-    byte *maxBright;
-    byte *prewMaxBright;
+    byte maxBright[lampAmount];
+    byte prewMaxBright[lampAmount];
 
     byte minManualBright = 0;
     byte maxManualBright = 255;

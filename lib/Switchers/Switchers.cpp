@@ -2,8 +2,8 @@
 
 Switchers::Switchers(byte amount)
 {
-    lampAmount = amount;
-    lamp_pins = new byte[lampAmount];
+    Amount = amount;
+    lamp_pins = new byte[Amount];
 }
 
 Switchers::~Switchers()
@@ -12,7 +12,7 @@ Switchers::~Switchers()
 
 void Switchers::begin(byte &startPinLamp)
 {
-    for (byte i = 0; i < lampAmount; i++)
+    for (byte i = 0; i < Amount; i++)
     {
         lamp_pins[i] = startPinLamp + i;
         pinMode(lamp_pins[i], OUTPUT);
@@ -22,7 +22,7 @@ void Switchers::begin(byte &startPinLamp)
 
 void Switchers::switcher(Watch &watch, Key &key)
 {
-    for (byte i = 0; i < lampAmount; i++)
+    for (byte i = 0; i < Amount; i++)
     {
         if (watch.autoSwitch[i] || key.buttonSwitch[i])
         {

@@ -65,7 +65,7 @@ String lightColor[] = {"WF 1", "WF 2", "WF 3", "RED", "CF 1", "CF 2", "CF 3", "U
 
 // String lightColor[] = {"UV 1", "UV 2", "BL 1", "BL 2", "R 1", "R 2", "FR 1", "FR 2", "CXB"};
 
-// DigiPot potent[lampAmount] = {
+// DigiPot potent[] = {
 //     DigiPot(2, 3, 4),
 //     DigiPot(5, 6, 7),
 //     DigiPot(8, 9, 10),
@@ -80,17 +80,17 @@ String lightColor[] = {"WF 1", "WF 2", "WF 3", "RED", "CF 1", "CF 2", "CF 3", "U
 // String specWavelengthSMD[] = {"365nm+385nm", "440nm", "660nm", "730nm", "3000K"};
 // String speclightColor[] = {"UV", "BL", "RED", "FR", "CXB"};
 
-byte lampAmount = sizeof(lightColor)/sizeof(String);
+byte Amount = sizeof(lightColor)/sizeof(String);
 
-Watch watch(lampAmount);
-Switchers switchers(lampAmount);
-ScreenU8G2 screen(WavelengthSMD, lightColor, lampAmount);
-// Screen screen(WavelengthSMD, lightColor, lampAmount);
-Timer timer(lampAmount);
-Key key(keyPin, lampAmount);
-Bright bright(lampAmount);
-// Pot pot(lampAmount);
-Memory memory(lampAmount);
+Timer timer(Amount);
+Key key(keyPin, Amount); // firstObject !!!!!! need to check !!!!!!
+Watch watch(Amount);
+Switchers switchers(Amount);
+Bright bright(Amount);
+// Pot pot(Amount);
+Memory memory(Amount);
+ScreenU8G2 screen(WavelengthSMD, lightColor, Amount);
+// Screen screen(WavelengthSMD, lightColor, Amount);
 
 void setup()
 {
