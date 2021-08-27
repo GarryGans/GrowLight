@@ -2,14 +2,14 @@
 
 Pot::Pot(byte amount)
 {
-    // lampAmount = amount;
+    Amount = amount;
     
-    // bright = new byte[lampAmount];
+    bright = new byte[Amount];
 
-    // maxBright = new byte[lampAmount];
-    // prewMaxBright = new byte[lampAmount];
+    maxBright = new byte[Amount];
+    prewMaxBright = new byte[Amount];
 
-    // pot = new DigiPot[lampAmount];
+    pot = new DigiPot[Amount];
 }
 
 Pot::~Pot()
@@ -18,7 +18,7 @@ Pot::~Pot()
 
 void Pot::setPot(DigiPot pot[])
 {
-    for (byte i = 0; i < lampAmount; i++)
+    for (byte i = 0; i < Amount; i++)
     {
         this->pot[i] = pot[i];
     }
@@ -81,7 +81,7 @@ void Pot::autoBright(Watch &watch, Key &key, Timer &timer)
 {
     if (key.screen != key.manual || key.screen != key.bright)
     {
-        for (byte i = 0; i < lampAmount; i++)
+        for (byte i = 0; i < Amount; i++)
         {
             autoChangeBright(watch, key, timer, i);
         }
@@ -130,7 +130,7 @@ void Pot::manualChangeBright(Key &key, Timer &timer)
 
 void Pot::resetAllPots()
 {
-    for (byte i = 0; i < lampAmount; i++)
+    for (byte i = 0; i < Amount; i++)
     {
         pot[i].reset();
         bright[i] = pot[i].get();

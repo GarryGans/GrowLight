@@ -25,7 +25,7 @@ private:
 
     unsigned long *prewBrightMillis;
 
-    unsigned long riseMillis = 1000;
+    unsigned long riseMillis = 100;
 
     unsigned long prewMoveMillis;
 

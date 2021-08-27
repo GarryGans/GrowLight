@@ -7,7 +7,7 @@
 #include <Key.h>
 #include <Timer.h>
 
-#define lampAmount 8
+// #mount 8
 
 class Watch : public RTC_ext_1307
 // class Watch : public RTC_ext_3231
@@ -20,7 +20,7 @@ class Watch : public RTC_ext_1307
     friend class Bright;
 
 private:
-    // byte lampAmount;
+    byte Amount;
 
     byte cursorDateTime;
     byte cursorSpectrum;
@@ -36,8 +36,10 @@ private:
     byte sec;
     byte dow;
 
-    int start[lampAmount];
-    int finish[lampAmount];
+    // int start[lampAmount];
+    // int finish[lampAmount];
+    int *start;
+    int *finish;
 
     int daySTD = 12 * 60;
     int totalDayLenght = daySTD;
@@ -45,10 +47,15 @@ private:
     const int midNightBefore = 23 * 60 + 59;
     const int midNightAfter = 0;
 
-    boolean autoSwitch[lampAmount];
-    boolean skip[lampAmount];
+    // boolean autoSwitch[lampAmount];
+    // boolean skip[lampAmount];
 
-    boolean brightDown[lampAmount];
+    // boolean brightDown[lampAmount];
+
+    boolean *autoSwitch;
+    boolean *skip;
+
+    boolean *brightDown;
 
     int intervalDefault = 1;
     int interval = 0;
@@ -58,10 +65,15 @@ private:
     byte finishHourStd = 18;
     byte finishMinuteStd = 0;
 
-    byte startHour[lampAmount];
-    byte startMinute[lampAmount];
-    byte finishHour[lampAmount];
-    byte finishMinute[lampAmount];
+    // byte startHour[lampAmount];
+    // byte startMinute[lampAmount];
+    // byte finishHour[lampAmount];
+    // byte finishMinute[lampAmount];
+
+    byte *startHour;
+    byte *startMinute;
+    byte *finishHour;
+    byte *finishMinute;
 
     byte RiseHour;
     byte RiseMin;

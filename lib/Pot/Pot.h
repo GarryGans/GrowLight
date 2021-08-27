@@ -7,7 +7,7 @@
 #include <Key.h>
 #include <Watch.h>
 
-#define lampAmount 8
+// #define lampAmount 8
 
 class Pot
 {
@@ -16,18 +16,22 @@ class Pot
     friend class Screen;
 
 private:
-    // byte lampAmount;
+    byte Amount;
 
-    byte bright[lampAmount];
+    // byte bright[lampAmount];
+    byte *bright;
 
-    byte autoMinBright = 0;
-    byte maxBright[lampAmount];
-    byte prewMaxBright[lampAmount];
+    byte autoMinBright = 18;
+    // byte maxBright[lampAmount];
+    // byte prewMaxBright[lampAmount];
+    byte *maxBright;
+    byte *prewMaxBright;
 
     byte minManualBright = 0;
-    byte maxManualBright = 100;
+    byte maxManualBright = 60;
     
-    DigiPot pot[lampAmount];
+    DigiPot *pot;
+    // DigiPot pot[lampAmount];
 
 public:
     Pot(byte amount);
