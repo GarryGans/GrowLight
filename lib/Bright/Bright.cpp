@@ -2,13 +2,13 @@
 
 Bright::Bright(byte amount)
 {
-    // lampAmount = amount;
+    Amount = amount;
 
-    // pin = new byte[lampAmount];
-    // bright = new byte[lampAmount];
+    pin = new byte[Amount];
+    bright = new byte[Amount];
 
-    // maxBright = new byte[lampAmount];
-    // prewMaxBright = new byte[lampAmount];
+    maxBright = new byte[Amount];
+    prewMaxBright = new byte[Amount];
 }
 
 Bright::~Bright()
@@ -19,7 +19,7 @@ void Bright::begin(byte startBrightPin)
 {
     this->startPinBright = startBrightPin;
 
-    for (byte i = 0; i < lampAmount; i++)
+    for (byte i = 0; i < Amount; i++)
     {
         this->pin[i] = startBrightPin + i;
         pinMode(pin[i], OUTPUT);
@@ -84,7 +84,7 @@ void Bright::autoBright(Watch &watch, Key &key, Timer &timer)
 {
     if (key.screen != key.manual || key.screen != key.bright)
     {
-        for (byte i = 0; i < lampAmount; i++)
+        for (byte i = 0; i < Amount; i++)
         {
             autoChangeBright(watch, key, timer, i);
         }
@@ -115,7 +115,7 @@ void Bright::manualChangeBright(Key &key, Timer &timer)
 
 void Bright::resetAllBrights()
 {
-    for (byte i = 0; i < lampAmount; i++)
+    for (byte i = 0; i < Amount; i++)
     {
         bright[i] = minManualBright;
         analogWrite(pin[i], 0);

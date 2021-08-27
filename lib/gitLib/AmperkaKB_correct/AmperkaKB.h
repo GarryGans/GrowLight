@@ -13,6 +13,7 @@
 // отпускаие кнопки
 #define ON_RELEASE 3
 
+// MY CORRECT
 #define ON_HOLD 4
 
 // типы клавиатур
