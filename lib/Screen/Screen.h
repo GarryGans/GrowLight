@@ -22,11 +22,10 @@ private:
     char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
 public:
-    Screen();
+    Screen(String *WavelengthSMD, String *lightColor);
     ~Screen();
 
     void begin();
-    void setStrings(String *WavelengthSMD, String *lightColor);
     void iGorLogo();
 
     void showDig(byte value);

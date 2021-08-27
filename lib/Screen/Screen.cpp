@@ -5,8 +5,13 @@
 // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
 #define OLED_RESET -1 // Reset pin # (or -1 if sharing Arduino reset pin)
 
-Screen::Screen() : Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET)
+Screen::Screen(String *WavelengthSMD, String *lightColor) : Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET)
 {
+    for (byte i = 0; i < lampAmount; i++)
+    {
+        this->WavelengthSMD[i] = WavelengthSMD[i];
+        this->lightColor[i] = lightColor[i];
+    }
 }
 
 Screen::~Screen()
@@ -16,15 +21,6 @@ Screen::~Screen()
 void Screen::begin()
 {
     Adafruit_SSD1306::begin(SSD1306_SWITCHCAPVCC, 0x3C);
-}
-
-void Screen::setStrings(String *WavelengthSMD, String *lightColor)
-{
-    for (byte i = 0; i < lampAmount; i++)
-    {
-        this->WavelengthSMD[i] = WavelengthSMD[i];
-        this->lightColor[i] = lightColor[i];
-    }
 }
 
 void Screen::iGorLogo()
@@ -42,6 +38,19 @@ void Screen::iGorLogo()
     print("iGor_2019");
 
     display();
+}
+
+void Screen::showStringWatch(byte hh, byte mm, byte ss)
+{
+    showDig(hh);
+
+    print(":");
+
+    showDig(mm);
+
+    print(":");
+
+    showDig(ss);
 }
 
 void Screen::headerTime(Watch &watch)
@@ -203,19 +212,6 @@ void Screen::showStringTime(byte hh, byte mm)
     print(":");
 
     showDig(mm);
-}
-
-void Screen::showStringWatch(byte hh, byte mm, byte ss)
-{
-    showDig(hh);
-
-    print(":");
-
-    showDig(mm);
-
-    print(":");
-
-    showDig(ss);
 }
 
 void Screen::showSpectrumTime(Watch &watch, byte id)
@@ -402,6 +398,7 @@ void Screen::blinkHeaderTime(Key &key, Watch &watch, Timer &timer)
         default:
             break;
         }
+
         showStringWatch(watch.hour, watch.min, watch.sec);
     }
 
@@ -458,9 +455,9 @@ void Screen::showStartScreen(Watch &watch, Key &key, Timer &timer)
         clearDisplay();
 
         setTextColor(1);
-
+        setTextSize(1);
         blinkHeaderDate(key, watch, timer);
-        // blinkHeaderTime(key, watch, timer);
+        blinkHeaderTime(key, watch, timer);
 
         showBlinkSunRise(key, timer, watch, watch.RiseHour, watch.RiseMin);
         showBlinkSunSet(key, timer, watch, watch.SetHour, watch.SetMin);

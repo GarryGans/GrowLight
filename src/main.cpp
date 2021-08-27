@@ -20,9 +20,9 @@ byte keyPin[] = {32, 34, 36, 38, 40, 42, 44, 46};
 
 //SINGLE VERSION
 
-String WavelengthSMD[] = {"3500k"};
+// String WavelengthSMD[] = {"3500k"};
 
-String lightColor[] = {"LED"};
+// String lightColor[] = {"LED"};
 // DigiPot potent[] = {
 //     DigiPot(2, 3, 4)};
 
@@ -38,17 +38,17 @@ String lightColor[] = {"LED"};
 
 // SQUARE 250 Led //
 
-// String WavelengthSMD[] = {
-//     "3500k+full",
-//     "3500k+full",
-//     "3500k+full",
-//     "660nm",
-//     "6500k+full",
-//     "6500k+full",
-//     "6500k+full",
-//     "365+385nm"};
+String WavelengthSMD[] = {
+    "3500k+full",
+    "3500k+full",
+    "3500k+full",
+    "660nm",
+    "6500k+full",
+    "6500k+full",
+    "6500k+full",
+    "365+385nm"};
 
-// String lightColor[] = {"WF 1", "WF 2", "WF 3", "RED", "CF 1", "CF 2", "CF 3", "UV"};
+String lightColor[] = {"WF 1", "WF 2", "WF 3", "RED", "CF 1", "CF 2", "CF 3", "UV"};
 
 // DigiPot potent[] = {
 //     DigiPot(2, 3, 4),
@@ -82,8 +82,8 @@ String lightColor[] = {"LED"};
 
 Watch watch;
 Switchers switchers;
-// ScreenU8G2 screen;
-Screen screen;
+ScreenU8G2 screen(WavelengthSMD, lightColor);
+// Screen screen(WavelengthSMD, lightColor);
 Timer timer;
 Key key(keyPin);
 Memory memory;
@@ -96,10 +96,8 @@ void setup()
 
     screen.begin();
 
-    // screen.iGorLogo();
+    screen.iGorLogo();
     delay(500);
-
-    screen.setStrings(WavelengthSMD, lightColor);
 
     watch.begin();
     // watch.adjust(DateTime(F(__DATE__), F(__TIME__)));

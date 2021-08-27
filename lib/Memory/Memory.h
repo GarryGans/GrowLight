@@ -22,6 +22,7 @@ private:
     int finishMinute_addr[lampAmount];
 
     int skip_addr[lampAmount];
+    
 
 public:
     Memory(/* args */);

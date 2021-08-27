@@ -67,10 +67,8 @@ private:
     byte WH = 48;
 
 public:
-    ScreenU8G2();
+    ScreenU8G2(String WavelengthSMD[], String lightColor[]);
     ~ScreenU8G2();
-
-    void setStrings(String *WavelengthSMD, String *lightColor);
 
     byte intToChar(int value);
     void align(byte WH, byte H, PositionX position_x, PositionY position_y);
