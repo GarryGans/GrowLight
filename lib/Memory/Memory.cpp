@@ -4,14 +4,14 @@ Memory::Memory(byte amount)
 {
     lampAmount = amount;
 
-    maxBright_addr = new int[lampAmount];
+    maxBright_addr = new byte[lampAmount];
 
-    startHour_addr = new int[lampAmount];
-    startMinute_addr = new int[lampAmount];
-    finishHour_addr = new int[lampAmount];
-    finishMinute_addr = new int[lampAmount];
+    startHour_addr = new byte[lampAmount];
+    startMinute_addr = new byte[lampAmount];
+    finishHour_addr = new byte[lampAmount];
+    finishMinute_addr = new byte[lampAmount];
 
-    skip_addr = new int[lampAmount];
+    skip_addr = new byte[lampAmount];
 }
 
 Memory::~Memory()
@@ -57,23 +57,28 @@ void Memory::readTime(int prew_addr, byte prewVar, byte id, Watch &watch)
 
     else
     {
-        startHour_addr[id] = startHour_addr[id - 1] + sizeof(watch.startHour[id - 1]);
+        startHour_addr[id] = finishMinute_addr[id - 1] + sizeof(watch.startHour[id - 1]);
     }
+
+    // Serial.println(startHour_addr[id]);
 
     EEPROM.get(startHour_addr[id], watch.startHour[id]);
     firstHour(watch.startHour[id]);
 
-    startMinute_addr[id] = startHour_addr[id] + sizeof(watch.startHour);
+    startMinute_addr[id] = startHour_addr[id] + sizeof(watch.startHour[id]);
+    // Serial.println(startMinute_addr[id]);
 
     EEPROM.get(startMinute_addr[id], watch.startMinute[id]);
     firstMin(watch.startMinute[id]);
 
-    finishHour_addr[id] = startMinute_addr[id] + sizeof(watch.startMinute);
+    finishHour_addr[id] = startMinute_addr[id] + sizeof(watch.startMinute[id]);
+    // Serial.println(finishHour_addr[id]);
 
     EEPROM.get(finishHour_addr[id], watch.finishHour[id]);
     firstHour(watch.finishHour[id]);
 
-    finishMinute_addr[id] = finishHour_addr[id] + sizeof(watch.finishHour);
+    finishMinute_addr[id] = finishHour_addr[id] + sizeof(watch.finishHour[id]);
+    // Serial.println(finishMinute_addr[id]);
 
     EEPROM.get(finishMinute_addr[id], watch.finishMinute[id]);
     firstMin(watch.finishMinute[id]);
@@ -96,18 +101,18 @@ void Memory::writeTime(int prew_addr, byte prewVar, byte id, Watch &watch)
 
     else
     {
-        startHour_addr[id] = startHour_addr[id - 1] + sizeof(watch.startHour[id - 1]);
+        startHour_addr[id] = finishMinute_addr[id - 1] + sizeof(watch.startHour[id - 1]);
     }
 
     EEPROM.put(startHour_addr[id], watch.startHour[id]);
 
-    startMinute_addr[id] = startHour_addr[id] + sizeof(watch.startHour);
+    startMinute_addr[id] = startHour_addr[id] + sizeof(watch.startHour[id]);
     EEPROM.put(startMinute_addr[id], watch.startMinute[id]);
 
-    finishHour_addr[id] = startMinute_addr[id] + sizeof(watch.startMinute);
+    finishHour_addr[id] = startMinute_addr[id] + sizeof(watch.startMinute[id]);
     EEPROM.put(finishHour_addr[id], watch.finishHour[id]);
 
-    finishMinute_addr[id] = finishHour_addr[id] + sizeof(watch.finishHour);
+    finishMinute_addr[id] = finishHour_addr[id] + sizeof(watch.finishHour[id]);
     EEPROM.put(finishMinute_addr[id], watch.finishMinute[id]);
 }
 

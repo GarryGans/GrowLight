@@ -13,17 +13,17 @@ class Memory
 private:
     byte lampAmount;
 
-    int startAddr = 0;
-    int start_addr_Size = 0;
+    byte startAddr = 0;
+    byte start_addr_Size = 0;
 
-    int *maxBright_addr;
+    byte *maxBright_addr;
 
-    int *startHour_addr;
-    int *startMinute_addr;
-    int *finishHour_addr;
-    int *finishMinute_addr;
+    byte *startHour_addr;
+    byte *startMinute_addr;
+    byte *finishHour_addr;
+    byte *finishMinute_addr;
 
-    int *skip_addr;
+    byte *skip_addr;
     
 
 public:
