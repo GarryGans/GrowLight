@@ -5,11 +5,10 @@
 #include <Switchers.h>
 #include <Timer.h>
 #include <Watch.h>
-// #include <Key.h>
+#include <Key.h>
 #include <Memory.h>
 #include <Pot.h>
 #include <Bright.h>
-#include <KeyPad.h>
 
 byte startPinBright = 2; //198 ~ 24 QuantumBoard 0.30 ~ 2.70
 
@@ -81,28 +80,10 @@ String lightColor[] = {"WF 1", "WF 2", "WF 3", "RED", "CF 1", "CF 2", "CF 3", "U
 // String specWavelengthSMD[] = {"365nm+385nm", "440nm", "660nm", "730nm", "3000K"};
 // String speclightColor[] = {"UV", "BL", "RED", "FR", "CXB"};
 
-byte Amount = sizeof(lightColor) / sizeof(String);
-
-#define R1 32
-#define R2 34
-#define R3 36
-#define R4 38
-#define C1 40
-#define C2 42
-#define C3 44
-#define C4 46
-
-#define holdDelay 1000
-#define holdSpeed 100
-
-byte rowPins[] = {R1, R2, R3, R4}; // connect to the row pinouts of the keypad
-byte colPins[] = {C1, C2, C3, C4}; // connect to the column pinouts of the keypad
-
-KeyPad key(rowPins, colPins, Amount);
+byte Amount = sizeof(lightColor)/sizeof(String);
 
 Timer timer(Amount);
-// Key key(keyPin, Amount); // firstObject !!!!!! need to check !!!!!!
-
+Key key(keyPin, Amount); // firstObject !!!!!! need to check !!!!!!
 Watch watch(Amount);
 Switchers switchers(Amount);
 Bright bright(Amount);
@@ -113,7 +94,7 @@ ScreenU8G2 screen(WavelengthSMD, lightColor, Amount);
 
 void setup()
 {
-    Serial.begin(9600);
+    // Serial.begin(9600);
 
     screen.begin();
 
@@ -123,8 +104,7 @@ void setup()
     watch.begin();
     // watch.adjust(DateTime(F(__DATE__), F(__TIME__)));
 
-    // key.begin(KB4x4, 500);
-    key.begin(holdDelay, holdSpeed);
+    key.begin(KB4x4, 500);
 
     // pot.setPot(potent);
     // pot.resetAllPots();
@@ -140,8 +120,7 @@ void setup()
 
 void loop()
 {
-    key.tick();
-    // key.read();
+    key.read();
 
     key.manualSwitchLight();
     watch.autoSwitcher(key);

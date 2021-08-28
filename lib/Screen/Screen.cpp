@@ -59,6 +59,7 @@ void Screen::showStringWatch(byte hh, byte mm, byte ss)
 void Screen::headerTime(Watch &watch)
 {
     Time now = watch.time();
+    setTextSize(1);
 
     setCursor(79, 2);
     showStringWatch(now.hour(), now.minute(), now.second());
@@ -67,6 +68,8 @@ void Screen::headerTime(Watch &watch)
 void Screen::headerDate(Watch &watch)
 {
     Date now = watch.date();
+
+    setTextSize(1);
 
     setCursor(0, 0);
     print(daysOfTheWeek[now.dayOfTheWeek()]);
@@ -90,8 +93,7 @@ void Screen::showAlert()
     print("manual");
 }
 
-// void Screen::brightInfo(Pot &pot, Key &key, Timer &timer)
-void Screen::brightInfo(Pot &pot, KeyPad &key, Timer &timer)
+void Screen::brightInfo(Pot &pot, Key &key, Timer &timer)
 {
     setTextSize(1);
     setCursor(80, 54);
@@ -111,8 +113,7 @@ void Screen::brightInfo(Pot &pot, KeyPad &key, Timer &timer)
     }
 }
 
-// void Screen::brightInfo(Bright &bright, Key &key, Timer &timer)
-void Screen::brightInfo(Bright &bright, KeyPad &key, Timer &timer)
+void Screen::brightInfo(Bright &bright, Key &key, Timer &timer)
 {
     setTextSize(1);
     setCursor(80, 54);
@@ -132,8 +133,7 @@ void Screen::brightInfo(Bright &bright, KeyPad &key, Timer &timer)
     }
 }
 
-// void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot)
-void Screen::bottomLine(Watch &watch, Timer &timer, KeyPad &key, Pot &pot)
+void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot)
 {
     if (watch.skip[key.id] && key.screen != key.manual && key.screen != key.bright && key.screen != key.duration)
     {
@@ -158,8 +158,7 @@ void Screen::bottomLine(Watch &watch, Timer &timer, KeyPad &key, Pot &pot)
     }
 }
 
-// void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright)
-void Screen::bottomLine(Watch &watch, Timer &timer, KeyPad &key, Bright &bright)
+void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright)
 {
     if (watch.skip[key.id] && key.screen != key.manual && key.screen != key.bright && key.screen != key.duration)
     {
@@ -184,8 +183,7 @@ void Screen::bottomLine(Watch &watch, Timer &timer, KeyPad &key, Bright &bright)
     }
 }
 
-// void Screen::showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Pot &pot)
-void Screen::showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, KeyPad &key, Pot &pot)
+void Screen::showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Pot &pot)
 {
     if (key.screen == key.lamp || key.screen == key.bright || key.screen == key.duration || key.screen == key.manual)
     {
@@ -199,8 +197,7 @@ void Screen::showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Ke
     }
 }
 
-// void Screen::showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Bright &bright)
-void Screen::showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, KeyPad &key, Bright &bright)
+void Screen::showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Bright &bright)
 {
     if (key.screen == key.lamp || key.screen == key.bright || key.screen == key.duration || key.screen == key.manual)
     {
@@ -265,8 +262,7 @@ void Screen::showBlinkYear(byte x, byte y, Timer &timer)
     }
 }
 
-// void Screen::showBlinkSpectrumTime(Watch &watch, Timer &timer, Key &key)
-void Screen::showBlinkSpectrumTime(Watch &watch, Timer &timer, KeyPad &key)
+void Screen::showBlinkSpectrumTime(Watch &watch, Timer &timer, Key &key)
 {
     setTextSize(1);
     setCursor(5, 54);
@@ -302,8 +298,7 @@ void Screen::showBlinkSpectrumTime(Watch &watch, Timer &timer, KeyPad &key)
     }
 }
 
-// void Screen::lampInfo(Watch &watch, Key &key)
-void Screen::lampInfo(Watch &watch, KeyPad &key)
+void Screen::lampInfo(Watch &watch, Key &key)
 {
     setCursor(0, 9);
     setTextSize(1);
@@ -326,8 +321,7 @@ void Screen::lampInfo(Watch &watch, KeyPad &key)
     }
 }
 
-// void Screen::showBlinkSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
-void Screen::showBlinkSunRise(KeyPad &key, Timer &timer, Watch &watch, byte hh, byte mm)
+void Screen::showBlinkSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
 {
     setCursor(5, 30);
     setTextSize(1);
@@ -357,8 +351,7 @@ void Screen::showBlinkSunRise(KeyPad &key, Timer &timer, Watch &watch, byte hh, 
     }
 }
 
-// void Screen::showBlinkSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
-void Screen::showBlinkSunSet(KeyPad &key, Timer &timer, Watch &watch, byte hh, byte mm)
+void Screen::showBlinkSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
 {
     setCursor(5, 52);
     setTextSize(1);
@@ -389,8 +382,7 @@ void Screen::showBlinkSunSet(KeyPad &key, Timer &timer, Watch &watch, byte hh, b
     }
 }
 
-// void Screen::blinkHeaderTime(Key &key, Watch &watch, Timer &timer)
-void Screen::blinkHeaderTime(KeyPad &key, Watch &watch, Timer &timer)
+void Screen::blinkHeaderTime(Key &key, Watch &watch, Timer &timer)
 {
     if (key.screen == key.watch)
     {
@@ -422,8 +414,7 @@ void Screen::blinkHeaderTime(KeyPad &key, Watch &watch, Timer &timer)
     }
 }
 
-// void Screen::blinkHeaderDate(Key &key, Watch &watch, Timer &timer)
-void Screen::blinkHeaderDate(KeyPad &key, Watch &watch, Timer &timer)
+void Screen::blinkHeaderDate(Key &key, Watch &watch, Timer &timer)
 {
     if (key.screen == key.watch)
     {
@@ -463,8 +454,7 @@ void Screen::blinkHeaderDate(KeyPad &key, Watch &watch, Timer &timer)
     }
 }
 
-// void Screen::showStartScreen(Watch &watch, Key &key, Timer &timer)
-void Screen::showStartScreen(Watch &watch, KeyPad &key, Timer &timer)
+void Screen::showStartScreen(Watch &watch, Key &key, Timer &timer)
 {
     if (key.screen == key.start || key.screen == key.watch || key.screen == key.dayDuration)
     {

@@ -42,8 +42,7 @@ void Bright::resetBright(byte pin, byte &bright)
     analogWrite(pin, bright);
 }
 
-// void Bright::autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i)
-void Bright::autoChangeBright(Watch &watch, KeyPad &key, Timer &timer, byte i)
+void Bright::autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i)
 {
     if (watch.autoSwitch[i] && !watch.skip[i] && !key.reduration[i] && !key.reBright[i])
     {
@@ -81,8 +80,7 @@ void Bright::autoChangeBright(Watch &watch, KeyPad &key, Timer &timer, byte i)
     }
 }
 
-// void Bright::autoBright(Watch &watch, Key &key, Timer &timer)
-void Bright::autoBright(Watch &watch, KeyPad &key, Timer &timer)
+void Bright::autoBright(Watch &watch, Key &key, Timer &timer)
 {
     if (key.screen != key.manual || key.screen != key.bright)
     {
@@ -98,8 +96,7 @@ void Bright::autoBright(Watch &watch, KeyPad &key, Timer &timer)
     }
 }
 
-// void Bright::manualChangeBright(Key &key, Timer &timer)
-void Bright::manualChangeBright(KeyPad &key, Timer &timer)
+void Bright::manualChangeBright(Key &key, Timer &timer)
 {
     if (key.screen == key.manual)
     {
@@ -159,8 +156,7 @@ void Bright::correctBright(boolean brightDown, byte pin, byte &bright, byte maxB
     }
 }
 
-// void Bright::changeMaxBright(Key &key, Watch &watch, Timer &timer)
-void Bright::changeMaxBright(KeyPad &key, Watch &watch, Timer &timer)
+void Bright::changeMaxBright(Key &key, Watch &watch, Timer &timer)
 {
     if (key.changeMaxBright())
     {
@@ -196,8 +192,7 @@ void Bright::changeMaxBright(KeyPad &key, Watch &watch, Timer &timer)
     }
 }
 
-// void Bright::changeBright(byte &bright, byte pin, Key &key, Timer &timer)
-void Bright::changeBright(byte &bright, byte pin, KeyPad &key, Timer &timer)
+void Bright::changeBright(byte &bright, byte pin, Key &key, Timer &timer)
 {
     if (key.valChange(timer))
     {

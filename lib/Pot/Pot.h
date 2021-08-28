@@ -5,7 +5,6 @@
 #include <DigiPot.h>
 #include <Timer.h>
 #include <Key.h>
-#include <KeyPad.h>
 #include <Watch.h>
 
 // #define lampAmount 8
@@ -42,20 +41,13 @@ public:
     void setMinBright(DigiPot &pot, byte &bright);
     void resetBright(DigiPot &pot, byte &bright);
 
-    // void autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i);
-    // void autoBright(Watch &watch, Key &key, Timer &timer);
-    // void manualChangeBright(Key &key, Timer &timer);
-    void autoChangeBright(Watch &watch, KeyPad &key, Timer &timer, byte i);
-    void autoBright(Watch &watch, KeyPad &key, Timer &timer);
-    void manualChangeBright(KeyPad &key, Timer &timer);
-
+    void autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i);
+    void autoBright(Watch &watch, Key &key, Timer &timer);
+    void manualChangeBright(Key &key, Timer &timer);
     void resetAllPots();
-    // void changeMaxBright(Key &key, Watch &watch, Timer &timer);
-    void changeMaxBright(KeyPad &key, Watch &watch, Timer &timer);
-
+    void changeMaxBright(Key &key, Watch &watch, Timer &timer);
     void correctBright(boolean brightDown, DigiPot &pot, byte &bright, byte maxBright, byte id);
-    // void changeBright(byte &bright, DigiPot &pot, Key &key, Timer &timer);
-    void changeBright(byte &bright, DigiPot &pot, KeyPad &key, Timer &timer);
+    void changeBright(byte &bright, DigiPot &pot, Key &key, Timer &timer);
 };
 
 #endif

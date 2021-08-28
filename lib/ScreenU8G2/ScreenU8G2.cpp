@@ -225,8 +225,7 @@ void ScreenU8G2::headerScreen(Watch &watch)
     headerTime(watch);
 }
 
-// void ScreenU8G2::brightInfo(Pot &pot, Key &key, Timer &timer)
-void ScreenU8G2::brightInfo(Pot &pot, KeyPad &key, Timer &timer)
+void ScreenU8G2::brightInfo(Pot &pot, Key &key, Timer &timer)
 {
     setFont(u8g2_font_courB08_tn);
 
@@ -247,8 +246,7 @@ void ScreenU8G2::brightInfo(Pot &pot, KeyPad &key, Timer &timer)
     }
 }
 
-// void ScreenU8G2::brightInfo(Bright &bright, Key &key, Timer &timer)
-void ScreenU8G2::brightInfo(Bright &bright, KeyPad &key, Timer &timer)
+void ScreenU8G2::brightInfo(Bright &bright, Key &key, Timer &timer)
 {
     setFont(u8g2_font_courB08_tn);
 
@@ -269,8 +267,7 @@ void ScreenU8G2::brightInfo(Bright &bright, KeyPad &key, Timer &timer)
     }
 }
 
-// void ScreenU8G2::bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot)
-void ScreenU8G2::bottomLine(Watch &watch, Timer &timer, KeyPad &key, Pot &pot)
+void ScreenU8G2::bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot)
 {
     if (watch.skip[key.id] && key.screen != key.manual && key.screen != key.bright && key.screen != key.duration)
     {
@@ -298,8 +295,7 @@ void ScreenU8G2::bottomLine(Watch &watch, Timer &timer, KeyPad &key, Pot &pot)
     }
 }
 
-// void ScreenU8G2::bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright)
-void ScreenU8G2::bottomLine(Watch &watch, Timer &timer, KeyPad &key, Bright &bright)
+void ScreenU8G2::bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright)
 {
     if (watch.skip[key.id] && key.screen != key.manual && key.screen != key.bright && key.screen != key.duration)
     {
@@ -327,8 +323,7 @@ void ScreenU8G2::bottomLine(Watch &watch, Timer &timer, KeyPad &key, Bright &bri
     }
 }
 
-// void ScreenU8G2::showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Pot &pot)
-void ScreenU8G2::showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, KeyPad &key, Pot &pot)
+void ScreenU8G2::showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Pot &pot)
 {
     if (key.screen == key.lamp || key.screen == key.bright || key.screen == key.duration || key.screen == key.manual)
     {
@@ -343,8 +338,7 @@ void ScreenU8G2::showLampScreen(Watch &watch, Switchers &switchers, Timer &timer
     }
 }
 
-// void ScreenU8G2::showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Bright &bright)
-void ScreenU8G2::showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, KeyPad &key, Bright &bright)
+void ScreenU8G2::showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Bright &bright)
 {
     if (key.screen == key.lamp || key.screen == key.bright || key.screen == key.duration || key.screen == key.manual)
     {
@@ -446,8 +440,7 @@ void ScreenU8G2::showBlinkYear(int year, int x, int y, Timer &timer)
     }
 }
 
-// void ScreenU8G2::showBlinkSpectrumTime(Watch &watch, Timer &timer, Key &key)
-void ScreenU8G2::showBlinkSpectrumTime(Watch &watch, Timer &timer, KeyPad &key)
+void ScreenU8G2::showBlinkSpectrumTime(Watch &watch, Timer &timer, Key &key)
 {
     if (key.screen == key.duration)
     {
@@ -485,8 +478,7 @@ void ScreenU8G2::showBlinkSpectrumTime(Watch &watch, Timer &timer, KeyPad &key)
     }
 }
 
-// void ScreenU8G2::lampInfo(Watch &watch, Key &key)
-void ScreenU8G2::lampInfo(Watch &watch, KeyPad &key)
+void ScreenU8G2::lampInfo(Watch &watch, Key &key)
 {
     setCursor(0, 16);
     setFont(u8g2_font_courB08_tf);
@@ -510,8 +502,7 @@ void ScreenU8G2::lampInfo(Watch &watch, KeyPad &key)
     }
 }
 
-// void ScreenU8G2::showBlinkSunRise(Key &key, Timer &timer, Watch &watch, int hh, int mm)
-void ScreenU8G2::showBlinkSunRise(KeyPad &key, Timer &timer, Watch &watch, int hh, int mm)
+void ScreenU8G2::showBlinkSunRise(Key &key, Timer &timer, Watch &watch, int hh, int mm)
 {
     setCursor(5, 30);
     setFont(u8g2_font_courB08_tf);
@@ -545,8 +536,7 @@ void ScreenU8G2::showBlinkSunRise(KeyPad &key, Timer &timer, Watch &watch, int h
     }
 }
 
-// void ScreenU8G2::showBlinkSunSet(Key &key, Timer &timer, Watch &watch, int hh, int mm)
-void ScreenU8G2::showBlinkSunSet(KeyPad &key, Timer &timer, Watch &watch, int hh, int mm)
+void ScreenU8G2::showBlinkSunSet(Key &key, Timer &timer, Watch &watch, int hh, int mm)
 {
     setCursor(5, 52);
     setFont(u8g2_font_courB08_tf);
@@ -580,8 +570,7 @@ void ScreenU8G2::showBlinkSunSet(KeyPad &key, Timer &timer, Watch &watch, int hh
     }
 }
 
-// void ScreenU8G2::blinkHeaderTime(Key &key, Watch &watch, Timer &timer)
-void ScreenU8G2::blinkHeaderTime(KeyPad &key, Watch &watch, Timer &timer)
+void ScreenU8G2::blinkHeaderTime(Key &key, Watch &watch, Timer &timer)
 {
     if (key.screen == key.watch)
     {
@@ -616,8 +605,7 @@ void ScreenU8G2::blinkHeaderTime(KeyPad &key, Watch &watch, Timer &timer)
     }
 }
 
-// void ScreenU8G2::blinkHeaderDate(Key &key, Watch &watch, Timer &timer)
-void ScreenU8G2::blinkHeaderDate(KeyPad &key, Watch &watch, Timer &timer)
+void ScreenU8G2::blinkHeaderDate(Key &key, Watch &watch, Timer &timer)
 {
     if (key.screen == key.watch)
     {
@@ -651,8 +639,7 @@ void ScreenU8G2::blinkHeaderDate(KeyPad &key, Watch &watch, Timer &timer)
     }
 }
 
-// void ScreenU8G2::showStartScreen(Watch &watch, Key &key, Timer &timer)
-void ScreenU8G2::showStartScreen(Watch &watch, KeyPad &key, Timer &timer)
+void ScreenU8G2::showStartScreen(Watch &watch, Key &key, Timer &timer)
 {
     if (key.screen == key.start || key.screen == key.watch || key.screen == key.dayDuration)
     {

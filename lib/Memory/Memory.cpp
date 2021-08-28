@@ -278,8 +278,7 @@ void Memory::writeEachSkip(int prew_addr, byte prewVar, Watch &watch)
     }
 }
 
-// void Memory::writeChanges(Watch &watch, Pot &pot, Key &key)
-void Memory::writeChanges(Watch &watch, Pot &pot, KeyPad &key)
+void Memory::writeChanges(Watch &watch, Pot &pot, Key &key)
 {
     if (key.writeTime)
     {
@@ -305,8 +304,7 @@ void Memory::writeChanges(Watch &watch, Pot &pot, KeyPad &key)
     }
 }
 
-// void Memory::writeChanges(Watch &watch, Bright &bright, Key &key)
-void Memory::writeChanges(Watch &watch, Bright &bright, KeyPad &key)
+void Memory::writeChanges(Watch &watch, Bright &bright, Key &key)
 {
     if (key.writeTime)
     {

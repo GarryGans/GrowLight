@@ -10,7 +10,6 @@ class Timer
     friend class ScreenU8G2;
     friend class Screen;
     friend class Key;
-    friend class KeyPad;
 
 private:
     unsigned long prewCounterMillis;
@@ -41,6 +40,7 @@ private:
     boolean blink;
     boolean blinkHide;
     boolean move;
+
 
 public:
     Timer(byte amount);
