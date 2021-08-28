@@ -83,7 +83,7 @@ String lightColor[] = {"WF 1", "WF 2", "WF 3", "RED", "CF 1", "CF 2", "CF 3", "U
 byte Amount = sizeof(lightColor)/sizeof(String);
 
 Timer timer(Amount);
-Key key(keyPin, Amount); // firstObject !!!!!! need to check !!!!!!
+Key key(keyPin, Amount);
 Watch watch(Amount);
 Switchers switchers(Amount);
 Bright bright(Amount);
