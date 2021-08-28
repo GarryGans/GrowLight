@@ -25,17 +25,17 @@ void KeyPad::begin(unsigned long holdDelay, unsigned long holdSpeed)
 
 boolean KeyPad::keyEvent()
 {
-    tick();
+    // tick();
 
     while (available())
     {
         keypadEvent e = read();
 
-        Serial.print((char)e.bit.KEY);
+        Serial.println((char)e.bit.KEY);
 
         if (e.bit.EVENT == KEY_JUST_PRESSED)
         {
-            Serial.println(" press");
+            // Serial.println(" press");
             press = true;
             prewDelay = millis();
             num = (char)e.bit.KEY;
@@ -45,11 +45,11 @@ boolean KeyPad::keyEvent()
 
         else if (e.bit.EVENT == KEY_JUST_RELEASED)
         {
-            Serial.println(" released");
+            // Serial.println(" released");
             press = false;
             hold = false;
-            num = 'N';
-            Serial.println(num);
+            // num = 'N';
+            // Serial.println(num);
 
             return false;
         }
@@ -58,7 +58,7 @@ boolean KeyPad::keyEvent()
     if (press && millis() - prewDelay >= holdDelay && millis() - prewSpeed >= holdSpeed)
     {
         hold = true;
-        Serial.println("hold");
+        // Serial.println("hold");
         prewSpeed = millis();
 
         return true;
@@ -204,6 +204,7 @@ void KeyPad::home()
     if (keyEvent() && num == 'A')
     {
         screen = start;
+        Serial.println("start");
     }
 }
 

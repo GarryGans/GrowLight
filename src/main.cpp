@@ -140,7 +140,7 @@ void setup()
 
 void loop()
 {
-    // key.test();
+    key.tick();
     // key.read();
 
     key.manualSwitchLight();
