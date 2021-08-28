@@ -6,7 +6,9 @@
 #include <Watch.h>
 #include <Pot.h>
 #include <Key.h>
+#include <KeyPad.h>
 #include <Bright.h>
+
 
 class Memory
 {
@@ -58,8 +60,10 @@ public:
     void writeSkip(int prew_addr, byte prewVar, byte id, Watch &watch);
     void writeEachSkip(int prew_addr, byte prewVar, Watch &watch);
 
-    void writeChanges(Watch &watch, Pot &pot, Key &key);
-    void writeChanges(Watch &watch, Bright &bright, Key &key);
+    // void writeChanges(Watch &watch, Pot &pot, Key &key);
+    // void writeChanges(Watch &watch, Bright &bright, Key &key);
+    void writeChanges(Watch &watch, Pot &pot, KeyPad &key);
+    void writeChanges(Watch &watch, Bright &bright, KeyPad &key);
 };
 
 #endif

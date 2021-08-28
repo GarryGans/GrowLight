@@ -5,6 +5,8 @@
 #include <RTC_extention.h>
 #include <Wire.h>
 #include <Key.h>
+#include <KeyPad.h>
+
 #include <Timer.h>
 
 // #mount 8
@@ -88,21 +90,37 @@ public:
     int nowTime();
     int calculateTimeToMinute(byte setHour, byte setMinute);
     void autoSwitchLight(int start, int finish, boolean &autoSwitch, boolean &brightDown);
-    void autoSwitcher(Key &key);
+    // void autoSwitcher(Key &key);
 
-    void cursorChange(Key &key, byte &cursor);
-    void hmsChange(Key &key, byte &hms, byte &cursor, Timer &timer);
+    // void cursorChange(Key &key, byte &cursor);
+    // void hmsChange(Key &key, byte &hms, byte &cursor, Timer &timer);
 
-    void spectrumReDuration(Key &key, Timer &timer);
-    void dayReduration(Key &key, Timer &timer);
+    // void spectrumReDuration(Key &key, Timer &timer);
+    // void dayReduration(Key &key, Timer &timer);
 
-    void dtCursor(Key &key);
-    void timeChange(byte &time, Key &key, Timer &timer);
-    void yearChange(int &year, Key &key, Timer &timer);
-    void monthChange(byte &month, Key &key, Timer &timer);
-    void dayChange(byte &day, Key &key, Timer &timer);
+    // void dtCursor(Key &key);
+    // void timeChange(byte &time, Key &key, Timer &timer);
+    // void yearChange(int &year, Key &key, Timer &timer);
+    // void monthChange(byte &month, Key &key, Timer &timer);
+    // void dayChange(byte &day, Key &key, Timer &timer);
+    // void leapYearDay();
+    // void setWatch(Key &key, Timer &timer);
+
+    void autoSwitcher(KeyPad &key);
+
+    void cursorChange(KeyPad &key, byte &cursor);
+    void hmsChange(KeyPad &key, byte &hms, byte &cursor, Timer &timer);
+
+    void spectrumReDuration(KeyPad &key, Timer &timer);
+    void dayReduration(KeyPad &key, Timer &timer);
+
+    void dtCursor(KeyPad &key);
+    void timeChange(byte &time, KeyPad &key, Timer &timer);
+    void yearChange(int &year, KeyPad &key, Timer &timer);
+    void monthChange(byte &month, KeyPad &key, Timer &timer);
+    void dayChange(byte &day, KeyPad &key, Timer &timer);
     void leapYearDay();
-    void setWatch(Key &key, Timer &timer);
+    void setWatch(KeyPad &key, Timer &timer);
 };
 
 #endif

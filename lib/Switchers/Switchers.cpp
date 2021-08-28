@@ -20,7 +20,8 @@ void Switchers::begin(byte &startPinLamp)
     }
 }
 
-void Switchers::switcher(Watch &watch, Key &key)
+// void Switchers::switcher(Watch &watch, Key &key)
+void Switchers::switcher(Watch &watch, KeyPad &key)
 {
     for (byte i = 0; i < Amount; i++)
     {

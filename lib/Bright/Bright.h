@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include <Timer.h>
 #include <Key.h>
+#include <KeyPad.h>
 #include <Watch.h>
 
 
@@ -36,13 +37,22 @@ public:
     void setMinBright(byte pin, byte &bright);
     void resetBright(byte pin, byte &bright);
 
-    void autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i);
-    void autoBright(Watch &watch, Key &key, Timer &timer);
-    void manualChangeBright(Key &key, Timer &timer);
+    // void autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i);
+    // void autoBright(Watch &watch, Key &key, Timer &timer);
+    // void manualChangeBright(Key &key, Timer &timer);
+    void autoChangeBright(Watch &watch, KeyPad &key, Timer &timer, byte i);
+    void autoBright(Watch &watch, KeyPad &key, Timer &timer);
+    void manualChangeBright(KeyPad &key, Timer &timer);
+
     void resetAllBrights();
-    void changeMaxBright(Key &key, Watch &watch, Timer &timer);
+
+    // void changeMaxBright(Key &key, Watch &watch, Timer &timer);
+    void changeMaxBright(KeyPad &key, Watch &watch, Timer &timer);
+
     void correctBright(boolean brightDown, byte pin, byte &bright, byte maxBright, byte id);
-    void changeBright(byte &bright, byte pin, Key &key, Timer &timer);
+
+    // void changeBright(byte &bright, byte pin, Key &key, Timer &timer);
+    void changeBright(byte &bright, byte pin, KeyPad &key, Timer &timer);
 };
 
 #endif

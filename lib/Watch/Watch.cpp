@@ -89,7 +89,8 @@ void Watch::autoSwitchLight(int start, int finish, boolean &autoSwitch, boolean 
     }
 }
 
-void Watch::autoSwitcher(Key &key)
+// void Watch::autoSwitcher(Key &key) 
+void Watch::autoSwitcher(KeyPad &key)
 {
     if (key.screen != key.dayDuration)
     {
@@ -125,7 +126,8 @@ void Watch::autoSwitcher(Key &key)
     }
 }
 
-void Watch::cursorChange(Key &key, byte &cursor)
+// void Watch::cursorChange(Key &key, byte &cursor)
+void Watch::cursorChange(KeyPad &key, byte &cursor)
 {
     if (key.navigation())
     {
@@ -149,7 +151,8 @@ void Watch::cursorChange(Key &key, byte &cursor)
     }
 }
 
-void Watch::hmsChange(Key &key, byte &hms, byte &cursor, Timer &timer)
+// void Watch::hmsChange(Key &key, byte &hms, byte &cursor, Timer &timer)
+void Watch::hmsChange(KeyPad &key, byte &hms, byte &cursor, Timer &timer)
 {
     if (key.valChange(timer))
     {
@@ -183,7 +186,8 @@ void Watch::hmsChange(Key &key, byte &hms, byte &cursor, Timer &timer)
     cursorChange(key, cursor);
 }
 
-void Watch::spectrumReDuration(Key &key, Timer &timer)
+// void Watch::spectrumReDuration(Key &key, Timer &timer)
+void Watch::spectrumReDuration(KeyPad &key, Timer &timer)
 {
     if (key.spectrumReDuration())
     {
@@ -213,7 +217,8 @@ void Watch::spectrumReDuration(Key &key, Timer &timer)
     }
 }
 
-void Watch::dayReduration(Key &key, Timer &timer)
+// void Watch::dayReduration(Key &key, Timer &timer)
+void Watch::dayReduration(KeyPad &key, Timer &timer)
 {
     if (key.dayReduration())
     {
@@ -263,7 +268,8 @@ void Watch::dayReduration(Key &key, Timer &timer)
     }
 }
 
-void Watch::dtCursor(Key &key)
+// void Watch::dtCursor(Key &key)
+void Watch::dtCursor(KeyPad &key)
 {
     if (key.navigation())
     {
@@ -288,7 +294,8 @@ void Watch::dtCursor(Key &key)
     }
 }
 
-void Watch::timeChange(byte &time, Key &key, Timer &timer)
+// void Watch::timeChange(byte &time, Key &key, Timer &timer)
+void Watch::timeChange(byte &time, KeyPad &key, Timer &timer)
 {
     if (key.valChange(timer))
     {
@@ -324,7 +331,8 @@ void Watch::timeChange(byte &time, Key &key, Timer &timer)
     }
 }
 
-void Watch::yearChange(int &year, Key &key, Timer &timer)
+// void Watch::yearChange(int &year, Key &key, Timer &timer)
+void Watch::yearChange(int &year, KeyPad &key, Timer &timer)
 {
     if (key.valChange(timer))
     {
@@ -345,7 +353,8 @@ void Watch::yearChange(int &year, Key &key, Timer &timer)
     }
 }
 
-void Watch::monthChange(byte &month, Key &key, Timer &timer)
+// void Watch::monthChange(byte &month, Key &key, Timer &timer)
+void Watch::monthChange(byte &month, KeyPad &key, Timer &timer)
 {
     if (key.valChange(timer))
     {
@@ -370,7 +379,9 @@ void Watch::monthChange(byte &month, Key &key, Timer &timer)
         }
     }
 }
-void Watch::dayChange(byte &day, Key &key, Timer &timer)
+
+// void Watch::dayChange(byte &day, Key &key, Timer &timer)
+void Watch::dayChange(byte &day, KeyPad &key, Timer &timer)
 {
     if (key.valChange(timer))
     {
@@ -451,7 +462,8 @@ void Watch::leapYearDay()
     }
 }
 
-void Watch::setWatch(Key &key, Timer &timer)
+// void Watch::setWatch(Key &key, Timer &timer)
+void Watch::setWatch(KeyPad &key, Timer &timer)
 {
     if (key.setWatch())
     {
