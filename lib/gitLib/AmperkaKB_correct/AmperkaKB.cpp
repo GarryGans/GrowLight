@@ -16,8 +16,9 @@ AmperkaKB::AmperkaKB(uint8_t pin1KB, uint8_t pin2KB, uint8_t pin3KB, uint8_t pin
 }
 
 // инициализация клавиатуры
-void AmperkaKB::begin(uint8_t typeKB, uint32_t timeHold)
+void AmperkaKB::begin(uint8_t typeKB, uint32_t timeHold, uint32_t holdSpeed)
 {
+    this->holdSpeed = holdSpeed;
     _timeHold = timeHold;
     _typeKB = typeKB;
     // определяем номер подмассива для вывода информации
@@ -112,6 +113,7 @@ void AmperkaKB::read()
         getChar = _massCharKey[_massItem][_numberKeyNow];
         // MY CORRECT
         hold = true;
+        prewSpeed = millis();
         // END MY CORRECT
         _numberKeyNowLong = 255;
         _msNumberKeyState = millis();
@@ -119,9 +121,10 @@ void AmperkaKB::read()
     }
 
     // MY CORRECT
-    if (hold && _numberKeyNow != 255 && millis() - _msNumberKeyState > _timeHold)
+    if (hold && _numberKeyNow != 255 && millis() - prewSpeed > holdSpeed)
     {
         _state = ON_HOLD;
+        prewSpeed = millis();
     }
 
     if (_numberKeyNow == 255)

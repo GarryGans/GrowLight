@@ -26,7 +26,7 @@ class AmperkaKB
 public:
     AmperkaKB(uint8_t = 255, uint8_t = 255, uint8_t = 255, uint8_t = 255, uint8_t = 255, uint8_t = 255, uint8_t = 255, uint8_t = 255);
     // инициализация клавиатуры
-    void begin(uint8_t typeKB, uint32_t timeHold = 2000);
+    void begin(uint8_t typeKB, uint32_t timeHold = 2000, uint32_t holdSpeed = 1000);
     // считывание данных с кнопки
     void read();
     // определение нажатой кнопки
@@ -47,6 +47,8 @@ public:
 private:
     // MY CORRECT
     boolean hold;
+    unsigned long prewSpeed;
+    unsigned long holdSpeed;
 
     // тип подключённой клавиатуры
     uint8_t _typeKB;
