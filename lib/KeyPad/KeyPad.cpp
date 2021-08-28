@@ -31,8 +31,11 @@ boolean KeyPad::keyEvent()
     {
         keypadEvent e = read();
 
+        Serial.print((char)e.bit.KEY);
+
         if (e.bit.EVENT == KEY_JUST_PRESSED)
         {
+            Serial.println(" press");
             press = true;
             prewDelay = millis();
             num = (char)e.bit.KEY;
@@ -42,9 +45,11 @@ boolean KeyPad::keyEvent()
 
         else if (e.bit.EVENT == KEY_JUST_RELEASED)
         {
+            Serial.println(" released");
             press = false;
             hold = false;
             num = 'N';
+            Serial.println(num);
 
             return false;
         }
@@ -53,6 +58,7 @@ boolean KeyPad::keyEvent()
     if (press && millis() - prewDelay >= holdDelay && millis() - prewSpeed >= holdSpeed)
     {
         hold = true;
+        Serial.println("hold");
         prewSpeed = millis();
 
         return true;
@@ -103,13 +109,13 @@ boolean KeyPad::navigation()
 {
     if (keyEvent())
     {
-        if (num == 8)
+        if (num == '8')
         {
             direction = FORWARD;
             return true;
         }
 
-        else if (num == 12)
+        else if (num == 'C')
         {
             direction = BACK;
             return true;
@@ -123,7 +129,7 @@ boolean KeyPad::valChange(Timer &timer)
 {
     if (keyEvent())
     {
-        if (num == 6)
+        if (num == '6')
         {
             timer.blinkHide = true;
             act = MINUS;
@@ -131,7 +137,7 @@ boolean KeyPad::valChange(Timer &timer)
             return true;
         }
 
-        else if (num == 15)
+        else if (num == '#')
         {
             timer.blinkHide = true;
             act = PLUS;
@@ -195,7 +201,7 @@ void KeyPad::reset()
 
 void KeyPad::home()
 {
-    if (keyEvent() && num == 10)
+    if (keyEvent() && num == 'A')
     {
         screen = start;
     }
@@ -270,7 +276,7 @@ boolean KeyPad::checkSet(Screen set)
 
 boolean KeyPad::ok()
 {
-    if (keyEvent() && num == 9)
+    if (keyEvent() && num == '9')
     {
         return true;
     }
@@ -279,7 +285,7 @@ boolean KeyPad::ok()
 
 boolean KeyPad::setWatch()
 {
-    if ((keyEvent() && num == 3) || (screen == watch && ok()))
+    if ((keyEvent() && num == '3') || (screen == watch && ok()))
     {
         return checkSet(watch);
     }
@@ -289,7 +295,7 @@ boolean KeyPad::setWatch()
 
 boolean KeyPad::spectrumReDuration()
 {
-    if (keyEvent() && num == 14)
+    if (keyEvent() && num == '*')
     {
         return checkSet(duration);
     }
@@ -303,7 +309,7 @@ boolean KeyPad::spectrumReDuration()
 
 boolean KeyPad::changeMaxBright()
 {
-    if ((keyEvent() && num == 7) || (screen == bright && ok()))
+    if ((keyEvent() && num == '7') || (screen == bright && ok()))
     {
         return checkSet(bright);
     }
@@ -313,7 +319,7 @@ boolean KeyPad::changeMaxBright()
 
 boolean KeyPad::dayReduration()
 {
-    if (keyEvent() && num == 2)
+    if (keyEvent() && num == '2')
     {
         return checkSet(dayDuration);
     }
@@ -328,7 +334,7 @@ boolean KeyPad::dayReduration()
 
 boolean KeyPad::skipEnable(boolean &skip, byte id)
 {
-    if (keyEvent() && num == 4)
+    if (keyEvent() && num == '4')
     {
         checkSet(lamp);
 
@@ -348,7 +354,7 @@ boolean KeyPad::skipEnable(boolean &skip, byte id)
 
 void KeyPad::manualSwitchLight()
 {
-    if (keyEvent() && num == 1)
+    if (keyEvent() && num == '1')
     {
         checkSet(manual);
     }

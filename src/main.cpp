@@ -83,17 +83,17 @@ String lightColor[] = {"WF 1", "WF 2", "WF 3", "RED", "CF 1", "CF 2", "CF 3", "U
 
 byte Amount = sizeof(lightColor) / sizeof(String);
 
-#define R1 2
-#define R2 3
-#define R3 4
-#define R4 5
-#define C1 6
-#define C2 7
-#define C3 8
-#define C4 9
+#define R1 32
+#define R2 34
+#define R3 36
+#define R4 38
+#define C1 40
+#define C2 42
+#define C3 44
+#define C4 46
 
 #define holdDelay 1000
-#define holdSpeed 1000
+#define holdSpeed 100
 
 byte rowPins[] = {R1, R2, R3, R4}; // connect to the row pinouts of the keypad
 byte colPins[] = {C1, C2, C3, C4}; // connect to the column pinouts of the keypad
@@ -113,7 +113,7 @@ ScreenU8G2 screen(WavelengthSMD, lightColor, Amount);
 
 void setup()
 {
-    // Serial.begin(9600);
+    Serial.begin(9600);
 
     screen.begin();
 
@@ -140,6 +140,7 @@ void setup()
 
 void loop()
 {
+    // key.test();
     // key.read();
 
     key.manualSwitchLight();
