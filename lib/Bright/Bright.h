@@ -20,12 +20,12 @@ private:
     byte *pin;
     byte *bright;
 
-    byte autoMinBright = 24;
+    byte autoMinBright = 198;
     byte *maxBright;
     byte *prewMaxBright;
 
-    byte minManualBright = 0;
-    byte maxManualBright = 255;
+    byte minManualBright = 255;
+    byte maxManualBright = 0;
 
 public:
     Bright(byte amount);

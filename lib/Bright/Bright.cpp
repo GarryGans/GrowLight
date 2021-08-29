@@ -29,7 +29,7 @@ void Bright::begin(byte startBrightPin)
 
 void Bright::setMinBright(byte pin, byte &bright)
 {
-    if (bright < autoMinBright)
+    if (bright > autoMinBright)
     {
         bright = autoMinBright;
         analogWrite(pin, bright);
@@ -79,6 +79,14 @@ void Bright::autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i)
     }
 }
 
+void Bright::resetAllBrights()
+{
+    for (byte i = 0; i < Amount; i++)
+    {
+        resetBright(pin[i], bright[i]);
+    }
+}
+
 void Bright::autoBright(Watch &watch, Key &key, Timer &timer)
 {
     if (key.screen != key.manual || key.screen != key.bright)
@@ -112,35 +120,17 @@ void Bright::manualChangeBright(Key &key, Timer &timer)
     }
 }
 
-void Bright::resetAllBrights()
-{
-    for (byte i = 0; i < Amount; i++)
-    {
-        bright[i] = minManualBright;
-        analogWrite(pin[i], 0);
-    }
-}
-
 void Bright::correctBright(boolean brightDown, byte pin, byte &bright, byte maxBright, byte id)
 {
     if (!brightDown)
     {
-        if (bright > maxBright)
-        {
-            bright = maxBright;
-            analogWrite(pin, bright);
-        }
-
-        else if (bright < maxBright)
-        {
-            bright = maxBright;
-            analogWrite(pin, bright);
-        }
+        bright = maxBright;
+        analogWrite(pin, bright);
     }
 
     else if (brightDown)
     {
-        if (prewMaxBright[id] > maxBright)
+        if (prewMaxBright[id] < maxBright)
         {
             bright -= (prewMaxBright[id] - maxBright);
             analogWrite(pin, bright);
@@ -167,14 +157,14 @@ void Bright::changeMaxBright(Key &key, Watch &watch, Timer &timer)
     {
         if (key.valChange(timer))
         {
-            if (key.act == key.MINUS && maxBright[key.id] > autoMinBright)
-            {
-                maxBright[key.id]--;
-            }
-
-            if (key.act == key.PLUS && maxBright[key.id] < maxManualBright)
+            if (key.act == key.MINUS && maxBright[key.id] < autoMinBright)
             {
                 maxBright[key.id]++;
+            }
+
+            if (key.act == key.PLUS && maxBright[key.id] > maxManualBright)
+            {
+                maxBright[key.id]--;
             }
         }
     }
@@ -195,14 +185,14 @@ void Bright::changeBright(byte &bright, byte pin, Key &key, Timer &timer)
 {
     if (key.valChange(timer))
     {
-        if (key.act == key.MINUS && bright > minManualBright)
-        {
-            bright--;
-            analogWrite(pin, bright);
-        }
-        else if (key.act == key.PLUS && bright < maxManualBright)
+        if (key.act == key.MINUS && bright < minManualBright)
         {
             bright++;
+            analogWrite(pin, bright);
+        }
+        else if (key.act == key.PLUS && bright > maxManualBright)
+        {
+            bright--;
             analogWrite(pin, bright);
         }
     }
