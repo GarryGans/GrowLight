@@ -4,8 +4,7 @@
 #include <Arduino.h>
 #include <AmperkaKB.h>
 #include <Timer.h>
-
-#define lampAmount 8
+#include <Data.h>
 
 class Key : public AmperkaKB
 {

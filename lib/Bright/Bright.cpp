@@ -23,7 +23,7 @@ void Bright::begin(byte startBrightPin)
     {
         this->pin[i] = startBrightPin + i;
         pinMode(pin[i], OUTPUT);
-        analogWrite(pin[i], 0);
+        analogWrite(pin[i], minManualBright);
     }
 }
 
@@ -50,33 +50,32 @@ void Bright::autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i)
         {
             setMinBright(pin[i], bright[i]);
 
-            if (timer.wait(timer.prewBrightMillis[i], timer.riseMillis) && bright[i] < maxBright[i])
+            if (timer.wait(timer.prewBrightMillis[i], timer.riseMillis) && bright[i] > maxBright[i])
             {
-                bright[i]++;
+                bright[i]--;
                 analogWrite(pin[i], bright[i]);
             }
         }
 
         if (watch.brightDown[i])
         {
-            if (timer.wait(timer.prewBrightMillis[i], timer.riseMillis) && bright[i] > autoMinBright)
+            if (timer.wait(timer.prewBrightMillis[i], timer.riseMillis) && bright[i] < autoMinBright)
             {
-                bright[i]--;
+                bright[i]++;
                 analogWrite(pin[i], bright[i]);
             }
 
             if (bright[i] == autoMinBright)
             {
+                resetBright(pin[i], bright[i]);
                 watch.autoSwitch[i] = false;
                 watch.brightDown[i] = false;
-                resetBright(pin[i], bright[i]);
             }
         }
     }
     else if (watch.skip[i] && key.screen != key.manual)
     {
-        bright[i] = minManualBright;
-        analogWrite(pin[i], bright[i]);
+        resetBright(pin[i], bright[i]);
     }
 }
 

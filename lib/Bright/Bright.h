@@ -20,7 +20,7 @@ private:
     byte *pin;
     byte *bright;
 
-    byte autoMinBright = 0;
+    byte autoMinBright = 24;
     byte *maxBright;
     byte *prewMaxBright;
 
