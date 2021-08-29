@@ -13,11 +13,11 @@
 class Switchers
 {
 private:
-    byte Amount;
-    byte *lamp_pins;
+    // byte *lamp_pins;
+    byte lamp_pins[lampAmount];
 
 public:
-    Switchers(byte amount);
+    Switchers();
     ~Switchers();
 
     void begin(byte &startPinLamp);

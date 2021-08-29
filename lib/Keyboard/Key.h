@@ -17,8 +17,6 @@ class Key : public AmperkaKB
     friend class Bright;
 
 private:
-    byte Amount;
-
     enum Screen
     {
         start,

@@ -3,22 +3,22 @@
 #define OFF HIGH // реле: 1 - высокого уровня (или мосфет), 0 - низкого
 #define ON LOW
 
-Watch::Watch(byte amount) : RTC_ext_1307()
-// Watch::Watch(byte amount) : RTC_ext_3231()
+// Watch::Watch(byte amount) : RTC_ext_1307()
+Watch::Watch(byte amount) : RTC_ext_3231()
 {
     Amount = amount;
 
-    start = new int[Amount];
-    finish = new int[Amount];
+    // start = new int[Amount];
+    // finish = new int[Amount];
 
-    autoSwitch = new boolean[Amount];
-    skip = new boolean[Amount];
-    brightDown = new boolean[Amount];
+    // autoSwitch = new boolean[Amount];
+    // skip = new boolean[Amount];
+    // brightDown = new boolean[Amount];
 
-    startHour = new byte[Amount];
-    startMinute = new byte[Amount];
-    finishHour = new byte[Amount];
-    finishMinute = new byte[Amount];
+    // startHour = new byte[Amount];
+    // startMinute = new byte[Amount];
+    // finishHour = new byte[Amount];
+    // finishMinute = new byte[Amount];
 }
 
 Watch::~Watch()

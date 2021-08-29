@@ -2,6 +2,7 @@
 #define TIMER_H
 
 #include <Arduino.h>
+#include <Data.h>
 
 class Timer
 {
@@ -23,7 +24,8 @@ private:
     unsigned long prewBlinkMillis;
     unsigned long blinkMillis = 500;
 
-    unsigned long *prewBrightMillis;
+    // unsigned long *prewBrightMillis;
+    unsigned long prewBrightMillis[lampAmount];
 
     unsigned long riseMillis = 1000;
 

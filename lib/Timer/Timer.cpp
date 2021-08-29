@@ -2,7 +2,7 @@
 
 Timer::Timer(byte amount)
 {
-    prewBrightMillis = new unsigned long[amount];
+    // prewBrightMillis = new unsigned long[amount];
 }
 
 Timer::~Timer()

@@ -1,14 +1,12 @@
 #include <Bright.h>
 
-Bright::Bright(byte amount)
+Bright::Bright()
 {
-    Amount = amount;
+    // pin = new byte[lampAmount];
+    // bright = new byte[lampAmount];
 
-    pin = new byte[Amount];
-    bright = new byte[Amount];
-
-    maxBright = new byte[Amount];
-    prewMaxBright = new byte[Amount];
+    // maxBright = new byte[lampAmount];
+    // prewMaxBright = new byte[lampAmount];
 }
 
 Bright::~Bright()
@@ -19,7 +17,7 @@ void Bright::begin(byte startBrightPin)
 {
     this->startPinBright = startBrightPin;
 
-    for (byte i = 0; i < Amount; i++)
+    for (byte i = 0; i < lampAmount; i++)
     {
         this->pin[i] = startBrightPin + i;
         pinMode(pin[i], OUTPUT);
@@ -81,7 +79,7 @@ void Bright::autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i)
 
 void Bright::resetAllBrights()
 {
-    for (byte i = 0; i < Amount; i++)
+    for (byte i = 0; i < lampAmount; i++)
     {
         resetBright(pin[i], bright[i]);
     }
@@ -91,7 +89,7 @@ void Bright::autoBright(Watch &watch, Key &key, Timer &timer)
 {
     if (key.screen != key.manual || key.screen != key.bright)
     {
-        for (byte i = 0; i < Amount; i++)
+        for (byte i = 0; i < lampAmount; i++)
         {
             autoChangeBright(watch, key, timer, i);
         }
@@ -122,26 +120,10 @@ void Bright::manualChangeBright(Key &key, Timer &timer)
 
 void Bright::correctBright(boolean brightDown, byte pin, byte &bright, byte maxBright, byte id)
 {
-    if (!brightDown)
+    if (!brightDown && prewMaxBright[id] < maxBright)
     {
         bright = maxBright;
         analogWrite(pin, bright);
-    }
-
-    else if (brightDown)
-    {
-        if (prewMaxBright[id] < maxBright)
-        {
-            bright -= (prewMaxBright[id] - maxBright);
-            analogWrite(pin, bright);
-        }
-
-        else if (prewMaxBright[id] < maxBright)
-        {
-
-            bright += (maxBright - prewMaxBright[id]);
-            analogWrite(pin, bright);
-        }
     }
 }
 

@@ -1,9 +1,8 @@
 #include "Switchers.h"
 
-Switchers::Switchers(byte amount)
+Switchers::Switchers()
 {
-    Amount = amount;
-    lamp_pins = new byte[Amount];
+    // lamp_pins = new byte[Amount];
 }
 
 Switchers::~Switchers()
