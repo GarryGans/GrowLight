@@ -1,15 +1,15 @@
 #include <main.h>
 
 
-Timer timer(Amount);
-Key key(keyPin, Amount);
-Watch watch(Amount);
-Switchers switchers(Amount);
-Bright bright(Amount);
-// Pot pot(Amount);
-Memory memory(Amount);
-// ScreenU8G2 screen(WavelengthSMD, lightColor, Amount);
-Screen screen(WavelengthSMD, lightColor, Amount);
+Timer timer;
+Key key(keyPin);
+Watch watch;
+Switchers switchers;
+Bright bright;
+// Pot pot;
+Memory memory;
+// ScreenU8G2 screen(WavelengthSMD, lightColor);
+Screen screen(WavelengthSMD, lightColor);
 
 void setup()
 {

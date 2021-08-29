@@ -1,6 +1,6 @@
 #include "Timer.h"
 
-Timer::Timer(byte amount)
+Timer::Timer()
 {
     // prewBrightMillis = new unsigned long[amount];
 }

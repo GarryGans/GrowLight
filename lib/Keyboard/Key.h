@@ -70,7 +70,7 @@ private:
     byte idLast;
 
 public:
-    Key(byte pin[], byte amount);
+    Key(byte pin[]);
     ~Key();
 
     void checkKeyboard();

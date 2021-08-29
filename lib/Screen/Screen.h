@@ -24,7 +24,7 @@ private:
     char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
 public:
-    Screen(String *WavelengthSMD, String *lightColor, byte amount);
+    Screen(String *WavelengthSMD, String *lightColor);
     ~Screen();
 
     void begin();

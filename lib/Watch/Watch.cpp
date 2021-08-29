@@ -3,22 +3,21 @@
 #define OFF HIGH // реле: 1 - высокого уровня (или мосфет), 0 - низкого
 #define ON LOW
 
-// Watch::Watch(byte amount) : RTC_ext_1307()
-Watch::Watch(byte amount) : RTC_ext_3231()
+// Watch::Watch() : RTC_ext_1307()
+Watch::Watch() : RTC_ext_3231()
 {
-    Amount = amount;
 
-    // start = new int[Amount];
-    // finish = new int[Amount];
+    // start = new int[lampAmount];
+    // finish = new int[lampAmount];
 
-    // autoSwitch = new boolean[Amount];
-    // skip = new boolean[Amount];
-    // brightDown = new boolean[Amount];
+    // autoSwitch = new boolean[lampAmount];
+    // skip = new boolean[lampAmount];
+    // brightDown = new boolean[lampAmount];
 
-    // startHour = new byte[Amount];
-    // startMinute = new byte[Amount];
-    // finishHour = new byte[Amount];
-    // finishMinute = new byte[Amount];
+    // startHour = new byte[lampAmount];
+    // startMinute = new byte[lampAmount];
+    // finishHour = new byte[lampAmount];
+    // finishMinute = new byte[lampAmount];
 }
 
 Watch::~Watch()
@@ -101,7 +100,7 @@ void Watch::autoSwitcher(Key &key)
 
     if (key.screen != key.manual)
     {
-        for (byte i = 0; i < Amount; i++)
+        for (byte i = 0; i < lampAmount; i++)
         {
             if (!skip[i] && !key.reduration[i])
             {
@@ -118,7 +117,7 @@ void Watch::autoSwitcher(Key &key)
 
     else
     {
-        for (byte i = 0; i < Amount; i++)
+        for (byte i = 0; i < lampAmount; i++)
         {
             autoSwitch[i] = false;
         }
@@ -250,7 +249,7 @@ void Watch::dayReduration(Key &key, Timer &timer)
         start[0] = calculateTimeToMinute(RiseHour, RiseMin);
         finish[0] = calculateTimeToMinute(SetHour, SetMin);
 
-        for (byte id = 0; id < Amount; id++)
+        for (byte id = 0; id < lampAmount; id++)
         {
             timeFromMinute(start[0] + interval, startHour[id], startMinute[id]);
             timeFromMinute(finish[0] - interval, finishHour[id], finishMinute[id]);

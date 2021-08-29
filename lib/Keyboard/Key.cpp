@@ -1,10 +1,8 @@
 #include "Key.h"
 
-Key::Key(byte pin[], byte amount) : AmperkaKB(pin[0], pin[1], pin[2], pin[3], pin[4], pin[5], pin[6], pin[7])
+Key::Key(byte pin[]) : AmperkaKB(pin[0], pin[1], pin[2], pin[3], pin[4], pin[5], pin[6], pin[7])
 {
-    Amount = amount;
-
-    idLast = Amount - 1;
+    
     
     // buttonSwitch = new boolean[Amount];
     // reduration = new boolean[Amount];
@@ -148,7 +146,7 @@ void Key::reset()
     resetManualPot = true;
     resetManualBright = true;
 
-    for (byte i = 0; i < Amount; i++)
+    for (byte i = 0; i < lampAmount; i++)
     {
         buttonSwitch[i] = 0;
     }

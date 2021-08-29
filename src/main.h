@@ -78,4 +78,4 @@ String lightColor[] = {"QB"};
 // String specWavelengthSMD[] = {"365nm+385nm", "440nm", "660nm", "730nm", "3000K"};
 // String speclightColor[] = {"UV", "BL", "RED", "FR", "CXB"};
 
-byte Amount = sizeof(lightColor) / sizeof(String);
+// byte Amount = sizeof(lightColor) / sizeof(String);

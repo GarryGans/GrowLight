@@ -45,7 +45,7 @@ private:
 
 
 public:
-    Timer(byte amount);
+    Timer();
     ~Timer();
 
     void minusCounter(byte &counter);

@@ -22,6 +22,7 @@ void Bright::begin(byte startBrightPin)
         this->pin[i] = startBrightPin + i;
         pinMode(pin[i], OUTPUT);
         analogWrite(pin[i], minManualBright);
+        bright[i] = minManualBright;
     }
 }
 

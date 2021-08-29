@@ -19,8 +19,6 @@ class Watch : public RTC_ext_3231
     friend class Bright;
 
 private:
-    byte Amount;
-
     byte cursorDateTime;
     byte cursorSpectrum;
     byte cursorDay;
@@ -80,7 +78,7 @@ private:
     byte SetMin;
 
 public:
-    Watch(byte amount);
+    Watch();
     ~Watch();
 
     void timeFromMinute(int time, byte &hour, byte &minute);
