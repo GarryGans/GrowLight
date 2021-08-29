@@ -13,3 +13,5 @@
 
 #define minManual 255
 #define maxManual 22
+
+#define riseSpeed 100

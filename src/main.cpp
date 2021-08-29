@@ -18,23 +18,26 @@ void setup()
     screen.begin();
 
     screen.iGorLogo();
-    delay(500);
+    delay(100);
 
     watch.begin();
     // watch.adjust(DateTime(F(__DATE__), F(__TIME__)));
+    delay(100);
 
     key.begin(KB4x4, holdDelay, holdSpeed);
+    delay(100);
 
     // pot.setPot(potent);
     // pot.resetAllPots();
     bright.begin(startPinBright);
+    delay(100);
 
     switchers.begin(startPinLamp);
+    delay(100);
 
     // memory.begin(watch, pot);
     memory.begin(watch, bright);
-
-    delay(500);
+    delay(100);
 }
 
 void loop()

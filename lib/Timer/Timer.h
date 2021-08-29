@@ -27,7 +27,7 @@ private:
     // unsigned long *prewBrightMillis;
     unsigned long prewBrightMillis[lampAmount];
 
-    unsigned long riseMillis = 1000;
+    unsigned long riseMillis = riseSpeed;
 
     unsigned long prewMoveMillis;
 

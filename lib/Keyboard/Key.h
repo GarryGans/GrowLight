@@ -67,7 +67,7 @@ private:
 
     byte id;
     byte idFirst = 0;
-    byte idLast;
+    byte idLast = lampAmount -1;
 
 public:
     Key(byte pin[]);
