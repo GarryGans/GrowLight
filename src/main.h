@@ -9,6 +9,9 @@
 // #include <Pot.h>
 #include <Bright.h>
 
+#define holdSpeed 50
+#define holdDelay 500
+
 // byte startPinLamp = 11;
 byte startPinLamp = 22;
 byte startPinBright = 2; //198 ~ 24 QuantumBoard 0.30 ~ 2.70

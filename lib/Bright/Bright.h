@@ -20,15 +20,15 @@ private:
     byte pin[lampAmount];
     byte bright[lampAmount];
 
-    byte autoMinBright = 197; // 197(340mA) sunRise 216(120mA) sunSet   min 196(350mA) max 22(2700ma)
-    byte autoMinSunSet = 216;
+    byte minSunRise = minSunRiseBright; // 197(340mA) sunRise 216(120mA) sunSet   min 196(350mA) max 22(2700ma)
+    byte minSunSet = minSunSetBright;
     // byte *maxBright;
     // byte *prewMaxBright;
     byte maxBright[lampAmount];
     byte prewMaxBright[lampAmount];
 
-    byte minManualBright = 255;
-    byte maxManualBright = 0;
+    byte minManualBright = minManual;
+    byte maxManualBright = maxManual;
 
 public:
     Bright();
