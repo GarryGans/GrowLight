@@ -140,7 +140,7 @@ void Bright::changeMaxBright(Key &key, Watch &watch, Timer &timer)
     {
         if (key.valChange(timer))
         {
-            if (key.act == key.MINUS && maxBright[key.id] < autoMinBright)
+            if (key.act == key.MINUS && maxBright[key.id] < autoMinSunSet)
             {
                 maxBright[key.id]++;
             }

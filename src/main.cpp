@@ -23,7 +23,7 @@ void setup()
     watch.begin();
     // watch.adjust(DateTime(F(__DATE__), F(__TIME__)));
 
-    key.begin(KB4x4, 500, 200);
+    key.begin(KB4x4, holdDelay, holdSpeed);
 
     // pot.setPot(potent);
     // pot.resetAllPots();
