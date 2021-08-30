@@ -32,10 +32,10 @@ private:
     byte sec;
     byte dow;
 
-    int start[lampAmount];
-    int finish[lampAmount];
-    // int *start;
-    // int *finish;
+    // int start[lampAmount];
+    // int finish[lampAmount];
+    int *start;
+    int *finish;
 
     int daySTD = 12 * 60;
     int totalDayLenght = daySTD;
@@ -43,15 +43,15 @@ private:
     const int midNightBefore = 23 * 60 + 59;
     const int midNightAfter = 0;
 
-    boolean autoSwitch[lampAmount];
-    boolean skip[lampAmount];
+    // boolean autoSwitch[lampAmount];
+    // boolean skip[lampAmount];
 
-    boolean brightDown[lampAmount];
+    // boolean brightDown[lampAmount];
 
-    // boolean *autoSwitch;
-    // boolean *skip;
+    boolean *autoSwitch;
+    boolean *skip;
 
-    // boolean *brightDown;
+    boolean *brightDown;
 
     int intervalDefault = 1;
     int interval = 0;
@@ -61,15 +61,15 @@ private:
     byte finishHourStd = 18;
     byte finishMinuteStd = 0;
 
-    byte startHour[lampAmount];
-    byte startMinute[lampAmount];
-    byte finishHour[lampAmount];
-    byte finishMinute[lampAmount];
+    // byte startHour[lampAmount];
+    // byte startMinute[lampAmount];
+    // byte finishHour[lampAmount];
+    // byte finishMinute[lampAmount];
 
-    // byte *startHour;
-    // byte *startMinute;
-    // byte *finishHour;
-    // byte *finishMinute;
+    byte *startHour;
+    byte *startMinute;
+    byte *finishHour;
+    byte *finishMinute;
 
     byte RiseHour;
     byte RiseMin;

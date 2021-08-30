@@ -13,8 +13,8 @@
 class Switchers
 {
 private:
-    // byte *lamp_pins;
-    byte lamp_pins[lampAmount];
+    byte *lamp_pins;
+    // byte lamp_pins[lampAmount];
 
 public:
     Switchers();
