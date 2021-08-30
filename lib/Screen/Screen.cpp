@@ -95,6 +95,37 @@ void Screen::showAlert()
     print("manual");
 }
 
+void Screen::showBlinkBig(byte x, byte y, Timer &timer)
+{
+    if (timer.blinkReady())
+    {
+        drawRect(x, y, 32, 24, SSD1306_WHITE);
+    }
+}
+
+void Screen::showBlinkYear(byte x, byte y, Timer &timer)
+{
+    if (timer.blinkReady())
+    {
+        drawRect(x, y, 32, 12, SSD1306_WHITE);
+    }
+}
+
+void Screen::showBlink(byte x, byte y, Timer &timer, byte val)
+{
+    if (timer.blinkReady())
+    {
+        if (val < 100)
+        {
+            drawRect(x, y, 16, 12, SSD1306_WHITE);
+        }
+        else
+        {
+            drawRect(x, y, 24, 12, SSD1306_WHITE);
+        }
+    }
+}
+
 void Screen::brightInfo(Pot &pot, Key &key, Timer &timer)
 {
     setTextSize(1);
@@ -105,7 +136,7 @@ void Screen::brightInfo(Pot &pot, Key &key, Timer &timer)
         print("/");
         if (key.screen == key.bright)
         {
-            showBlink(90, 52, timer);
+            showBlink(90, 52, timer, pot.maxBright[key.id]);
             print(pot.maxBright[key.id]);
         }
         else
@@ -125,7 +156,7 @@ void Screen::brightInfo(Bright &bright, Key &key, Timer &timer)
         print("/");
         if (key.screen == key.bright)
         {
-            showBlink(90, 52, timer);
+            showBlink(90, 52, timer, bright.maxBright[key.id]);
             print(bright.maxBright[key.id]);
         }
         else
@@ -240,30 +271,6 @@ void Screen::showDig(byte value)
     print(value);
 }
 
-void Screen::showBlinkBig(byte x, byte y, Timer &timer)
-{
-    if (timer.blinkReady())
-    {
-        drawRect(x, y, 32, 24, SSD1306_WHITE);
-    }
-}
-
-void Screen::showBlink(byte x, byte y, Timer &timer)
-{
-    if (timer.blinkReady())
-    {
-        drawRect(x, y, 16, 12, SSD1306_WHITE);
-    }
-}
-
-void Screen::showBlinkYear(byte x, byte y, Timer &timer)
-{
-    if (timer.blinkReady())
-    {
-        drawRect(x, y, 32, 12, SSD1306_WHITE);
-    }
-}
-
 void Screen::showBlinkSpectrumTime(Watch &watch, Timer &timer, Key &key)
 {
     setTextSize(1);
@@ -274,19 +281,19 @@ void Screen::showBlinkSpectrumTime(Watch &watch, Timer &timer, Key &key)
         switch (watch.cursorSpectrum)
         {
         case 0:
-            showBlink(3, 52, timer);
+            showBlink(3, 52, timer, 99);
             break;
 
         case 1:
-            showBlink(21, 52, timer);
+            showBlink(21, 52, timer, 99);
             break;
 
         case 2:
-            showBlink(40, 52, timer);
+            showBlink(40, 52, timer, 99);
             break;
 
         case 3:
-            showBlink(56, 52, timer);
+            showBlink(56, 52, timer, 99);
             break;
 
         default:
@@ -394,13 +401,13 @@ void Screen::blinkHeaderTime(Key &key, Watch &watch, Timer &timer)
         switch (watch.cursorDateTime)
         {
         case 3:
-            showBlink(76, 0, timer);
+            showBlink(76, 0, timer, 99);
             break;
         case 4:
-            showBlink(94, 0, timer);
+            showBlink(94, 0, timer, 99);
             break;
         case 5:
-            showBlink(112, 0, timer);
+            showBlink(112, 0, timer, 99);
             break;
 
         default:
