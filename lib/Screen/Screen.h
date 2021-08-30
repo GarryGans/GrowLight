@@ -16,10 +16,10 @@
 class Screen : public Adafruit_SSD1306
 {
 private:
-    // String *WavelengthSMD;
-    // String *lightColor;
-    String WavelengthSMD[lampAmount];
-    String lightColor[lampAmount];
+    String *WavelengthSMD;
+    String *lightColor;
+    // String WavelengthSMD[lampAmount];
+    // String lightColor[lampAmount];
 
     char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 

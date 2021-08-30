@@ -61,26 +61,7 @@ boolean Key::navigation()
 
 boolean Key::valChange(Timer &timer)
 {
-    if (onHold())
-    {
-        if (getNum == 6)
-        {
-            timer.blinkHide = true;
-            act = MINUS;
-
-            return true;
-        }
-
-        else if (getNum == 15)
-        {
-            timer.blinkHide = true;
-            act = PLUS;
-
-            return true;
-        }
-    }
-
-    if (justPressed())
+    if (onHold() || justPressed())
     {
         if (getNum == 6)
         {
@@ -100,6 +81,7 @@ boolean Key::valChange(Timer &timer)
     }
 
     timer.blinkHide = false;
+    
     return false;
 }
 

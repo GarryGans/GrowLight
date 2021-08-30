@@ -1,12 +1,12 @@
 #include <Arduino.h>
-// #include <ScreenU8G2.h>
+#include <ScreenU8G2.h>
 #include <Screen.h>
 #include <Switchers.h>
 #include <Timer.h>
 #include <Watch.h>
 #include <Key.h>
 #include <Memory.h>
-// #include <Pot.h>
+#include <Pot.h>
 #include <Bright.h>
 
 #define holdSpeed 50

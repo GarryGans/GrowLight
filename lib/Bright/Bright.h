@@ -6,7 +6,6 @@
 #include <Key.h>
 #include <Watch.h>
 
-
 class Bright
 {
     friend class Memory;
@@ -30,11 +29,25 @@ private:
     byte minManualBright = minManual;
     byte maxManualBright = maxManual;
 
+    byte brightLevel;
+    byte lowLevel = 0;
+    byte maxLevel;
+
+    byte maxPWM = 255;
+
 public:
     Bright();
     ~Bright();
 
+    //void setMinManual();
+    //void setMaxManual();
+    //void setMinRise();
+    //void setMinSet();
+    //void setRiseSpeed();
+
     void begin(byte startBrightPin);
+
+    void brightLevelCount(byte &bright);
 
     void setMinBright(byte pin, byte &bright);
     void resetBright(byte pin, byte &bright);

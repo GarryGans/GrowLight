@@ -73,6 +73,8 @@ public:
     Key(byte pin[]);
     ~Key();
 
+    //void setPresets() // Vega, Bloom(time, bright, spectr)
+
     void checkKeyboard();
 
     void idChange();

@@ -81,6 +81,8 @@ public:
     Watch();
     ~Watch();
 
+    //setSpecInterval();
+
     void timeFromMinute(int time, byte &hour, byte &minute);
     int nowTime();
     int calculateTimeToMinute(byte setHour, byte setMinute);
