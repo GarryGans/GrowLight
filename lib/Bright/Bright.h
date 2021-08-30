@@ -31,7 +31,7 @@ private:
 
     byte brightLevel;
     byte lowLevel = 0;
-    byte maxLevel;
+    byte maxLevel[lampAmount];
 
     byte maxPWM = 255;
 
@@ -47,7 +47,7 @@ public:
 
     void begin(byte startBrightPin);
 
-    void brightLevelCount(byte &bright);
+    void brightLevelCount();
 
     void setMinBright(byte pin, byte &bright);
     void resetBright(byte pin, byte &bright);

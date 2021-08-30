@@ -37,7 +37,7 @@ void Watch::timeFromMinute(int time, byte &hour, byte &minute)
     minute = time;
 }
 
-int Watch::calculateTimeToMinute(byte setHour, byte setMinute)
+int Watch::timeToMinute(byte setHour, byte setMinute)
 {
     return (setHour * 60 + setMinute);
 }
@@ -45,7 +45,7 @@ int Watch::calculateTimeToMinute(byte setHour, byte setMinute)
 int Watch::nowTime()
 {
     DateTime time = now();
-    return (calculateTimeToMinute(time.hour(), time.minute()));
+    return (timeToMinute(time.hour(), time.minute()));
 }
 
 void Watch::autoSwitchLight(int start, int finish, boolean &autoSwitch, boolean &brightDown)
@@ -104,8 +104,8 @@ void Watch::autoSwitcher(Key &key)
         {
             if (!skip[i] && !key.reduration[i])
             {
-                start[i] = calculateTimeToMinute(startHour[i], startMinute[i]);
-                finish[i] = calculateTimeToMinute(finishHour[i], finishMinute[i]);
+                start[i] = timeToMinute(startHour[i], startMinute[i]);
+                finish[i] = timeToMinute(finishHour[i], finishMinute[i]);
                 autoSwitchLight(start[i], finish[i], autoSwitch[i], brightDown[i]);
             }
             else if (skip[i])
@@ -246,8 +246,8 @@ void Watch::dayReduration(Key &key, Timer &timer)
 
     if (key.correctDay)
     {
-        start[0] = calculateTimeToMinute(RiseHour, RiseMin);
-        finish[0] = calculateTimeToMinute(SetHour, SetMin);
+        start[0] = timeToMinute(RiseHour, RiseMin);
+        finish[0] = timeToMinute(SetHour, SetMin);
 
         for (byte id = 0; id < lampAmount; id++)
         {

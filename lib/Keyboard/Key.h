@@ -77,6 +77,7 @@ public:
 
     void checkKeyboard();
 
+    void keyCommands(Timer &timer);
     void idChange();
     void setSpec();
 

@@ -18,6 +18,19 @@ void Key::checkKeyboard()
     Serial.println(getNum);
 }
 
+void Key::keyCommands(Timer &timer)
+{
+    read();
+
+    manualSwitchLight();
+
+    autoScreenMove(timer);
+
+    manualChangeScreen(timer);
+
+    home();
+}
+
 void Key::idChange()
 {
     id++;

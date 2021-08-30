@@ -7,7 +7,6 @@
 #include <Key.h>
 #include <Timer.h>
 
-
 // class Watch : public RTC_ext_1307
 class Watch : public RTC_ext_3231
 {
@@ -85,7 +84,7 @@ public:
 
     void timeFromMinute(int time, byte &hour, byte &minute);
     int nowTime();
-    int calculateTimeToMinute(byte setHour, byte setMinute);
+    int timeToMinute(byte setHour, byte setMinute);
     void autoSwitchLight(int start, int finish, boolean &autoSwitch, boolean &brightDown);
     void autoSwitcher(Key &key);
 
