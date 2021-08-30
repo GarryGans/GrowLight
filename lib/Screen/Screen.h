@@ -36,7 +36,7 @@ public:
     void headerDate(Watch &watch);
     void headerScreen(Watch &watch);
 
-    void showBlink(byte x, byte y, Timer &timer);
+    void showBlink(byte x, byte y, Timer &timer, byte val);
     void showBlinkBig(byte x, byte y, Timer &timer);
     void showBlinkYear(byte x, byte y, Timer &timer);
     void showBlinkSpectrumTime(Watch &watch, Timer &timer, Key &key);

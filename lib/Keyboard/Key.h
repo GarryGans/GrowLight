@@ -42,13 +42,13 @@ private:
 
     boolean autoMove;
 
-    boolean buttonSwitch[lampAmount];
-    boolean reduration[lampAmount];
-    boolean reBright[lampAmount];
+    // boolean buttonSwitch[lampAmount];
+    // boolean reduration[lampAmount];
+    // boolean reBright[lampAmount];
 
-    // boolean *buttonSwitch;
-    // boolean *reduration;
-    // boolean *reBright;
+    boolean *buttonSwitch;
+    boolean *reduration;
+    boolean *reBright;
 
     boolean resetManualPot;
     boolean resetManualBright;

@@ -7,8 +7,8 @@ Switchers switchers;
 Bright bright;
 // Pot pot;
 Memory memory;
-// ScreenU8G2 screen(WavelengthSMD, lightColor);
-Screen screen(WavelengthSMD, lightColor);
+ScreenU8G2 screen(WavelengthSMD, lightColor);
+// Screen screen(WavelengthSMD, lightColor);
 
 void setup()
 {

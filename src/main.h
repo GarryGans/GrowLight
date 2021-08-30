@@ -20,9 +20,9 @@ byte startPinBright = 2; //198 ~ 24 QuantumBoard 0.30 ~ 2.70
 byte keyPin[] = {32, 34, 36, 38, 40, 42, 44, 46};
 
 //SINGLE VERSION
-String WavelengthSMD[] = {"3500k+UV+RED+FR"};
+// String WavelengthSMD[] = {"3500k+UV+RED+FR"};
 
-String lightColor[] = {"QB"};
+// String lightColor[] = {"QB"};
 
 // DigiPot potent[] = {
 //     DigiPot(2, 3, 4)};
@@ -39,17 +39,17 @@ String lightColor[] = {"QB"};
 
 // SQUARE 250 Led //
 
-// String WavelengthSMD[] = {
-//     "3500k+full",
-//     "3500k+full",
-//     "3500k+full",
-//     "660nm",
-//     "6500k+full",
-//     "6500k+full",
-//     "6500k+full",
-//     "365+385nm"};
+String WavelengthSMD[] = {
+    "3500k+full",
+    "3500k+full",
+    "3500k+full",
+    "660nm",
+    "6500k+full",
+    "6500k+full",
+    "6500k+full",
+    "365+385nm"};
 
-// String lightColor[] = {"WF 1", "WF 2", "WF 3", "RED", "CF 1", "CF 2", "CF 3", "UV"};
+String lightColor[] = {"WF 1", "WF 2", "WF 3", "RED", "CF 1", "CF 2", "CF 3", "UV"};
 
 // DigiPot potent[] = {
 //     DigiPot(2, 3, 4),
