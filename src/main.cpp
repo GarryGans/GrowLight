@@ -58,7 +58,7 @@ void loop()
 
     // pot.manualChangeBright(key, timer);
     // pot.changeMaxBright(key, watch, timer);
-    bright.manualChangeBright(key, timer);
+    bright.manualChangeBright(watch, key, timer);
     bright.changeMaxBright(key, watch, timer);
 
     key.keyCommands(timer);

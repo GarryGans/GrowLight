@@ -54,11 +54,10 @@ public:
 
     void autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i);
     void autoBright(Watch &watch, Key &key, Timer &timer);
-    void manualChangeBright(Key &key, Timer &timer);
+    void manualChangeBright(Watch &watch, Key &key, Timer &timer);
     void resetAllBrights();
     void changeMaxBright(Key &key, Watch &watch, Timer &timer);
-    void correctBright(boolean brightDown, byte pin, byte &bright, byte maxBright, byte id);
-    void changeBright(byte &bright, byte pin, Key &key, Timer &timer);
+    void changeBright(byte &bright, byte pin, Key &key, Timer &timer, Watch &watch, byte min, byte max);
 };
 
 #endif
