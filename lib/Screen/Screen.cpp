@@ -437,11 +437,11 @@ void Screen::blinkHeaderDate(Key &key, Watch &watch, Timer &timer)
         switch (watch.cursorDateTime)
         {
         case 0:
-            showBlink(0, 8, timer);
+            showBlink(0, 8, timer,99);
             break;
 
         case 1:
-            showBlink(18, 8, timer);
+            showBlink(18, 8, timer,99);
             break;
         case 2:
             showBlinkYear(32, 8, timer);
