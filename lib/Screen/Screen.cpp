@@ -7,8 +7,8 @@
 
 Screen::Screen(String *WavelengthSMD, String *lightColor) : Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET)
 {
-    this->WavelengthSMD = new String[lampAmount];
-    this->lightColor = new String[lampAmount];
+    // this->WavelengthSMD = new String[lampAmount];
+    // this->lightColor = new String[lampAmount];
 
     for (byte i = 0; i < lampAmount; i++)
     {
@@ -19,8 +19,8 @@ Screen::Screen(String *WavelengthSMD, String *lightColor) : Adafruit_SSD1306(SCR
 
 Screen::~Screen()
 {
-    delete  [] WavelengthSMD;
-    delete [] lightColor;
+    // delete  [] WavelengthSMD;
+    // delete [] lightColor;
 }
 
 void Screen::begin()

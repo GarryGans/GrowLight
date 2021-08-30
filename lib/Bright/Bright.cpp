@@ -124,19 +124,10 @@ void Bright::changeBright(byte &bright, byte pin, Key &key, Timer &timer, Watch 
             bright++;
         }
 
-        if (watch.autoSwitch[key.id])
+        if (!watch.brightDown[key.id] && watch.autoSwitch[key.id])
         {
-            if (!watch.brightDown[key.id])
-            {
-                this->bright[key.id] = bright;
-                analogWrite(pin, (maxPWM - this->bright[key.id]));
-            }
-
-            else if (watch.brightDown && bright > prewMaxBright[key.id])
-            {
-                this->bright[key.id] = bright;
-                analogWrite(pin, (maxPWM - this->bright[key.id]));
-            }
+            this->bright[key.id] = bright;
+            analogWrite(pin, (maxPWM - this->bright[key.id]));
         }
 
         else if (key.buttonSwitch[key.id])
