@@ -2,15 +2,29 @@
 
 Bright::Bright()
 {
-    // pin = new byte[lampAmount];
-    // bright = new byte[lampAmount];
+    pin = new byte[lampAmount];
+    bright = new byte[lampAmount];
 
-    // maxBright = new byte[lampAmount];
-    // prewMaxBright = new byte[lampAmount];
+    maxBright = new byte[lampAmount];
+    prewMaxBright = new byte[lampAmount];
+
+    for (byte i = 0; i < lampAmount; i++)
+    {
+        pin[i] = 0;
+        bright[i] = 0;
+
+        maxBright[i] = 0;
+        prewMaxBright[i] = 0;
+    }
 }
 
 Bright::~Bright()
 {
+    delete[] pin;
+    delete[] bright;
+
+    delete[] maxBright;
+    delete[] prewMaxBright;
 }
 
 void Bright::begin(byte startBrightPin)

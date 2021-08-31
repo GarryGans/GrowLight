@@ -14,23 +14,24 @@ class Bright
 
 private:
     byte startPinBright;
-    // byte *pin;
-    // byte *bright;
-    byte pin[lampAmount];
-    byte bright[lampAmount];
+    byte *pin;
+    byte *bright;
+    // byte pin[lampAmount];
+    // byte bright[lampAmount];
 
     byte minSunRise = minSunRiseBright; // 197(340mA) sunRise 216(120mA) sunSet   min 196(350mA) max 22(2700ma)
     byte minSunSet = minSunSetBright;
-    // byte *maxBright;
-    // byte *prewMaxBright;
-    byte maxBright[lampAmount];
-    byte prewMaxBright[lampAmount];
+    byte *maxBright;
+    byte *prewMaxBright;
+    // byte maxBright[lampAmount];
+    // byte prewMaxBright[lampAmount];
 
     byte minManualBright = minManual;
     byte maxManualBright = maxManual;
 
     byte brightLevel;
     byte lowLevel = 0;
+
     byte maxLevel[lampAmount];
 
     byte maxPWM = 255;
