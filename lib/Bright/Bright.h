@@ -9,7 +9,6 @@
 class Bright
 {
     friend class Memory;
-    friend class ScreenU8G2;
     friend class Screen;
 
 private:

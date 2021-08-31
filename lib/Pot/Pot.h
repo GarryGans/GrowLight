@@ -10,7 +10,6 @@
 class Pot
 {
     friend class Memory;
-    friend class ScreenU8G2;
     friend class Screen;
 
 private:

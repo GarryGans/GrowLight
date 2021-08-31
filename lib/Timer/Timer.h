@@ -8,7 +8,6 @@ class Timer
 {
     friend class Pot;
     friend class Bright;
-    friend class ScreenU8G2;
     friend class Screen;
     friend class Key;
 

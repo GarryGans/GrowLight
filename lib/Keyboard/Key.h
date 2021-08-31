@@ -8,7 +8,6 @@
 
 class Key : public AmperkaKB
 {
-    friend class ScreenU8G2;
     friend class Screen;
     friend class Switchers;
     friend class Pot;

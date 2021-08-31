@@ -11,7 +11,6 @@
 class Watch : public RTC_ext_3231
 {
     friend class Memory;
-    friend class ScreenU8G2;
     friend class Screen;
     friend class Switchers;
     friend class Pot;
