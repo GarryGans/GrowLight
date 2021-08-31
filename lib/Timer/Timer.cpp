@@ -2,7 +2,6 @@
 
 Timer::Timer()
 {
-    // prewBrightMillis = new unsigned long[amount];
 }
 
 Timer::~Timer()

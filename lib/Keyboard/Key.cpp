@@ -2,23 +2,10 @@
 
 Key::Key(byte pin[]) : AmperkaKB(pin[0], pin[1], pin[2], pin[3], pin[4], pin[5], pin[6], pin[7])
 {
-    buttonSwitch = new boolean[lampAmount];
-    reduration = new boolean[lampAmount];
-    reBright = new boolean[lampAmount];
-
-    for (byte i = 0; i < lampAmount; i++)
-    {
-        buttonSwitch[i] = 0;
-        reduration[i] = 0;
-        reBright[i] = 0;
-    }
 }
 
 Key::~Key()
 {
-    delete [] buttonSwitch;
-    delete [] reduration;
-    delete [] reBright;
 }
 
 void Key::checkKeyboard()
@@ -102,7 +89,7 @@ boolean Key::valChange(Timer &timer)
     }
 
     timer.blinkHide = false;
-    
+
     return false;
 }
 

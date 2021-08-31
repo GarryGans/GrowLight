@@ -24,7 +24,6 @@ private:
     unsigned long prewBlinkMillis;
     unsigned long blinkMillis = 500;
 
-    // unsigned long *prewBrightMillis;
     unsigned long prewBrightMillis[lampAmount];
 
     unsigned long riseMillis = riseSpeed;
@@ -42,7 +41,6 @@ private:
     boolean blink;
     boolean blinkHide;
     boolean move;
-
 
 public:
     Timer();

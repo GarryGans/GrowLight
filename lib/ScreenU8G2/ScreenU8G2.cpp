@@ -2,9 +2,6 @@
 
 ScreenU8G2::ScreenU8G2(String WavelengthSMD[], String lightColor[]) : U8G2_SH1106_128X64_NONAME_1_HW_I2C(U8G2_R0, /* reset=*/U8X8_PIN_NONE)
 {
-    this->WavelengthSMD = new String[lampAmount];
-    this->lightColor = new String[lampAmount];
-
     for (byte i = 0; i < lampAmount; i++)
     {
         this->WavelengthSMD[i] = WavelengthSMD[i];
@@ -14,8 +11,6 @@ ScreenU8G2::ScreenU8G2(String WavelengthSMD[], String lightColor[]) : U8G2_SH110
 
 ScreenU8G2::~ScreenU8G2()
 {
-    delete[] this->WavelengthSMD;
-    delete[] this->lightColor;
 }
 
 void ScreenU8G2::align(byte W, byte H, PositionX position_x, PositionY position_y)

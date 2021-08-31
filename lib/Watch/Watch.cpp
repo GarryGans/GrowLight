@@ -6,47 +6,10 @@
 // Watch::Watch() : RTC_ext_1307()
 Watch::Watch() : RTC_ext_3231()
 {
-    start = new int[lampAmount];
-    finish = new int[lampAmount];
-
-    autoSwitch = new boolean[lampAmount];
-    skip = new boolean[lampAmount];
-    brightDown = new boolean[lampAmount];
-
-    startHour = new byte[lampAmount];
-    startMinute = new byte[lampAmount];
-    finishHour = new byte[lampAmount];
-    finishMinute = new byte[lampAmount];
-
-    for (byte i = 0; i < lampAmount; i++)
-    {
-        start[i] = 0;
-        finish[i] = 0;
-
-        autoSwitch[i] = 0;
-        skip[i] = 0;
-        brightDown[i] = 0;
-
-        startHour[i] = 0;
-        startMinute[i] = 0;
-        finishHour[i] = 0;
-        finishMinute[i] = 0;
-    }
 }
 
 Watch::~Watch()
 {
-    delete[] start;
-    delete[] finish;
-
-    delete[] autoSwitch;
-    delete[] skip;
-    delete[] brightDown;
-
-    delete[] startHour;
-    delete[] startMinute;
-    delete[] finishHour;
-    delete[] finishMinute;
 }
 
 void Watch::timeFromMinute(int time, byte &hour, byte &minute)

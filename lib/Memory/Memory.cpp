@@ -2,39 +2,10 @@
 
 Memory::Memory()
 {
-
-    maxBright_addr = new byte[lampAmount];
-
-    startHour_addr = new byte[lampAmount];
-    startMinute_addr = new byte[lampAmount];
-    finishHour_addr = new byte[lampAmount];
-    finishMinute_addr = new byte[lampAmount];
-
-    skip_addr = new byte[lampAmount];
-
-    for (byte i = 0; i < lampAmount; i++)
-    {
-        maxBright_addr[i] = 0;
-
-        startHour_addr[i] = 0;
-        startMinute_addr[i] = 0;
-        finishHour_addr[i] = 0;
-        finishMinute_addr[i] = 0;
-
-        skip_addr[i] = 0;
-    }
 }
 
 Memory::~Memory()
 {
-    delete[] maxBright_addr;
-
-    delete[] startHour_addr;
-    delete[] startMinute_addr;
-    delete[] finishHour_addr;
-    delete[] finishMinute_addr;
-
-    delete[] skip_addr;
 }
 
 void Memory::begin(Watch &watch, Pot &pot)

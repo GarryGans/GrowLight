@@ -9,12 +9,10 @@
 #define OFF HIGH // реле: 1 - высокого уровня (или мосфет), 0 - низкого
 #define ON LOW
 
-
 class Switchers
 {
 private:
-    byte *lamp_pins;
-    // byte lamp_pins[lampAmount];
+    byte lamp_pins[lampAmount];
 
 public:
     Switchers();

@@ -14,23 +14,14 @@ private:
     byte startAddr = 0;
     byte start_addr_Size = 0;
 
-    byte *maxBright_addr;
+    byte maxBright_addr[lampAmount];
 
-    byte *startHour_addr;
-    byte *startMinute_addr;
-    byte *finishHour_addr;
-    byte *finishMinute_addr;
+    byte startHour_addr[lampAmount];
+    byte startMinute_addr[lampAmount];
+    byte finishHour_addr[lampAmount];
+    byte finishMinute_addr[lampAmount];
 
-    byte *skip_addr;
-
-    // byte maxBright_addr[lampAmount];
-
-    // byte startHour_addr[lampAmount];
-    // byte startMinute_addr[lampAmount];
-    // byte finishHour_addr[lampAmount];
-    // byte finishMinute_addr[lampAmount];
-
-    // byte skip_addr[lampAmount];
+    byte skip_addr[lampAmount];
 
 public:
     Memory();

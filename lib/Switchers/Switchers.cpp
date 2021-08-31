@@ -2,17 +2,10 @@
 
 Switchers::Switchers()
 {
-    lamp_pins = new byte[lampAmount];
-    
-    for (byte i = 0; i < lampAmount; i++)
-    {
-        lamp_pins[i] = 0;
-    }
 }
 
 Switchers::~Switchers()
 {
-    delete[] lamp_pins;
 }
 
 void Switchers::begin(byte &startPinLamp)

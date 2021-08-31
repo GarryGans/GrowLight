@@ -12,7 +12,7 @@ ScreenU8G2 screen(WavelengthSMD, lightColor);
 
 void setup()
 {
-    // Serial.begin(9600);
+    Serial.begin(9600);
 
     screen.begin();
 

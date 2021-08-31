@@ -16,8 +16,6 @@
 class Screen : public Adafruit_SSD1306
 {
 private:
-    // String *WavelengthSMD;
-    // String *lightColor;
     String WavelengthSMD[lampAmount];
     String lightColor[lampAmount];
 
@@ -65,7 +63,6 @@ public:
 
     void showBlinkSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm);
     void showBlinkSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm);
-
 };
 
 #endif

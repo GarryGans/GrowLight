@@ -42,13 +42,9 @@ private:
 
     boolean autoMove;
 
-    // boolean buttonSwitch[lampAmount];
-    // boolean reduration[lampAmount];
-    // boolean reBright[lampAmount];
-
-    boolean *buttonSwitch;
-    boolean *reduration;
-    boolean *reBright;
+    boolean buttonSwitch[lampAmount];
+    boolean reduration[lampAmount];
+    boolean reBright[lampAmount];
 
     boolean resetManualPot;
     boolean resetManualBright;
@@ -67,7 +63,7 @@ private:
 
     byte id;
     byte idFirst = 0;
-    byte idLast = lampAmount -1;
+    byte idLast = lampAmount - 1;
 
 public:
     Key(byte pin[]);
