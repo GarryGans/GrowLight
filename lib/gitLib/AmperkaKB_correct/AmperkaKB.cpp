@@ -16,9 +16,12 @@ AmperkaKB::AmperkaKB(uint8_t pin1KB, uint8_t pin2KB, uint8_t pin3KB, uint8_t pin
 }
 
 // инициализация клавиатуры
+
 void AmperkaKB::begin(uint8_t typeKB, uint32_t timeHold, uint32_t holdSpeed)
 {
+    //My correct added holdSpeed
     this->holdSpeed = holdSpeed;
+    
     _timeHold = timeHold;
     _typeKB = typeKB;
     // определяем номер подмассива для вывода информации
