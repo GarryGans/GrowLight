@@ -126,7 +126,7 @@ void Screen::brightInfo(Pot &pot, Key &key, Timer &timer)
         print("/");
         if (key.screen == key.bright)
         {
-            showBlink(90, 52, timer, pot.maxBright[key.id]);
+            showBlink(96, 52, timer, pot.maxBright[key.id]);
             print(pot.maxBright[key.id]);
         }
         else
@@ -146,7 +146,20 @@ void Screen::brightInfo(Bright &bright, Key &key, Timer &timer)
         print("/");
         if (key.screen == key.bright)
         {
-            showBlink(90, 52, timer, bright.maxBright[key.id]);
+            byte x;
+            byte y;
+            if (bright.maxBright[key.id] < 100)
+            {
+                x = 95;
+                y = 52;
+            }
+            else
+            {
+                x = 101;
+                y = 52;
+            }
+
+            showBlink(x, y, timer, bright.maxBright[key.id]);
             print(bright.maxBright[key.id]);
         }
         else
