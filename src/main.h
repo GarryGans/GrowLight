@@ -13,7 +13,7 @@
 
 // byte startPinLamp = 11;
 byte startPinLamp = 22;
-byte startPinBright = 2; //198 ~ 24 QuantumBoard 0.30 ~ 2.70
+// byte startPinBright = 2; //198 ~ 24 QuantumBoard 0.30 ~ 2.70
 
 // byte keyPin[] = {10, 9, 8, 7, 6, 5, 4, 3};
 byte keyPin[] = {32, 34, 36, 38, 40, 42, 44, 46};
@@ -50,15 +50,15 @@ String WavelengthSMD[] = {
 
 String lightColor[] = {"WF 1", "WF 2", "WF 3", "RED", "CF 1", "CF 2", "CF 3", "UV"};
 
-// DigiPot potent[] = {
-//     DigiPot(2, 3, 4),
-//     DigiPot(5, 6, 7),
-//     DigiPot(8, 9, 10),
-//     DigiPot(11, 12, 13),
-//     DigiPot(14, 15, 16),
-//     DigiPot(17, 18, 19),
-//     DigiPot(33, 35, 37),
-//     DigiPot(39, 41, 43)};
+DigiPot potent[] = {
+    DigiPot(2, 3, 4),
+    DigiPot(5, 6, 7),
+    DigiPot(8, 9, 10),
+    DigiPot(11, 12, 13),
+    DigiPot(14, 15, 16),
+    DigiPot(17, 18, 19),
+    DigiPot(33, 35, 37),
+    DigiPot(39, 41, 43)};
 
 // CREE Ultraviolet FarRed Red Blue //
 // String WavelengthSMD[] = {"365nm+385nm", "365nm+385nm", "440nm", "440nm", "660nm", "660nm", "730nm", "730nm", "3000K"};
