@@ -114,7 +114,7 @@ void Pot::manualChangeBright(Key &key, Timer &timer)
 
         else
         {
-            bright[key.id] = minManualBright);
+            bright[key.id] = minManualBright;
             pot[key.id].set((99 - bright[key.id]));
         }
     }
