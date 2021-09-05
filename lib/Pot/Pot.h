@@ -17,12 +17,12 @@ private:
 
     byte bright[lampAmount];
 
-    byte autoMinBright = 18;
+    byte autoMinBright = 0;
     byte maxBright[lampAmount];
     byte prewMaxBright[lampAmount];
 
     byte minManualBright = 0;
-    byte maxManualBright = 60;
+    byte maxManualBright = 99;
 
     DigiPot pot[lampAmount];
 

@@ -20,15 +20,15 @@ void Pot::setMinBright(DigiPot &pot, byte &bright)
 {
     if (bright < autoMinBright)
     {
-        bright = autoMinBright;
-        pot.set((99 - bright));
+        pot.set(autoMinBright);
+        bright = pot.get();
     }
 }
 
 void Pot::resetBright(DigiPot &pot, byte &bright)
 {
-    bright = minManualBright;
-    pot.set((99 - bright));
+    pot.set(minManualBright);
+    bright = pot.get();
 }
 
 void Pot::autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i)
@@ -41,8 +41,8 @@ void Pot::autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i)
 
             if (timer.wait(timer.prewBrightMillis[i], timer.riseMillis) && bright[i] < maxBright[i])
             {
-                bright[i]++;
-                pot[i].set((99 - bright[i]));
+                pot[i].increase(1);
+                bright[i] = pot[i].get();
             }
         }
 
@@ -50,22 +50,22 @@ void Pot::autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i)
         {
             if (timer.wait(timer.prewBrightMillis[i], timer.riseMillis) && bright[i] > autoMinBright)
             {
-                bright[i]--;
-                pot[i].set((99 - bright[i]));
+                pot[i].decrease(1);
+                bright[i] = pot[i].get();
             }
 
             if (bright[i] == autoMinBright)
             {
-                resetBright(pot[i], bright[i]);
                 watch.autoSwitch[i] = false;
                 watch.brightDown[i] = false;
+                resetBright(pot[i], bright[i]);
             }
         }
     }
     else if (watch.skip[i] && key.screen != key.manual)
     {
-        bright[i] = minManualBright;
-        pot[i].set((99 - bright[i]));
+        pot[i].set(minManualBright);
+        bright[i] = pot[i].get();
     }
 }
 
@@ -92,12 +92,12 @@ void Pot::changeBright(byte &bright, DigiPot &pot, Key &key, Timer &timer)
         if (key.act == key.MINUS && bright > autoMinBright)
         {
             bright--;
-            pot.set((99-bright));
+            pot.decrease(1);
         }
         else if (key.act == key.PLUS && bright < maxManualBright)
         {
             bright++;
-            pot.set((99 - bright));
+            pot.increase(1);
         }
     }
 }
@@ -114,8 +114,8 @@ void Pot::manualChangeBright(Key &key, Timer &timer)
 
         else
         {
-            bright[key.id] = minManualBright;
-            pot[key.id].set((99 - bright[key.id]));
+            pot[key.id].set(minManualBright);
+            bright[key.id] = pot[key.id].get();
         }
     }
 }
@@ -124,8 +124,8 @@ void Pot::resetAllPots()
 {
     for (byte i = 0; i < lampAmount; i++)
     {
-        bright[i] = minManualBright;
-        pot[i].set((99 - bright[i]));
+        pot[i].reset();
+        bright[i] = pot[i].get();
     }
 }
 
@@ -133,8 +133,8 @@ void Pot::correctBright(boolean brightDown, DigiPot &pot, byte &bright, byte max
 {
     if (!brightDown && prewMaxBright[id] > maxBright)
     {
-        bright = maxBright;
-        pot.set((99-bright));
+        pot.set(maxBright);
+        bright = pot.get();
     }
 }
 
