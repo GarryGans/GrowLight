@@ -11,26 +11,31 @@
 #define holdSpeed 50
 #define holdDelay 500
 
-byte startPinLamp = 11;
-// byte startPinLamp = 22;
-byte startPinBright = 2; //198 ~ 24 QuantumBoard 0.30 ~ 2.70
+//Nano Ver.
 
-byte keyPin[] = {10, 9, 8, 7, 6, 5, 4, 3};
+byte startPinBright = 10; //198 ~ 24 QuantumBoard 0.30 ~ 2.70
+byte startPinLamp = 12;
+
+byte keyPin[] = {9, 8, 7, 6, 5, 4, 3, 2};
+
+//Mega Ver.
+// byte startPinBright = 2; //198 ~ 24 QuantumBoard 0.30 ~ 2.70
+// byte startPinLamp = 22;
 // byte keyPin[] = {32, 34, 36, 38, 40, 42, 44, 46};
 
 //SINGLE VERSION
-String WavelengthSMD[] = {"3500k+UV+RED+FR"};
+// String WavelengthSMD[] = {"3500k+UV+RED+FR"};
 
-String lightColor[] = {"QB"};
+// String lightColor[] = {"QB"};
 
 // DigiPot potent[] = {
 //     DigiPot(2, 3, 4)};
 
 // VERSION PEPPER
-// String WavelengthSMD[] = {"3500k+6500k",
-//                           "385nm+660nm+730nm+WC"};
+String WavelengthSMD[] = {"3500k+6500k",
+                          "385nm+660nm+730nm+WC"};
 
-// String lightColor[] = {"WC", "UFR"};
+String lightColor[] = {"WC", "UFR"};
 
 // DigiPot potent[] = {
 //     DigiPot(2, 3, 4),

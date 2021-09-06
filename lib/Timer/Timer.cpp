@@ -8,18 +8,18 @@ Timer::~Timer()
 {
 }
 
-void Timer::resetCounter(byte &counter)
+void Timer::resetCounter()
 {
-    counter = maxCounter;
+    unfrizeCounter = maxCounter;
 }
 
-boolean Timer::unfrize(byte &counter)
+boolean Timer::unfrize()
 {
-    minusCounter(counter);
+    minusCounter(unfrizeCounter);
 
-    if (counter == 0)
+    if (unfrizeCounter == 0)
     {
-        resetCounter(counter);
+        resetCounter();
         return true;
     }
 

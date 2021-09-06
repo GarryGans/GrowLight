@@ -1,5 +1,5 @@
-#ifndef SCREENU8G2_H
-#define SCREENU8G2_H
+#ifndef SCREEN_H
+#define SCREEN_H
 
 #include <Arduino.h>
 #include <Wire.h>
@@ -12,7 +12,9 @@
 #include <Pot.h>
 #include <Bright.h>
 
-class ScreenU8G2 : public U8G2_SH1106_128X64_NONAME_1_HW_I2C
+// class Screen : public U8G2_SH1106_128X64_NONAME_1_HW_I2C
+class Screen : public U8G2_SSD1306_128X64_NONAME_1_HW_I2C
+
 {
 private:
     String WavelengthSMD[lampAmount];
@@ -67,10 +69,10 @@ private:
     byte WH = 48;
 
 public:
-    ScreenU8G2(String WavelengthSMD[], String lightColor[]);
-    ~ScreenU8G2();
+    Screen(String WavelengthSMD[], String lightColor[]);
+    ~Screen();
 
-    byte intToChar(int value);
+    byte getWidth(byte value);
     void align(byte WH, byte H, PositionX position_x, PositionY position_y);
     void frameAlign(byte W, byte H, PositionX position_x, PositionY position_y);
     void iconAlign(int icon, byte iconWH, PositionX position_x, PositionY position_y);
@@ -79,6 +81,7 @@ public:
     void mover(byte deep_x);
     void moveString(Timer &timer, byte end_x, byte bottom_y, const char *string);
     void escapeBar(Timer &timer);
+    byte nextX(byte value, byte prewX);
 
     void iGorLogo();
 

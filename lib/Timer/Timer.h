@@ -48,8 +48,8 @@ public:
     void minusCounter(byte &counter);
     boolean wait(unsigned long &prewMillis, unsigned long setMillis);
     boolean blinkReady();
-    boolean unfrize(byte &counter);
-    void resetCounter(byte &counter);
+    boolean unfrize();
+    void resetCounter();
     boolean moveReady();
 };
 

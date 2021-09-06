@@ -118,12 +118,12 @@ void Key::manualChangeScreen(Timer &timer)
                 }
             }
 
-            timer.resetCounter(timer.unfrizeCounter);
+            timer.resetCounter();
         }
 
         if (!autoMove && screen != manual)
         {
-            if (timer.unfrize(timer.unfrizeCounter))
+            if (timer.unfrize())
             {
                 autoMove = true;
             }

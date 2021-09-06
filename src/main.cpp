@@ -15,7 +15,7 @@ void setup()
 
     screen.begin();
 
-    screen.iGorLogo();
+    // screen.iGorLogo();
     delay(100);
 
     watch.begin();
