@@ -81,25 +81,25 @@ public:
     void mover(byte deep_x);
     void moveString(Timer &timer, byte end_x, byte bottom_y, const char *string);
     void escapeBar(Timer &timer);
-    byte nextX(byte value, byte prewX);
+    byte nextX(byte prewX, byte value, char *simbol);
 
     void iGorLogo();
 
-    void showDig(int value);
+    void showDig(byte value);
 
     void headerTime(Watch &watch);
     void headerDate(Watch &watch);
     void headerScreen(Watch &watch);
 
-    void showBlink(int value, int x, int y, Timer &timer);
-    void showBlinkYear(int year, int x, int y, Timer &timer);
+    void showBlink(byte value, byte x, byte y, Timer &timer);
+    void showBlinkYear(int year, byte x, byte y, Timer &timer);
 
     void showBlinkSpectrumTime(Watch &watch, Timer &timer, Key &key);
 
-    void showStringTime(int hh, int mm);
-    void showStringWatch(int hh, int mm, int ss);
-    void showStringDate(int day, int month, int year);
-    void showSpectrumTime(Watch &watch, int id);
+    void showStringTime(byte hh, byte mm);
+    void showStringWatch(byte hh, byte mm, byte ss);
+    void showStringDate(byte day, byte month, int year);
+    void showSpectrumTime(Watch &watch, byte id);
 
     void brightInfo(Pot &pot, Key &key, Timer &timer);
     void brightInfo(Bright &bright, Key &key, Timer &timer);

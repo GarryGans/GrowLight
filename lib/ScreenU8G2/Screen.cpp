@@ -199,7 +199,7 @@ byte Screen::getWidth(byte value)
     return getStrWidth(val);
 }
 
-void Screen::showBlink(int value, int x, int y, Timer &timer)
+void Screen::showBlink(int value, byte x, byte y, Timer &timer)
 {
     if (timer.blinkReady())
     {
@@ -228,9 +228,9 @@ void Screen::brightInfo(Pot &pot, Key &key, Timer &timer)
     }
 }
 
-byte Screen::nextX(byte value, byte prewX)
+byte Screen::nextX(byte prewX, byte value,  char simbol[] = 0)
 {
-    return (prewX + getWidth(value) + getStrWidth("/"));
+    return (prewX + getWidth(value) + getStrWidth(simbol));
 }
 
 void Screen::brightInfo(Bright &bright, Key &key, Timer &timer)
@@ -242,9 +242,10 @@ void Screen::brightInfo(Bright &bright, Key &key, Timer &timer)
     if (key.screen != key.manual)
     {
         print("/");
+
         if (key.screen == key.bright)
         {
-            showBlink(bright.maxBright[key.id], nextX(bright.bright[key.id], 80), 57 - 8, timer);
+            showBlink(bright.maxBright[key.id], nextX(80, bright.bright[key.id], "/"), 57 - 8, timer);
 
             print(bright.maxBright[key.id]);
         }
@@ -397,7 +398,7 @@ void Screen::showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Ke
     }
 }
 
-void Screen::showStringTime(int hh, int mm)
+void Screen::showStringTime(byte hh, byte mm)
 {
     showDig(hh);
 
@@ -406,7 +407,7 @@ void Screen::showStringTime(int hh, int mm)
     showDig(mm);
 }
 
-void Screen::showStringWatch(int hh, int mm, int ss)
+void Screen::showStringWatch(byte hh, byte mm, byte ss)
 {
     showDig(hh);
 
@@ -419,7 +420,7 @@ void Screen::showStringWatch(int hh, int mm, int ss)
     showDig(ss);
 }
 
-void Screen::showStringDate(int day, int month, int year)
+void Screen::showStringDate(byte day, byte month, int year)
 {
     showDig(day);
 
@@ -432,7 +433,7 @@ void Screen::showStringDate(int day, int month, int year)
     print(year);
 }
 
-void Screen::showSpectrumTime(Watch &watch, int id)
+void Screen::showSpectrumTime(Watch &watch, byte id)
 {
     showStringTime(watch.startHour[id], watch.startMinute[id]);
 
@@ -441,7 +442,7 @@ void Screen::showSpectrumTime(Watch &watch, int id)
     showStringTime(watch.finishHour[id], watch.finishMinute[id]);
 }
 
-void Screen::showDig(int value)
+void Screen::showDig(byte value)
 {
     if (value < 10)
     {
@@ -450,7 +451,7 @@ void Screen::showDig(int value)
     print(value);
 }
 
-void Screen::showBlinkYear(int year, int x, int y, Timer &timer)
+void Screen::showBlinkYear(int year, byte x, byte y, Timer &timer)
 {
     char val[5];
     String str = String(year);
@@ -478,6 +479,7 @@ void Screen::showBlinkSpectrumTime(Watch &watch, Timer &timer, Key &key)
 
         case 1:
             showBlink(watch.startMinute[key.id], 5 + getStrWidth("00:"), 57 - 8, timer);
+
             break;
 
         case 2:
@@ -500,7 +502,7 @@ void Screen::showBlinkSpectrumTime(Watch &watch, Timer &timer, Key &key)
     }
 }
 
-void Screen::showBlinkSunRise(Key &key, Timer &timer, Watch &watch, int hh, int mm)
+void Screen::showBlinkSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
 {
     setCursor(5, 30);
     setFont(u8g2_font_courB08_tf);
@@ -534,7 +536,7 @@ void Screen::showBlinkSunRise(Key &key, Timer &timer, Watch &watch, int hh, int 
     }
 }
 
-void Screen::showBlinkSunSet(Key &key, Timer &timer, Watch &watch, int hh, int mm)
+void Screen::showBlinkSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
 {
     setCursor(5, 52);
     setFont(u8g2_font_courB08_tf);
