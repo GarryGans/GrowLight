@@ -199,7 +199,7 @@ byte Screen::getWidth(byte value)
     return getStrWidth(val);
 }
 
-void Screen::showBlink(int value, byte x, byte y, Timer &timer)
+void Screen::showBlink(byte value, byte x, byte y, Timer &timer)
 {
     if (timer.blinkReady())
     {

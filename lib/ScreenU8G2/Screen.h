@@ -117,8 +117,8 @@ public:
     void blinkHeaderDate(Key &key, Watch &watch, Timer &timer);
     void blinkHeaderTime(Key &key, Watch &watch, Timer &timer);
 
-    void showBlinkSunRise(Key &key, Timer &timer, Watch &watch, int hh, int mm);
-    void showBlinkSunSet(Key &key, Timer &timer, Watch &watch, int hh, int mm);
+    void showBlinkSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm);
+    void showBlinkSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm);
 };
 
 #endif
