@@ -230,7 +230,7 @@ void Screen::brightInfo(Pot &pot, Key &key, Timer &timer)
 
 byte Screen::nextX(byte value, byte prewX = 0, const char *simbol = 0)
 {
-    return (prewX + getWidth(value) + getStrWidth(simbol));
+    return (getWidth(value) + prewX + getStrWidth(simbol));
 }
 
 void Screen::brightInfo(Bright &bright, Key &key, Timer &timer)
