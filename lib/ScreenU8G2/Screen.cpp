@@ -280,8 +280,6 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot)
     {
         setFont(u8g2_font_courB08_tn);
 
-        // setCursor(5, 57);
-
         blinkSpectrumTime(watch, timer, key);
 
         brightInfo(pot, key, timer);
@@ -308,8 +306,6 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright)
     {
         setFont(u8g2_font_courB08_tn);
 
-        setCursor(5, 57);
-
         blinkSpectrumTime(watch, timer, key);
 
         brightInfo(bright, key, timer);
@@ -318,14 +314,14 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright)
 
 void Screen::lampInfo(Watch &watch, Key &key)
 {
-    setCursor(0, 16);
     setFont(u8g2_font_courB08_tf);
 
+    setCursor(0, 16);
     print(WavelengthSMD[key.id]);
 
     setFont(u8g2_font_courB18_tr);
-    setCursor(5, 38);
 
+    setCursor(5, 38);
     print(lightColor[key.id]);
 
     setCursor(74, 38);
@@ -344,9 +340,6 @@ void Screen::headerTime(Watch &watch)
 {
     Time now = watch.time();
 
-    setFont(u8g2_font_courB08_tn);
-
-    setCursor(74, 8);
     showStringWatch(now.hour(), now.minute(), now.second());
 }
 
@@ -469,12 +462,13 @@ void Screen::blinkFrameYear(int year, byte x, byte y, Timer &timer)
 
 void Screen::blinkSpectrumTime(Watch &watch, Timer &timer, Key &key)
 {
+    setFont(u8g2_font_courB08_tn);
+
+    setCursor(5, 57);
+    showSpectrumTime(watch, key.id);
+
     if (key.screen == key.duration)
     {
-        setFont(u8g2_font_courB08_tn);
-
-        setCursor(5, 57);
-
         switch (watch.cursorSpectrum)
         {
         case 0:
@@ -497,25 +491,20 @@ void Screen::blinkSpectrumTime(Watch &watch, Timer &timer, Key &key)
         default:
             break;
         }
-
-        showSpectrumTime(watch, key.id);
-    }
-    else
-    {
-        showSpectrumTime(watch, key.id);
     }
 }
 
 void Screen::showSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
 {
-    setCursor(5, 30);
     setFont(u8g2_font_courB08_tf);
 
+    setCursor(5, 30);
     print("Sun Rise:");
 
     setFont(u8g2_font_pressstart2p_8f);
 
     setCursor(60, 30);
+    showStringTime(hh, mm);
 
     if (key.screen == key.dayDuration)
     {
@@ -532,23 +521,20 @@ void Screen::showSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
         default:
             break;
         }
-        showStringTime(hh, mm);
-    }
-    else
-    {
-        showStringTime(hh, mm);
     }
 }
 
 void Screen::showSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
 {
-    setCursor(5, 52);
     setFont(u8g2_font_courB08_tf);
+
+    setCursor(5, 52);
     print("Sun Set:");
 
     setFont(u8g2_font_pressstart2p_8f);
 
     setCursor(60, 52);
+    showStringTime(hh, mm);
 
     if (key.screen == key.dayDuration)
     {
@@ -565,22 +551,19 @@ void Screen::showSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
         default:
             break;
         }
-
-        showStringTime(hh, mm);
-    }
-    else
-    {
-        showStringTime(hh, mm);
     }
 }
 
 void Screen::blinkHeaderTime(Key &key, Watch &watch, Timer &timer)
 {
+    setFont(u8g2_font_courB08_tn);
+
+    setCursor(74, 8);
+
     if (key.screen == key.watch)
     {
-        setFont(u8g2_font_courB08_tn);
-
-        setCursor(74, 8);
+        
+        showStringWatch(watch.hour, watch.min, watch.sec);
 
         switch (watch.cursorDateTime)
         {
@@ -599,8 +582,6 @@ void Screen::blinkHeaderTime(Key &key, Watch &watch, Timer &timer)
         default:
             break;
         }
-
-        showStringWatch(watch.hour, watch.min, watch.sec);
     }
 
     else
