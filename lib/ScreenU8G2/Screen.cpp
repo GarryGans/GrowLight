@@ -199,7 +199,7 @@ byte Screen::getWidth(byte value)
     return getStrWidth(val);
 }
 
-void Screen::showBlink(byte value, byte x, byte y, Timer &timer)
+void Screen::blinkFrame(byte value, byte x, byte y, Timer &timer)
 {
     if (timer.blinkReady())
     {
@@ -228,7 +228,7 @@ void Screen::brightInfo(Pot &pot, Key &key, Timer &timer)
     }
 }
 
-byte Screen::nextX(byte prewX, byte value,  char simbol[] = 0)
+byte Screen::nextX(byte value, byte prewX = 0, const char *simbol = 0)
 {
     return (prewX + getWidth(value) + getStrWidth(simbol));
 }
@@ -245,7 +245,7 @@ void Screen::brightInfo(Bright &bright, Key &key, Timer &timer)
 
         if (key.screen == key.bright)
         {
-            showBlink(bright.maxBright[key.id], nextX(80, bright.bright[key.id], "/"), 57 - 8, timer);
+            blinkFrame(bright.maxBright[key.id], nextX(bright.bright[key.id], 80, "/"), 57 - 8, timer);
 
             print(bright.maxBright[key.id]);
         }
@@ -278,7 +278,7 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot)
 
         setCursor(5, 57);
 
-        showBlinkSpectrumTime(watch, timer, key);
+        blinkSpectrumTime(watch, timer, key);
 
         brightInfo(pot, key, timer);
     }
@@ -306,7 +306,7 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright)
 
         setCursor(5, 57);
 
-        showBlinkSpectrumTime(watch, timer, key);
+        blinkSpectrumTime(watch, timer, key);
 
         brightInfo(bright, key, timer);
     }
@@ -451,7 +451,7 @@ void Screen::showDig(byte value)
     print(value);
 }
 
-void Screen::showBlinkYear(int year, byte x, byte y, Timer &timer)
+void Screen::blinkFrameYear(int year, byte x, byte y, Timer &timer)
 {
     char val[5];
     String str = String(year);
@@ -463,7 +463,7 @@ void Screen::showBlinkYear(int year, byte x, byte y, Timer &timer)
     }
 }
 
-void Screen::showBlinkSpectrumTime(Watch &watch, Timer &timer, Key &key)
+void Screen::blinkSpectrumTime(Watch &watch, Timer &timer, Key &key)
 {
     if (key.screen == key.duration)
     {
@@ -474,20 +474,20 @@ void Screen::showBlinkSpectrumTime(Watch &watch, Timer &timer, Key &key)
         switch (watch.cursorSpectrum)
         {
         case 0:
-            showBlink(watch.startHour[key.id], 5, 57 - 8, timer);
+            blinkFrame(watch.startHour[key.id], 5, 57 - 8, timer);
             break;
 
         case 1:
-            showBlink(watch.startMinute[key.id], 5 + getStrWidth("00:"), 57 - 8, timer);
+            blinkFrame(watch.startMinute[key.id], 5 + getStrWidth("00:"), 57 - 8, timer);
 
             break;
 
         case 2:
-            showBlink(watch.finishHour[key.id], 5 + getStrWidth("00:00-"), 57 - 8, timer);
+            blinkFrame(watch.finishHour[key.id], 5 + getStrWidth("00:00-"), 57 - 8, timer);
             break;
 
         case 3:
-            showBlink(watch.finishMinute[key.id], 5 + getStrWidth("00:00-00:"), 57 - 8, timer);
+            blinkFrame(watch.finishMinute[key.id], 5 + getStrWidth("00:00-00:"), 57 - 8, timer);
             break;
 
         default:
@@ -502,7 +502,7 @@ void Screen::showBlinkSpectrumTime(Watch &watch, Timer &timer, Key &key)
     }
 }
 
-void Screen::showBlinkSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
+void Screen::showSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
 {
     setCursor(5, 30);
     setFont(u8g2_font_courB08_tf);
@@ -518,11 +518,11 @@ void Screen::showBlinkSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byt
         switch (watch.cursorDay)
         {
         case 0:
-            showBlink(hh, 60, 30 - 8, timer);
+            blinkFrame(hh, 60, 30 - 8, timer);
             break;
 
         case 1:
-            showBlink(mm, 60 + getStrWidth("00:"), 30 - 8, timer);
+            blinkFrame(mm, 60 + getStrWidth("00:"), 30 - 8, timer);
             break;
 
         default:
@@ -536,7 +536,7 @@ void Screen::showBlinkSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byt
     }
 }
 
-void Screen::showBlinkSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
+void Screen::showSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
 {
     setCursor(5, 52);
     setFont(u8g2_font_courB08_tf);
@@ -551,11 +551,11 @@ void Screen::showBlinkSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte
         switch (watch.cursorDay)
         {
         case 2:
-            showBlink(hh, 60, 52 - 8, timer);
+            blinkFrame(hh, 60, 52 - 8, timer);
             break;
 
         case 3:
-            showBlink(mm, 60 + getStrWidth("00:"), 52 - 8, timer);
+            blinkFrame(mm, 60 + getStrWidth("00:"), 52 - 8, timer);
             break;
 
         default:
@@ -581,15 +581,15 @@ void Screen::blinkHeaderTime(Key &key, Watch &watch, Timer &timer)
         switch (watch.cursorDateTime)
         {
         case 3:
-            showBlink(watch.hour, 74, 0, timer);
+            blinkFrame(watch.hour, 74, 0, timer);
             break;
 
         case 4:
-            showBlink(watch.min, 74 + getStrWidth("00:"), 0, timer);
+            blinkFrame(watch.min, 74 + getStrWidth("00:"), 0, timer);
             break;
 
         case 5:
-            showBlink(watch.sec, 74 + getStrWidth("00:00:"), 0, timer);
+            blinkFrame(watch.sec, 74 + getStrWidth("00:00:"), 0, timer);
             break;
 
         default:
@@ -616,15 +616,15 @@ void Screen::blinkHeaderDate(Key &key, Watch &watch, Timer &timer)
         switch (watch.cursorDateTime)
         {
         case 0:
-            showBlink(watch.day, 0, 0, timer);
+            blinkFrame(watch.day, 0, 0, timer);
             break;
 
         case 1:
-            showBlink(watch.month, getStrWidth("00/"), 0, timer);
+            blinkFrame(watch.month, getStrWidth("00/"), 0, timer);
             break;
 
         case 2:
-            showBlinkYear(watch.year, getStrWidth("00/00/"), 0, timer);
+            blinkFrameYear(watch.year, getStrWidth("00/00/"), 0, timer);
             break;
 
         default:
@@ -649,8 +649,8 @@ void Screen::showStartScreen(Watch &watch, Key &key, Timer &timer)
             blinkHeaderDate(key, watch, timer);
             blinkHeaderTime(key, watch, timer);
 
-            showBlinkSunRise(key, timer, watch, watch.RiseHour, watch.RiseMin);
-            showBlinkSunSet(key, timer, watch, watch.SetHour, watch.SetMin);
+            showSunRise(key, timer, watch, watch.RiseHour, watch.RiseMin);
+            showSunSet(key, timer, watch, watch.SetHour, watch.SetMin);
 
         } while (nextPage());
 

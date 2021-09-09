@@ -67,7 +67,6 @@ private:
     int lock = 79;
     int unlock = 68;
     byte WH = 48;
-
 public:
     Screen(String WavelengthSMD[], String lightColor[]);
     ~Screen();
@@ -81,7 +80,7 @@ public:
     void mover(byte deep_x);
     void moveString(Timer &timer, byte end_x, byte bottom_y, const char *string);
     void escapeBar(Timer &timer);
-    byte nextX(byte prewX, byte value, char *simbol);
+    byte nextX(byte value, byte prewX, const char *simbol);
 
     void iGorLogo();
 
@@ -91,10 +90,10 @@ public:
     void headerDate(Watch &watch);
     void headerScreen(Watch &watch);
 
-    void showBlink(byte value, byte x, byte y, Timer &timer);
-    void showBlinkYear(int year, byte x, byte y, Timer &timer);
+    void blinkFrame(byte value, byte x, byte y, Timer &timer);
+    void blinkFrameYear(int year, byte x, byte y, Timer &timer);
 
-    void showBlinkSpectrumTime(Watch &watch, Timer &timer, Key &key);
+    void blinkSpectrumTime(Watch &watch, Timer &timer, Key &key);
 
     void showStringTime(byte hh, byte mm);
     void showStringWatch(byte hh, byte mm, byte ss);
@@ -117,8 +116,8 @@ public:
     void blinkHeaderDate(Key &key, Watch &watch, Timer &timer);
     void blinkHeaderTime(Key &key, Watch &watch, Timer &timer);
 
-    void showBlinkSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm);
-    void showBlinkSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm);
+    void showSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm);
+    void showSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm);
 };
 
 #endif
