@@ -26,7 +26,11 @@ private:
     {
         centerX,
         left,
+        leftSpace,
+        leftHalf,
         right,
+        rightSpace,
+        rightHalf,
         customX
     } position_x;
 
@@ -34,12 +38,16 @@ private:
     {
         centerY,
         up,
+        upSpace,
+        upHalf,
         down,
         downSpace,
-        custom,
+        downHalf,
         centerFrame,
         upFrame,
+        upFrameHalf,
         downFrame,
+        downFrameHalf,
         customY
     } position_y;
 
