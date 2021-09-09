@@ -148,16 +148,7 @@ void Screen::digStringAlign(byte dig, const char *string, PositionX position_x, 
 
 void Screen::digAlign(byte dig, PositionX position_x, PositionY position_y)
 {
-    if (dig > 9 && dig < 100)
-    {
-        digWidth = getStrWidth("W") * 2;
-    }
-    else
-    {
-        digWidth = getStrWidth("W");
-    }
-
-    align(digWidth, getMaxCharWidth(), position_x, position_y);
+    align(getDigWidth(dig), getMaxCharWidth(), position_x, position_y);
 
     setCursor(x, y);
     print(dig);
@@ -204,7 +195,7 @@ void Screen::iGorLogo()
     } while (nextPage());
 }
 
-byte Screen::getWidth(byte value)
+byte Screen::getDigWidth(byte value)
 {
     char val[4];
     String(value).toCharArray(val, 4);
@@ -216,7 +207,7 @@ void Screen::blinkFrame(byte value, byte x, byte y, Timer &timer)
 {
     if (timer.blinkReady())
     {
-        drawFrame(x, y - 2, getWidth(value) + 4, getMaxCharHeight() + 4);
+        drawFrame(x, y - 2, getDigWidth(value) + 4, getMaxCharHeight() + 4);
     }
 }
 
@@ -244,7 +235,7 @@ void Screen::brightInfo(Pot &pot, Key &key, Timer &timer)
 
 byte Screen::nextX(byte value, byte prewX = 0, const char *simbol = 0)
 {
-    return (getWidth(value) + prewX + getStrWidth(simbol));
+    return (getDigWidth(value) + prewX + getStrWidth(simbol));
 }
 
 void Screen::brightInfo(Bright &bright, Key &key, Timer &timer)
@@ -375,7 +366,7 @@ void Screen::brightScreen(Bright &bright, Key &key, Timer &timer)
 
     if (timer.blinkReady())
     {
-        frameAlign(getWidth(bright.maxBright[key.id]), getMaxCharHeight(), centerX, centerFrame);
+        frameAlign(getDigWidth(bright.maxBright[key.id]), getMaxCharHeight(), centerX, centerFrame);
     }
 }
 
