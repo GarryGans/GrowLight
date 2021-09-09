@@ -52,6 +52,7 @@ void loop()
 
     // screen.showLampScreen(watch, switchers, timer, key, pot);
     screen.showLampScreen(watch, switchers, timer, key, bright);
+    screen.showBrightScreen(bright, key, timer);
 
     watch.spectrumReDuration(key, timer);
 

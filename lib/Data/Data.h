@@ -8,7 +8,7 @@
 
 // #define lampAmount 9
 
-#define minSunRiseBright 4 // min 58 197(340mA) sunRise, 216(120mA) sunSet, max 22(2700ma)
+#define minSunRiseBright 58 // min 58 197(340mA) sunRise, 216(120mA) sunSet, max 22(2700ma)
 #define minSunSetBright 39 // min 39
 
 #define minManual 0

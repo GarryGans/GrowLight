@@ -125,7 +125,7 @@ void Screen::moveString(Timer &timer, byte deep_x, byte bottom_y, const char *st
     }
 }
 
-void Screen::digAlign(byte dig, const char *string, PositionX position_x, PositionY position_y)
+void Screen::digStringAlign(byte dig, const char *string, PositionX position_x, PositionY position_y)
 {
     if (dig > 9 && dig < 100)
     {
@@ -136,20 +136,31 @@ void Screen::digAlign(byte dig, const char *string, PositionX position_x, Positi
         digWidth = getStrWidth("W");
     }
 
-    if (string != 0)
-    {
-        digWidth += getStrWidth(string);
-    }
+    digWidth += getStrWidth(string);
 
     align(digWidth, getMaxCharWidth(), position_x, position_y);
 
     setCursor(x, y);
     print(dig);
 
-    if (string != 0)
+    print(string);
+}
+
+void Screen::digAlign(byte dig, PositionX position_x, PositionY position_y)
+{
+    if (dig > 9 && dig < 100)
     {
-        print(string);
+        digWidth = getStrWidth("W") * 2;
     }
+    else
+    {
+        digWidth = getStrWidth("W");
+    }
+
+    align(digWidth, getMaxCharWidth(), position_x, position_y);
+
+    setCursor(x, y);
+    print(dig);
 }
 
 void Screen::frameAlign(byte W, byte H, PositionX position_x, PositionY position_y)
@@ -247,31 +258,8 @@ void Screen::brightInfo(Bright &bright, Key &key, Timer &timer)
     {
         print("/");
 
-        if (key.screen == key.bright)
-        {
-            blinkFrame(bright.maxBright[key.id], nextX(bright.bright[key.id], 80, "/"), 57 - 8, timer);
-
-            print(bright.maxBright[key.id]);
-        }
-        else
-        {
-            print(bright.maxBright[key.id]);
-        }
+        print(bright.maxBright[key.id]);
     }
-}
-
-void Screen::brightInfo(Bright &bright, Key &key, Timer &timer)
-{
-    setFont(u8g2_font_courB18_tr);
-
-    setCursor(80, 57);
-    print(bright.bright[key.id]);
-
-    print("/");
-
-    blinkFrame(bright.maxBright[key.id], nextX(bright.bright[key.id], 80, "/"), 57 - 8, timer);
-
-    print(bright.maxBright[key.id]);
 }
 
 void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot)
@@ -375,14 +363,30 @@ void Screen::headerDate(Watch &watch)
     textAlign(daysOfTheWeek[now.dayOfTheWeek()], left, customY);
 }
 
-void Screen::showBrightScreen(Bright &bright, Key &key)
+void Screen::brightScreen(Bright &bright, Key &key, Timer &timer)
+{
+    setFont(u8g2_font_pressstart2p_8f);
+
+    textAlign("Set Max Bright", centerX, up);
+
+    setFont(u8g2_font_courB18_tr);
+
+    digAlign(bright.maxBright[key.id], centerX, centerY);
+
+    if (timer.blinkReady())
+    {
+        frameAlign(getWidth(bright.maxBright[key.id]), getMaxCharHeight(), centerX, centerFrame);
+    }
+}
+
+void Screen::showBrightScreen(Bright &bright, Key &key, Timer &timer)
 {
     if (key.screen == key.bright)
     {
         firstPage();
         do
         {
-            // bottomLine(watch, timer, key, bright);
+            brightScreen(bright, key, timer);
         } while (nextPage());
     }
 }

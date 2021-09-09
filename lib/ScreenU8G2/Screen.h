@@ -67,19 +67,24 @@ private:
     int lock = 79;
     int unlock = 68;
     byte WH = 48;
+
 public:
     Screen(String WavelengthSMD[], String lightColor[]);
     ~Screen();
 
-    byte getWidth(byte value);
+    byte getDigWidth(byte value);
+
     void align(byte WH, byte H, PositionX position_x, PositionY position_y);
     void frameAlign(byte W, byte H, PositionX position_x, PositionY position_y);
     void iconAlign(int icon, byte iconWH, PositionX position_x, PositionY position_y);
-    void digAlign(byte dig, const char *string, PositionX position_x, PositionY position_y);
+    void digStringAlign(byte dig, const char *string, PositionX position_x, PositionY position_y);
+    void digAlign(byte dig, PositionX position_x, PositionY position_y);
     void textAlign(const char *string, PositionX position_x, PositionY position_y);
+
     void mover(byte deep_x);
     void moveString(Timer &timer, byte end_x, byte bottom_y, const char *string);
     void escapeBar(Timer &timer);
+
     byte nextX(byte value, byte prewX, const char *simbol);
 
     void iGorLogo();
@@ -102,12 +107,14 @@ public:
     void brightInfo(Pot &pot, Key &key, Timer &timer);
     void brightInfo(Bright &bright, Key &key, Timer &timer);
 
+    void brightScreen(Bright &bright, Key &key, Timer &timer);
+
     void bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot);
     void bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright);
 
     void lampInfo(Watch &watch, Key &key);
 
-    void showBrightScreen(Bright &bright, Key &key);
+    void showBrightScreen(Bright &bright, Key &key, Timer &timer);
 
     void showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Pot &pot);
     void showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Bright &bright);
