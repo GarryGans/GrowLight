@@ -77,6 +77,7 @@ void Screen::align(byte W, byte H, PositionX position_x, PositionY position_y)
 void Screen::textAlign(const char *string, PositionX position_x, PositionY position_y)
 {
     align(getStrWidth(string), getMaxCharWidth(), position_x, position_y);
+
     setCursor(x, y);
     print(string);
 }
@@ -141,9 +142,10 @@ void Screen::digAlign(byte dig, const char *string, PositionX position_x, Positi
     }
 
     align(digWidth, getMaxCharWidth(), position_x, position_y);
-    setCursor(x, y);
 
+    setCursor(x, y);
     print(dig);
+
     if (string != 0)
     {
         print(string);
@@ -213,6 +215,7 @@ void Screen::brightInfo(Pot &pot, Key &key, Timer &timer)
 
     setCursor(80, 57);
     print(pot.bright[key.id]);
+
     if (key.screen != key.manual)
     {
         print("/");
@@ -239,6 +242,7 @@ void Screen::brightInfo(Bright &bright, Key &key, Timer &timer)
 
     setCursor(80, 57);
     print(bright.bright[key.id]);
+
     if (key.screen != key.manual)
     {
         print("/");
@@ -276,7 +280,7 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot)
     {
         setFont(u8g2_font_courB08_tn);
 
-        setCursor(5, 57);
+        // setCursor(5, 57);
 
         blinkSpectrumTime(watch, timer, key);
 
