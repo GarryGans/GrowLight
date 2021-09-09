@@ -48,11 +48,6 @@ private:
     int intervalDefault = 1;
     int interval = 0;
 
-    byte startHourStd = 6;
-    byte startMinuteStd = 0;
-    byte finishHourStd = 18;
-    byte finishMinuteStd = 0;
-
     byte startHour[lampAmount];
     byte startMinute[lampAmount];
     byte finishHour[lampAmount];

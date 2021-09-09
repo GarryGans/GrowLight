@@ -260,6 +260,20 @@ void Screen::brightInfo(Bright &bright, Key &key, Timer &timer)
     }
 }
 
+void Screen::brightInfo(Bright &bright, Key &key, Timer &timer)
+{
+    setFont(u8g2_font_courB18_tr);
+
+    setCursor(80, 57);
+    print(bright.bright[key.id]);
+
+    print("/");
+
+    blinkFrame(bright.maxBright[key.id], nextX(bright.bright[key.id], 80, "/"), 57 - 8, timer);
+
+    print(bright.maxBright[key.id]);
+}
+
 void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot)
 {
     if (watch.skip[key.id] && key.screen != key.manual && key.screen != key.bright && key.screen != key.duration)
@@ -338,6 +352,10 @@ void Screen::lampInfo(Watch &watch, Key &key)
 
 void Screen::headerTime(Watch &watch)
 {
+    setFont(u8g2_font_courB08_tn);
+
+    setCursor(74, 8);
+
     Time now = watch.time();
 
     showStringWatch(now.hour(), now.minute(), now.second());
@@ -345,25 +363,28 @@ void Screen::headerTime(Watch &watch)
 
 void Screen::headerDate(Watch &watch)
 {
+    setFont(u8g2_font_courB08_tf);
+
+    setCursor(0, 9);
+
     Date now = watch.date();
 
-    setFont(u8g2_font_courB08_tf);
+    showStringDate(now.day(), now.month(), now.year());
 
     setY = 16;
     textAlign(daysOfTheWeek[now.dayOfTheWeek()], left, customY);
-
-    setCursor(0, 8);
-    showDig(now.day());
-    print('/');
-    showDig(now.month());
-    print('/');
-    print(now.year());
 }
 
-void Screen::headerScreen(Watch &watch)
+void Screen::showBrightScreen(Bright &bright, Key &key)
 {
-    headerDate(watch);
-    headerTime(watch);
+    if (key.screen == key.bright)
+    {
+        firstPage();
+        do
+        {
+            // bottomLine(watch, timer, key, bright);
+        } while (nextPage());
+    }
 }
 
 void Screen::showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Pot &pot)
@@ -376,14 +397,13 @@ void Screen::showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Ke
             headerTime(watch);
             lampInfo(watch, key);
             bottomLine(watch, timer, key, pot);
-
         } while (nextPage());
     }
 }
 
 void Screen::showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Bright &bright)
 {
-    if (key.screen == key.lamp || key.screen == key.bright || key.screen == key.duration || key.screen == key.manual)
+    if (key.screen == key.lamp || key.screen == key.duration || key.screen == key.manual)
     {
         firstPage();
         do
@@ -445,6 +465,7 @@ void Screen::showDig(byte value)
     {
         print("0");
     }
+
     print(value);
 }
 
@@ -477,7 +498,6 @@ void Screen::blinkSpectrumTime(Watch &watch, Timer &timer, Key &key)
 
         case 1:
             blinkFrame(watch.startMinute[key.id], 5 + getStrWidth("00:"), 57 - 8, timer);
-
             break;
 
         case 2:
@@ -562,7 +582,7 @@ void Screen::blinkHeaderTime(Key &key, Watch &watch, Timer &timer)
 
     if (key.screen == key.watch)
     {
-        
+
         showStringWatch(watch.hour, watch.min, watch.sec);
 
         switch (watch.cursorDateTime)
@@ -592,11 +612,13 @@ void Screen::blinkHeaderTime(Key &key, Watch &watch, Timer &timer)
 
 void Screen::blinkHeaderDate(Key &key, Watch &watch, Timer &timer)
 {
+    setFont(u8g2_font_courB08_tf);
+
+    setCursor(0, 9);
+
     if (key.screen == key.watch)
     {
-        setFont(u8g2_font_courB08_tf);
-
-        setCursor(0, 9);
+        showStringDate(watch.day, watch.month, watch.year);
 
         switch (watch.cursorDateTime)
         {
@@ -615,8 +637,6 @@ void Screen::blinkHeaderDate(Key &key, Watch &watch, Timer &timer)
         default:
             break;
         }
-
-        showStringDate(watch.day, watch.month, watch.year);
     }
     else
     {

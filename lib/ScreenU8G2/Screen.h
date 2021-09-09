@@ -88,7 +88,6 @@ public:
 
     void headerTime(Watch &watch);
     void headerDate(Watch &watch);
-    void headerScreen(Watch &watch);
 
     void blinkFrame(byte value, byte x, byte y, Timer &timer);
     void blinkFrameYear(int year, byte x, byte y, Timer &timer);
@@ -107,6 +106,8 @@ public:
     void bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright);
 
     void lampInfo(Watch &watch, Key &key);
+
+    void showBrightScreen(Bright &bright, Key &key);
 
     void showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Pot &pot);
     void showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Bright &bright);

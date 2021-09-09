@@ -204,11 +204,6 @@ void Watch::dayReduration(Key &key, Timer &timer)
 {
     if (key.dayReduration())
     {
-        RiseHour = startHourStd;
-        RiseMin = startMinuteStd;
-        SetHour = finishHourStd;
-        SetMin = finishMinuteStd;
-
         cursorDay = 0;
     }
 
