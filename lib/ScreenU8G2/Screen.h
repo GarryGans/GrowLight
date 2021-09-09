@@ -35,6 +35,7 @@ private:
         centerY,
         up,
         down,
+        downSpace,
         custom,
         centerFrame,
         upFrame,

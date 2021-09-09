@@ -45,20 +45,36 @@ void Screen::align(byte W, byte H, PositionX position_x, PositionY position_y)
         y = (screenHeight + H) / 2;
         break;
 
+        // case up:
+        //     y = (screenHeight / 2 - H) / 2 + H;
+        //     break;
+
     case up:
-        y = (screenHeight / 2 - H) / 2 + H;
+        y = H;
+        break;
+
+    case downSpace:
+        y = screenHeight - H / 4;
         break;
 
     case down:
-        y = (screenHeight + screenHeight / 2 - H) / 2 + H;
+        y = screenHeight;
         break;
 
+        // case upFrame:
+        //     y = (screenHeight / 2 - H) / 2;
+        //     break;
+
+        // case downFrame:
+        //     y = (screenHeight + screenHeight / 2 - H) / 2;
+        //     break;
+
     case upFrame:
-        y = (screenHeight / 2 - H) / 2;
+        y = 0;
         break;
 
     case downFrame:
-        y = (screenHeight + screenHeight / 2 - H) / 2;
+        y = screenHeight - H;
         break;
 
     case centerFrame:
@@ -156,8 +172,8 @@ void Screen::digAlign(byte dig, PositionX position_x, PositionY position_y)
 
 void Screen::frameAlign(byte W, byte H, PositionX position_x, PositionY position_y)
 {
-    // W += W / 4;
-    // H += H / 4;
+    W += W / 4;
+    H += H / 2;
 
     align(W, H, position_x, position_y);
     drawFrame(x, y, W, H);
@@ -365,11 +381,11 @@ void Screen::brightScreen(Bright &bright, Key &key, Timer &timer)
 
     setFont(u8g2_font_courB18_tr);
 
-    digAlign(bright.maxBright[key.id], centerX, centerY);
+    digAlign(bright.maxBright[key.id], centerX, downSpace);
 
     if (timer.blinkReady())
     {
-        frameAlign(getDigWidth(bright.maxBright[key.id]), getMaxCharWidth(), centerX, centerFrame);
+        frameAlign(getDigWidth(bright.maxBright[key.id]), getMaxCharWidth(), centerX, downFrame);
     }
 }
 
