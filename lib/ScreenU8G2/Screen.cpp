@@ -156,6 +156,9 @@ void Screen::digAlign(byte dig, PositionX position_x, PositionY position_y)
 
 void Screen::frameAlign(byte W, byte H, PositionX position_x, PositionY position_y)
 {
+    // W += W / 4;
+    // H += H / 4;
+
     align(W, H, position_x, position_y);
     drawFrame(x, y, W, H);
 }
@@ -207,7 +210,7 @@ void Screen::blinkFrame(byte value, byte x, byte y, Timer &timer)
 {
     if (timer.blinkReady())
     {
-        drawFrame(x, y - 2, getDigWidth(value) + 4, getMaxCharHeight() + 4);
+        drawFrame(x, y - 2, getDigWidth(value) + 4, getMaxCharWidth() + 4);
     }
 }
 
@@ -366,7 +369,7 @@ void Screen::brightScreen(Bright &bright, Key &key, Timer &timer)
 
     if (timer.blinkReady())
     {
-        frameAlign(getDigWidth(bright.maxBright[key.id]), getMaxCharHeight(), centerX, centerFrame);
+        frameAlign(getDigWidth(bright.maxBright[key.id]), getMaxCharWidth(), centerX, centerFrame);
     }
 }
 
@@ -472,7 +475,7 @@ void Screen::blinkFrameYear(int year, byte x, byte y, Timer &timer)
 
     if (timer.blinkReady())
     {
-        drawFrame(x, y, getStrWidth(val) + 3, getMaxCharHeight());
+        drawFrame(x, y, getStrWidth(val) + 3, getMaxCharWidth());
     }
 }
 

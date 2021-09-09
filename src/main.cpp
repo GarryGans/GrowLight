@@ -11,8 +11,6 @@ Screen screen(WavelengthSMD, lightColor);
 
 void setup()
 {
-    // Serial.begin(9600);
-
     screen.begin();
 
     // screen.iGorLogo();
