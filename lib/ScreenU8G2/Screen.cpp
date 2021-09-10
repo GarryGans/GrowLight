@@ -638,15 +638,11 @@ void Screen::setWatchScreen(Watch &watch, Key &key, Timer &timer)
 
 void Screen::blinkSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
 {
-    setFont(u8g2_font_courB08_tf);
 
-    setCursor(5, 30);
-    print("Sun Rise:");
+    // setFont(u8g2_font_pressstart2p_8f);
 
-    setFont(u8g2_font_pressstart2p_8f);
-
-    setCursor(60, 30);
-    showStringTime(hh, mm);
+    // setCursor(60, 30);
+    // showStringTime(hh, mm);
 
     switch (watch.cursorDay)
     {
@@ -665,10 +661,10 @@ void Screen::blinkSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm
 
 void Screen::blinkSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
 {
-    setFont(u8g2_font_courB08_tf);
+    // setFont(u8g2_font_courB08_tf);
 
-    setCursor(5, 52);
-    print("Sun Set:");
+    // setCursor(5, 52);
+    // print("Sun Set:");
 
     setFont(u8g2_font_pressstart2p_8f);
 
