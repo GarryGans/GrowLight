@@ -87,6 +87,7 @@ public:
     void iconAlign(int icon, byte iconWH, PosX position_x, PosY position_y);
     void digStringAlign(byte dig, const char *string, PosX position_x, PosY position_y);
     void digAlign(byte dig, PosX position_x, PosY position_y);
+    void getSetCursor(const char *string, PosX position_x, PosY position_y);
     void textAlign(const char *string, PosX position_x, PosY position_y);
     void stringAlign(String str, byte size, PosX position_x, PosY position_y);
 
@@ -115,7 +116,6 @@ public:
 
     void brightInfo(Pot &pot, Key &key, Timer &timer);
     void brightInfo(Bright &bright, Key &key, Timer &timer);
-
 
     void bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot);
     void bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright);

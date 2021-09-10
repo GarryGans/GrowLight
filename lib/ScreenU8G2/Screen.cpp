@@ -157,8 +157,11 @@ void Screen::digAlign(byte dig, PosX position_x, PosY position_y)
     print(dig);
 }
 
-void Screen::timeAligh(byte hh, bye mm, PosX position_x, PosY position_y)
+void Screen::getSetCursor(const char *string, PosX position_x, PosY position_y)
 {
+    align(getStrWidth(string), getMaxCharWidth(), position_x, position_y);
+
+    setCursor(x, y);
 }
 
 void Screen::iconAlign(int icon, byte iconWH, PosX position_x, PosY position_y)
@@ -265,31 +268,29 @@ void Screen::brightInfo(Pot &pot, Key &key, Timer &timer)
 {
     setFont(u8g2_font_courB08_tn);
 
-    setCursor(80, 57);
-    print(pot.bright[key.id]);
+    digAlign(pot.bright[key.id], PosX::rightHalf, PosY::downSpace);
 }
 
 void Screen::brightInfo(Bright &bright, Key &key, Timer &timer)
 {
-    setFont(u8g2_font_courB08_tn);
+    setFont(u8g2_font_pressstart2p_8f);
 
-    setCursor(80, 57);
-    print(bright.bright[key.id]);
+    digAlign(bright.bright[key.id], PosX::rightHalf, PosY::downSpace);
 }
 
 void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot)
 {
     if (watch.skip[key.id] && key.screen != key.manual && key.screen != key.bright && key.screen != key.duration)
     {
-        setFont(u8g2_font_pressstart2p_8f);
-        textAlign("SKIP", PosX::center, PosY::downHalf);
+        setFont(u8g2_font_pixelmordred_tf);
+        textAlign("SKIP", PosX::center, PosY::downSpace);
     }
 
     else if (key.screen == key.manual)
     {
-        setFont(u8g2_font_pixelmordred_tf);
+        setFont(u8g2_font_pressstart2p_8f);
 
-        textAlign("manual", PosX::leftHalf, PosY::downHalf);
+        textAlign("MANUAL", PosX::leftHalf, PosY::downSpace);
         brightInfo(pot, key, timer);
     }
 
@@ -308,13 +309,13 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright)
     if (watch.skip[key.id] && key.screen != key.manual && key.screen != key.bright && key.screen != key.duration)
     {
         setFont(u8g2_font_pressstart2p_8f);
-        textAlign("SKIP", PosX::center, PosY::downHalf);
+        textAlign("SKIP", PosX::center, PosY::downSpace);
     }
 
     else if (key.screen == key.manual)
     {
         setFont(u8g2_font_pixelmordred_tf);
-        textAlign("manual", PosX::leftHalf, PosY::downHalf);
+        textAlign("manual", PosX::leftHalf, PosY::downSpace);
 
         brightInfo(bright, key, timer);
     }
@@ -346,7 +347,7 @@ void Screen::headerTime(Watch &watch)
 {
     setFont(u8g2_font_courB08_tn);
 
-    setCursor(74, 8);
+    getSetCursor("00:00:00", PosX::rightSpace, PosY::upSpace);
 
     Time now = watch.time();
 
@@ -357,14 +358,14 @@ void Screen::headerDate(Watch &watch)
 {
     setFont(u8g2_font_courB08_tf);
 
-    setCursor(0, 9);
+    getSetCursor("00/00/0000", PosX::leftHalf, PosY::upSpace);
 
     Date now = watch.date();
 
     showStringDate(now.day(), now.month(), now.year());
 
-    setY = 16;
-    textAlign(daysOfTheWeek[now.dayOfTheWeek()], PosX::left, PosY::custom);
+    // setY = 16;
+    textAlign(daysOfTheWeek[now.dayOfTheWeek()], PosX::leftHalf, PosY::upHalf);
 }
 
 void Screen::showBrightScreen(Bright &bright, Key &key, Timer &timer)
@@ -489,7 +490,8 @@ void Screen::blinkSpectrumTime(Watch &watch, Timer &timer, Key &key)
 {
     setFont(u8g2_font_courB08_tn);
 
-    setCursor(5, 57);
+    getSetCursor("00:00-00:00", PosX::leftSpace, PosY::downSpace);
+
     showSpectrumTime(watch, key.id);
 
     if (key.screen == key.duration)
@@ -497,7 +499,7 @@ void Screen::blinkSpectrumTime(Watch &watch, Timer &timer, Key &key)
         switch (watch.cursorSpectrum)
         {
         case 0:
-            blinkFrame(watch.startHour[key.id], 5, 57, timer);
+            blinkFrame(watch.startHour[key.id], x, 57, timer);
             break;
 
         case 1:
