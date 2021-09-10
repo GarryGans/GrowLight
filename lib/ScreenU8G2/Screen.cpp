@@ -157,6 +157,21 @@ void Screen::digAlign(byte dig, PosX position_x, PosY position_y)
     print(dig);
 }
 
+void Screen::timeAligh(byte hh, bye mm, PosX position_x, PosY position_y)
+{
+}
+
+void Screen::iconAlign(int icon, byte iconWH, PosX position_x, PosY position_y)
+{
+    align(iconWH, iconWH, position_x, position_y);
+    drawGlyph(x, y, icon);
+}
+
+byte Screen::nextX(byte value, byte prewX = 0, const char *simbol = 0)
+{
+    return (getDigWidth(value) + prewX + getStrWidth(simbol));
+}
+
 void Screen::frameAlign(byte W, byte H, PosX position_x, PosY position_y)
 {
     W += W / 4;
@@ -166,10 +181,12 @@ void Screen::frameAlign(byte W, byte H, PosX position_x, PosY position_y)
     drawFrame(x, y, W, H);
 }
 
-void Screen::iconAlign(int icon, byte iconWH, PosX position_x, PosY position_y)
+void Screen::blinkFrame(byte value, byte x, byte y, Timer &timer)
 {
-    align(iconWH, iconWH, position_x, position_y);
-    drawGlyph(x, y, icon);
+    if (timer.blinkReady())
+    {
+        drawFrame(x, y - getMaxCharWidth(), getDigWidth(value) + 4, getMaxCharWidth() + 4);
+    }
 }
 
 void Screen::mover(byte deep_x)
@@ -229,19 +246,6 @@ void Screen::escapeBar(Timer &timer)
     if (width == blockWidth * timer.maxEscapeCounter)
     {
         timer.escBar = false;
-    }
-}
-
-byte Screen::nextX(byte value, byte prewX = 0, const char *simbol = 0)
-{
-    return (getDigWidth(value) + prewX + getStrWidth(simbol));
-}
-
-void Screen::blinkFrame(byte value, byte x, byte y, Timer &timer)
-{
-    if (timer.blinkReady())
-    {
-        drawFrame(x, y - 2, getDigWidth(value) + 4, getMaxCharWidth() + 4);
     }
 }
 
@@ -416,6 +420,16 @@ void Screen::showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Ke
     }
 }
 
+void Screen::showDig(byte value)
+{
+    if (value < 10)
+    {
+        print("0");
+    }
+
+    print(value);
+}
+
 void Screen::showStringTime(byte hh, byte mm)
 {
     showDig(hh);
@@ -460,16 +474,6 @@ void Screen::showSpectrumTime(Watch &watch, byte id)
     showStringTime(watch.finishHour[id], watch.finishMinute[id]);
 }
 
-void Screen::showDig(byte value)
-{
-    if (value < 10)
-    {
-        print("0");
-    }
-
-    print(value);
-}
-
 void Screen::blinkFrameYear(int year, byte x, byte y, Timer &timer)
 {
     char val[5];
@@ -493,19 +497,19 @@ void Screen::blinkSpectrumTime(Watch &watch, Timer &timer, Key &key)
         switch (watch.cursorSpectrum)
         {
         case 0:
-            blinkFrame(watch.startHour[key.id], 5, 57 - 8, timer);
+            blinkFrame(watch.startHour[key.id], 5, 57, timer);
             break;
 
         case 1:
-            blinkFrame(watch.startMinute[key.id], 5 + getStrWidth("00:"), 57 - 8, timer);
+            blinkFrame(watch.startMinute[key.id], nextX(watch.startHour[key.id], 5, ":"), 57, timer);
             break;
 
         case 2:
-            blinkFrame(watch.finishHour[key.id], 5 + getStrWidth("00:00-"), 57 - 8, timer);
+            blinkFrame(watch.finishHour[key.id], 5 + getStrWidth("00:00-"), 57, timer);
             break;
 
         case 3:
-            blinkFrame(watch.finishMinute[key.id], 5 + getStrWidth("00:00-00:"), 57 - 8, timer);
+            blinkFrame(watch.finishMinute[key.id], 5 + getStrWidth("00:00-00:"), 57, timer);
             break;
 
         default:
@@ -531,11 +535,11 @@ void Screen::showSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
         switch (watch.cursorDay)
         {
         case 0:
-            blinkFrame(hh, 60, 30 - 8, timer);
+            blinkFrame(hh, 60, 30, timer);
             break;
 
         case 1:
-            blinkFrame(mm, 60 + getStrWidth("00:"), 30 - 8, timer);
+            blinkFrame(mm, 60 + getStrWidth("00:"), 30, timer);
             break;
 
         default:
@@ -561,11 +565,11 @@ void Screen::showSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
         switch (watch.cursorDay)
         {
         case 2:
-            blinkFrame(hh, 60, 52 - 8, timer);
+            blinkFrame(hh, 60, 52, timer);
             break;
 
         case 3:
-            blinkFrame(mm, 60 + getStrWidth("00:"), 52 - 8, timer);
+            blinkFrame(mm, 60 + getStrWidth("00:"), 52, timer);
             break;
 
         default:

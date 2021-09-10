@@ -32,7 +32,7 @@ private:
         right,
         rightSpace,
         rightHalf,
-        customX
+        custom
     } position_x;
 
     enum class PosY
@@ -49,7 +49,7 @@ private:
         upFrameHalf,
         downFrame,
         downFrameHalf,
-        customY
+        custom
     } position_y;
 
     const byte screenWidth = 128;
