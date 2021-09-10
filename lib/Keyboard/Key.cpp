@@ -18,11 +18,8 @@ void Key::keyCommands(Timer &timer)
     read();
 
     manualSwitchLight();
-
     autoScreenMove(timer);
-
     manualChangeScreen(timer);
-
     home();
 }
 

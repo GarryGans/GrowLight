@@ -442,7 +442,7 @@ void Screen::timerScreen(Watch &watch, Timer &timer, Key &key)
 
 void Screen::lampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Pot &pot)
 {
-    if (key.screen == key.lamp || key.screen == key.duration || key.screen == key.manual)
+    if (key.screen == key.lamp || key.screen == key.manual)
     {
         firstPage();
         do
@@ -456,7 +456,7 @@ void Screen::lampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &k
 
 void Screen::lampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Bright &bright)
 {
-    if (key.screen == key.lamp || key.screen == key.duration || key.screen == key.manual)
+    if (key.screen == key.lamp || key.screen == key.manual)
     {
         firstPage();
         do
