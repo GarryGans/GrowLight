@@ -280,7 +280,7 @@ void Screen::brightInfo(Bright &bright, Key &key, Timer &timer)
 
 void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot)
 {
-    if (watch.skip[key.id] && key.screen != key.manual && key.screen != key.bright && key.screen != key.duration)
+    if (watch.skip[key.id] && key.screen != key.manual)
     {
         setFont(u8g2_font_pixelmordred_tf);
         textAlign("SKIP", PosX::center, PosY::downSpace);
@@ -289,24 +289,24 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot)
     else if (key.screen == key.manual)
     {
         setFont(u8g2_font_pressstart2p_8f);
-
         textAlign("MANUAL", PosX::leftHalf, PosY::downSpace);
+
         brightInfo(pot, key, timer);
     }
 
     else
     {
         setFont(u8g2_font_courB08_tn);
+        getSetCursor("00:00-00:00", PosX::leftSpace, PosY::downSpace);
 
-        blinkSpectrumTime(watch, timer, key);
-
+        showSpectrumTime(watch, key.id);
         brightInfo(pot, key, timer);
     }
 }
 
 void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright)
 {
-    if (watch.skip[key.id] && key.screen != key.manual && key.screen != key.bright && key.screen != key.duration)
+    if (watch.skip[key.id] && key.screen != key.manual)
     {
         setFont(u8g2_font_pressstart2p_8f);
         textAlign("SKIP", PosX::center, PosY::downSpace);
@@ -315,17 +315,17 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright)
     else if (key.screen == key.manual)
     {
         setFont(u8g2_font_pixelmordred_tf);
-        textAlign("manual", PosX::leftHalf, PosY::downSpace);
 
+        textAlign("manual", PosX::leftHalf, PosY::downSpace);
         brightInfo(bright, key, timer);
     }
 
     else
     {
         setFont(u8g2_font_courB08_tn);
+        getSetCursor("00:00-00:00", PosX::leftSpace, PosY::downSpace);
 
-        blinkSpectrumTime(watch, timer, key);
-
+        showSpectrumTime(watch, key.id);
         brightInfo(bright, key, timer);
     }
 }
@@ -442,7 +442,7 @@ void Screen::timerScreen(Watch &watch, Timer &timer, Key &key)
 
 void Screen::lampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Pot &pot)
 {
-    if (key.screen == key.lamp || key.screen == key.bright || key.screen == key.duration || key.screen == key.manual)
+    if (key.screen == key.lamp || key.screen == key.duration || key.screen == key.manual)
     {
         firstPage();
         do
@@ -531,15 +531,6 @@ void Screen::blinkFrameYear(int year, byte x, byte y, Timer &timer)
     {
         drawFrame(x, y, getStrWidth(val) + 3, getMaxCharWidth());
     }
-}
-
-void Screen::blinkSpectrumTime(Watch &watch, Timer &timer, Key &key)
-{
-    setFont(u8g2_font_courB08_tn);
-
-    getSetCursor("00:00-00:00", PosX::leftSpace, PosY::downSpace);
-
-    showSpectrumTime(watch, key.id);
 }
 
 void Screen::showSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
@@ -672,9 +663,9 @@ void Screen::blinkHeaderDate(Key &key, Watch &watch, Timer &timer)
     }
 }
 
-void Screen::startScreen(Watch &watch, Key &key, Timer &timer)
+void Screen::setWatchScreen(Watch &watch, Key &key, Timer &timer)
 {
-    if (key.screen == key.start || key.screen == key.watch || key.screen == key.dayDuration)
+    if (key.screen == key.watch)
     {
         firstPage();
         do
@@ -682,12 +673,37 @@ void Screen::startScreen(Watch &watch, Key &key, Timer &timer)
             blinkHeaderDate(key, watch, timer);
             blinkHeaderTime(key, watch, timer);
 
+        } while (nextPage());
+
+        if (key.screen == key.watch)
+        {
+            timer.resetCounter();
+        }
+
+        else if (timer.unfrize())
+        {
+            key.screen = key.lamp;
+            key.autoMove = true;
+        }
+    }
+}
+
+void Screen::startScreen(Watch &watch, Key &key, Timer &timer)
+{
+    if (key.screen == key.start || key.screen == key.dayDuration)
+    {
+        firstPage();
+        do
+        {
+            headerDate(watch);
+            headerTime(watch);
+
             showSunRise(key, timer, watch, watch.RiseHour, watch.RiseMin);
             showSunSet(key, timer, watch, watch.SetHour, watch.SetMin);
 
         } while (nextPage());
 
-        if (key.screen == key.dayDuration || key.screen == key.watch)
+        if (key.screen == key.dayDuration)
         {
             timer.resetCounter();
         }

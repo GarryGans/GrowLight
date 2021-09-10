@@ -107,8 +107,6 @@ public:
     void blinkFrame(byte value, byte x, byte y, Timer &timer);
     void blinkFrameYear(int year, byte x, byte y, Timer &timer);
 
-    void blinkSpectrumTime(Watch &watch, Timer &timer, Key &key);
-
     void showStringTime(byte hh, byte mm);
     void showStringWatch(byte hh, byte mm, byte ss);
     void showStringDate(byte day, byte month, int year);
