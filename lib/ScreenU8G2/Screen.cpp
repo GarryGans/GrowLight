@@ -544,23 +544,6 @@ void Screen::showSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
 
     setCursor(60, 30);
     showStringTime(hh, mm);
-
-    if (key.screen == key.dayDuration)
-    {
-        switch (watch.cursorDay)
-        {
-        case 0:
-            blinkFrame(hh, 60, 30, timer);
-            break;
-
-        case 1:
-            blinkFrame(mm, 60 + getStrWidth("00:"), 30, timer);
-            break;
-
-        default:
-            break;
-        }
-    }
 }
 
 void Screen::showSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
@@ -574,58 +557,32 @@ void Screen::showSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
 
     setCursor(60, 52);
     showStringTime(hh, mm);
-
-    if (key.screen == key.dayDuration)
-    {
-        switch (watch.cursorDay)
-        {
-        case 2:
-            blinkFrame(hh, 60, 52, timer);
-            break;
-
-        case 3:
-            blinkFrame(mm, 60 + getStrWidth("00:"), 52, timer);
-            break;
-
-        default:
-            break;
-        }
-    }
 }
 
 void Screen::blinkHeaderTime(Key &key, Watch &watch, Timer &timer)
 {
     setFont(u8g2_font_courB08_tn);
 
-    setCursor(74, 8);
+    getSetCursor("00:00:00", PosX::center, PosY::downHalf);
 
-    if (key.screen == key.watch)
+    showStringWatch(watch.hour, watch.min, watch.sec);
+
+    switch (watch.cursorDateTime)
     {
+    case 3:
+        blinkFrame(watch.hour, 74, 0, timer);
+        break;
 
-        showStringWatch(watch.hour, watch.min, watch.sec);
+    case 4:
+        blinkFrame(watch.min, 74 + getStrWidth("00:"), 0, timer);
+        break;
 
-        switch (watch.cursorDateTime)
-        {
-        case 3:
-            blinkFrame(watch.hour, 74, 0, timer);
-            break;
+    case 5:
+        blinkFrame(watch.sec, 74 + getStrWidth("00:00:"), 0, timer);
+        break;
 
-        case 4:
-            blinkFrame(watch.min, 74 + getStrWidth("00:"), 0, timer);
-            break;
-
-        case 5:
-            blinkFrame(watch.sec, 74 + getStrWidth("00:00:"), 0, timer);
-            break;
-
-        default:
-            break;
-        }
-    }
-
-    else
-    {
-        headerTime(watch);
+    default:
+        break;
     }
 }
 
@@ -633,33 +590,28 @@ void Screen::blinkHeaderDate(Key &key, Watch &watch, Timer &timer)
 {
     setFont(u8g2_font_courB08_tf);
 
-    setCursor(0, 9);
+    getSetCursor("00/00/0000", PosX::center, PosY::upHalf);
 
-    if (key.screen == key.watch)
+    showStringDate(watch.day, watch.month, watch.year);
+
+    // textAlign(daysOfTheWeek[now.dayOfTheWeek()], PosX::center, PosY::center);
+
+    switch (watch.cursorDateTime)
     {
-        showStringDate(watch.day, watch.month, watch.year);
+    case 0:
+        blinkFrame(watch.day, 0, 0, timer);
+        break;
 
-        switch (watch.cursorDateTime)
-        {
-        case 0:
-            blinkFrame(watch.day, 0, 0, timer);
-            break;
+    case 1:
+        blinkFrame(watch.month, getStrWidth("00/"), 0, timer);
+        break;
 
-        case 1:
-            blinkFrame(watch.month, getStrWidth("00/"), 0, timer);
-            break;
+    case 2:
+        blinkFrameYear(watch.year, getStrWidth("00/00/"), 0, timer);
+        break;
 
-        case 2:
-            blinkFrameYear(watch.year, getStrWidth("00/00/"), 0, timer);
-            break;
-
-        default:
-            break;
-        }
-    }
-    else
-    {
-        headerDate(watch);
+    default:
+        break;
     }
 }
 
@@ -675,22 +627,94 @@ void Screen::setWatchScreen(Watch &watch, Key &key, Timer &timer)
 
         } while (nextPage());
 
-        if (key.screen == key.watch)
-        {
-            timer.resetCounter();
-        }
+        // if (timer.unfrize())
+        // {
+        //     key.setDateTime = true;
+        //     key.screen = key.lamp;
+        //     key.autoMove = true;
+        // }
+    }
+}
 
-        else if (timer.unfrize())
+void Screen::blinkSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
+{
+    setFont(u8g2_font_courB08_tf);
+
+    setCursor(5, 30);
+    print("Sun Rise:");
+
+    setFont(u8g2_font_pressstart2p_8f);
+
+    setCursor(60, 30);
+    showStringTime(hh, mm);
+
+    switch (watch.cursorDay)
+    {
+    case 0:
+        blinkFrame(hh, 60, 30, timer);
+        break;
+
+    case 1:
+        blinkFrame(mm, 60 + getStrWidth("00:"), 30, timer);
+        break;
+
+    default:
+        break;
+    }
+}
+
+void Screen::blinkSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
+{
+    setFont(u8g2_font_courB08_tf);
+
+    setCursor(5, 52);
+    print("Sun Set:");
+
+    setFont(u8g2_font_pressstart2p_8f);
+
+    setCursor(60, 52);
+    showStringTime(hh, mm);
+
+    switch (watch.cursorDay)
+    {
+    case 2:
+        blinkFrame(hh, 60, 52, timer);
+        break;
+
+    case 3:
+        blinkFrame(mm, 60 + getStrWidth("00:"), 52, timer);
+        break;
+
+    default:
+        break;
+    }
+}
+
+void Screen::sunTimeScreen(Watch &watch, Key &key, Timer &timer)
+{
+    if (key.screen == key.dayDuration)
+    {
+        firstPage();
+        do
         {
-            key.screen = key.lamp;
-            key.autoMove = true;
-        }
+            blinkSunRise(key, timer, watch, watch.RiseHour, watch.RiseMin);
+            blinkSunSet(key, timer, watch, watch.SetHour, watch.SetMin);
+
+        } while (nextPage());
+
+        // if (timer.unfrize())
+        // {
+        //     key.writeDay = true;
+        //     key.correctDay = true;
+        //     key.screen = key.lamp;
+        //     key.autoMove = true;
+        // }
     }
 }
 
 void Screen::startScreen(Watch &watch, Key &key, Timer &timer)
 {
-    if (key.screen == key.start || key.screen == key.dayDuration)
+    if (key.screen == key.start)
     {
         firstPage();
         do
@@ -703,15 +727,29 @@ void Screen::startScreen(Watch &watch, Key &key, Timer &timer)
 
         } while (nextPage());
 
-        if (key.screen == key.dayDuration)
-        {
-            timer.resetCounter();
-        }
-
-        else if (timer.unfrize() && key.screen == key.start)
+        if (timer.unfrize())
         {
             key.screen = key.lamp;
             key.autoMove = true;
         }
     }
+}
+
+void Screen::screens(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Pot &pot)
+{
+    startScreen(watch, key, timer);
+    lampScreen(watch, switchers, timer, key, pot);
+    setWatchScreen(watch, key, timer);
+    sunTimeScreen(watch, key, timer);
+    timerScreen(watch, timer, key);
+}
+
+void Screen::screens(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Bright &bright)
+{
+    startScreen(watch, key, timer);
+    lampScreen(watch, switchers, timer, key, bright);
+    setWatchScreen(watch, key, timer);
+    sunTimeScreen(watch, key, timer);
+    timerScreen(watch, timer, key);
+    showBrightScreen(bright, key, timer);
 }

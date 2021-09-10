@@ -46,13 +46,8 @@ void loop()
     // pot.autoBright(watch, key, timer);
     bright.autoBright(watch, key, timer);
 
-    screen.startScreen(watch, key, timer);
     watch.dayReduration(key, timer);
     watch.setWatch(key, timer);
-
-    // screen.lampScreen(watch, switchers, timer, key, pot);
-    screen.lampScreen(watch, switchers, timer, key, bright);
-    screen.showBrightScreen(bright, key, timer);
 
     watch.spectrumReDuration(key, timer);
 
@@ -62,6 +57,10 @@ void loop()
     bright.changeMaxBright(key, watch, timer);
 
     key.keyCommands(timer);
+
+    // screen.screens(watch,switchers,timer,key,pot);
+    screen.screens(watch, switchers, timer, key, bright);
+
     // memory.writeChanges(watch, pot, key);
     memory.writeChanges(watch, bright, key);
 }

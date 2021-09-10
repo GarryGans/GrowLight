@@ -130,10 +130,20 @@ public:
     void lampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Pot &pot);
     void lampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Bright &bright);
 
+    void setWatchScreen(Watch &watch, Key &key, Timer &timer);
+
+    void blinkSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm);
+    void blinkSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm);
+
+    void sunTimeScreen(Watch &watch, Key &key, Timer &timer);
+
     void showSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm);
     void showSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm);
 
     void startScreen(Watch &watch, Key &key, Timer &timer);
+
+    void screens(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Pot &pot);
+    void screens(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Bright &bright);
 };
 
 #endif
