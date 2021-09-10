@@ -368,6 +368,31 @@ void Screen::headerDate(Watch &watch)
     textAlign(daysOfTheWeek[now.dayOfTheWeek()], PosX::leftHalf, PosY::upHalf);
 }
 
+void Screen::showBrightScreen(Pot &pot, Key &key, Timer &timer)
+{
+    if (key.screen == key.bright)
+    {
+        firstPage();
+        do
+        {
+            setFont(u8g2_font_pressstart2p_8f);
+
+            textAlign("Max Bright", PosX::center, PosY::upSpace);
+
+            setFont(u8g2_font_courB18_tr);
+
+            stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
+
+            digAlign(pot.maxBright[key.id], PosX::rightHalf, PosY::center);
+
+            if (timer.blinkReady())
+            {
+                frameAlign(getDigWidth(pot.maxBright[key.id]), getMaxCharWidth(), PosX::rightHalf, PosY::centerFrame);
+            }
+        } while (nextPage());
+    }
+}
+
 void Screen::showBrightScreen(Bright &bright, Key &key, Timer &timer)
 {
     if (key.screen == key.bright)
@@ -638,11 +663,13 @@ void Screen::setWatchScreen(Watch &watch, Key &key, Timer &timer)
 
 void Screen::blinkSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
 {
+    // setFont(u8g2_font_courB08_tf);
+    // print("Sun Set:");
 
-    // setFont(u8g2_font_pressstart2p_8f);
+    setFont(u8g2_font_pressstart2p_8f);
+    getSetCursor("00:00", PosX::center, PosY::upHalf);
 
-    // setCursor(60, 30);
-    // showStringTime(hh, mm);
+    showStringTime(hh, mm);
 
     switch (watch.cursorDay)
     {
@@ -662,13 +689,12 @@ void Screen::blinkSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm
 void Screen::blinkSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
 {
     // setFont(u8g2_font_courB08_tf);
-
-    // setCursor(5, 52);
     // print("Sun Set:");
 
-    setFont(u8g2_font_pressstart2p_8f);
 
-    setCursor(60, 52);
+    setFont(u8g2_font_pressstart2p_8f);
+    getSetCursor("00:00", PosX::center, PosY::downHalf);
+
     showStringTime(hh, mm);
 
     switch (watch.cursorDay)
@@ -738,6 +764,7 @@ void Screen::screens(Watch &watch, Switchers &switchers, Timer &timer, Key &key,
     setWatchScreen(watch, key, timer);
     sunTimeScreen(watch, key, timer);
     timerScreen(watch, timer, key);
+    showBrightScreen(pot, key, timer);
 }
 
 void Screen::screens(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Bright &bright)

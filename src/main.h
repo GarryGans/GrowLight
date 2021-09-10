@@ -24,18 +24,18 @@ byte keyPin[] = {9, 8, 7, 6, 5, 4, 3, 2};
 // byte keyPin[] = {32, 34, 36, 38, 40, 42, 44, 46};
 
 //SINGLE VERSION
-// String WavelengthSMD[] = {"3500k+UV+RED+FR"};
+String WavelengthSMD[] = {"3500k+UV+RED+FR"};
 
-// String lightColor[] = {"QB"};
+String lightColor[] = {"QB"};
 
 // DigiPot potent[] = {
 //     DigiPot(2, 3, 4)};
 
 // VERSION PEPPER
-String WavelengthSMD[] = {"3500k+6500k",
-                          "385nm+660nm+730nm+WC"};
+// String WavelengthSMD[] = {"3500k+6500k",
+//                           "385nm+660nm+730nm+WC"};
 
-String lightColor[] = {"WC", "UFR"};
+// String lightColor[] = {"WC", "UFR"};
 
 // DigiPot potent[] = {
 //     DigiPot(2, 3, 4),
