@@ -33,7 +33,7 @@ private:
         rightSpace,
         rightHalf,
         custom
-    } position_x;
+    } pos_x;
 
     enum class PosY
     {
@@ -50,7 +50,7 @@ private:
         downFrame,
         downFrameHalf,
         custom
-    } position_y;
+    } pos_y;
 
     const byte screenWidth = 128;
     const byte screenHeight = 64;
@@ -124,16 +124,18 @@ public:
 
     void showBrightScreen(Bright &bright, Key &key, Timer &timer);
 
-    void showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Pot &pot);
-    void showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Bright &bright);
-
-    void showStartScreen(Watch &watch, Key &key, Timer &timer);
-
     void blinkHeaderDate(Key &key, Watch &watch, Timer &timer);
     void blinkHeaderTime(Key &key, Watch &watch, Timer &timer);
 
+    void timerScreen(Watch &watch, Timer &timer, Key &key);
+
+    void lampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Pot &pot);
+    void lampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Bright &bright);
+
     void showSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm);
     void showSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm);
+
+    void startScreen(Watch &watch, Key &key, Timer &timer);
 };
 
 #endif

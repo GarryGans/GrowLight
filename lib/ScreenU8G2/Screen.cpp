@@ -393,7 +393,54 @@ void Screen::showBrightScreen(Bright &bright, Key &key, Timer &timer)
     }
 }
 
-void Screen::showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Pot &pot)
+void Screen::timerScreen(Watch &watch, Timer &timer, Key &key)
+{
+    if (key.screen == key.duration)
+    {
+        firstPage();
+        do
+        {
+            setFont(u8g2_font_courB08_tn);
+
+            textAlign("Set Spectrum Time", PosX::center, PosY::upSpace);
+
+            setFont(u8g2_font_courB08_tn);
+
+            getSetCursor("00:00", PosX::center, PosY::upHalf);
+
+            showStringTime(watch.startHour[key.id], watch.startMinute[key.id]);
+
+            getSetCursor("00:00", PosX::center, PosY::downSpace);
+
+            showStringTime(watch.finishHour[key.id], watch.finishMinute[key.id]);
+
+            switch (watch.cursorSpectrum)
+            {
+            case 0:
+                blinkFrame(watch.startHour[key.id], x, 57, timer);
+                break;
+
+            case 1:
+                blinkFrame(watch.startMinute[key.id], nextX(watch.startHour[key.id], 5, ":"), 57, timer);
+                break;
+
+            case 2:
+                blinkFrame(watch.finishHour[key.id], 5 + getStrWidth("00:00-"), 57, timer);
+                break;
+
+            case 3:
+                blinkFrame(watch.finishMinute[key.id], 5 + getStrWidth("00:00-00:"), 57, timer);
+                break;
+
+            default:
+                break;
+            }
+
+        } while (nextPage());
+    }
+}
+
+void Screen::lampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Pot &pot)
 {
     if (key.screen == key.lamp || key.screen == key.bright || key.screen == key.duration || key.screen == key.manual)
     {
@@ -407,7 +454,7 @@ void Screen::showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Ke
     }
 }
 
-void Screen::showLampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Bright &bright)
+void Screen::lampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Bright &bright)
 {
     if (key.screen == key.lamp || key.screen == key.duration || key.screen == key.manual)
     {
@@ -493,31 +540,6 @@ void Screen::blinkSpectrumTime(Watch &watch, Timer &timer, Key &key)
     getSetCursor("00:00-00:00", PosX::leftSpace, PosY::downSpace);
 
     showSpectrumTime(watch, key.id);
-
-    if (key.screen == key.duration)
-    {
-        switch (watch.cursorSpectrum)
-        {
-        case 0:
-            blinkFrame(watch.startHour[key.id], x, 57, timer);
-            break;
-
-        case 1:
-            blinkFrame(watch.startMinute[key.id], nextX(watch.startHour[key.id], 5, ":"), 57, timer);
-            break;
-
-        case 2:
-            blinkFrame(watch.finishHour[key.id], 5 + getStrWidth("00:00-"), 57, timer);
-            break;
-
-        case 3:
-            blinkFrame(watch.finishMinute[key.id], 5 + getStrWidth("00:00-00:"), 57, timer);
-            break;
-
-        default:
-            break;
-        }
-    }
 }
 
 void Screen::showSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
@@ -650,7 +672,7 @@ void Screen::blinkHeaderDate(Key &key, Watch &watch, Timer &timer)
     }
 }
 
-void Screen::showStartScreen(Watch &watch, Key &key, Timer &timer)
+void Screen::startScreen(Watch &watch, Key &key, Timer &timer)
 {
     if (key.screen == key.start || key.screen == key.watch || key.screen == key.dayDuration)
     {
