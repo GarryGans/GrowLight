@@ -23,7 +23,7 @@ private:
 
     char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
-    enum class PositionX
+    enum  PositionX
     {
         centerX,
         left,
@@ -35,7 +35,7 @@ private:
         customX
     } position_x;
 
-    enum class PositionY
+    enum PositionY
     {
         centerY,
         up,
@@ -115,7 +115,6 @@ public:
 
     void brightInfo(Pot &pot, Key &key, Timer &timer);
     void brightInfo(Bright &bright, Key &key, Timer &timer);
-
 
     void bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot);
     void bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright);

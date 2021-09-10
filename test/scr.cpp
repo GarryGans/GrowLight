@@ -1,4 +1,4 @@
-#include "Screen.h"
+#include "Scr.h"
 
 // Screen::Screen(String WavelengthSMD[], String lightColor[]) : U8G2_SH1106_128X64_NONAME_1_HW_I2C(U8G2_R0, /* reset=*/U8X8_PIN_NONE)
 Screen::Screen(String WavelengthSMD[], String lightColor[]) : U8G2_SSD1306_128X64_NONAME_1_HW_I2C(U8G2_R0, /* reset=*/U8X8_PIN_NONE)
@@ -19,35 +19,35 @@ void Screen::align(byte W, byte H, PositionX position_x, PositionY position_y)
 {
     switch (position_x)
     {
-    case PositionX::centerX:
+    case centerX:
         x = (screenWidth - W) / 2;
         break;
 
-    case PositionX::left:
+    case left:
         x = 0;
         break;
 
-    case PositionX::leftSpace:
+    case leftSpace:
         x = W / 8;
         break;
 
-    case PositionX::leftHalf:
+    case leftHalf:
         x = (screenWidth / 2 - W) / 2;
         break;
 
-    case PositionX::right:
+    case right:
         x = screenWidth - W;
         break;
 
-    case PositionX::rightSpace:
+    case rightSpace:
         x = screenWidth - (W + W / 8);
         break;
 
-    case PositionX::rightHalf:
+    case rightHalf:
         x = (screenWidth + screenWidth / 2 - W) / 2;
         break;
 
-    case PositionX::customX:
+    case customX:
         x = setX;
         break;
 
@@ -251,8 +251,8 @@ void Screen::iGorLogo()
     do
     {
         setFont(u8g2_font_timB14_tf);
-        textAlign("Smart Garden", PositionX::centerX, up);
-        textAlign("iGor_2019", PositionX::centerX, centerY);
+        textAlign("Smart Garden", centerX, up);
+        textAlign("iGor_2019", centerX, centerY);
 
     } while (nextPage());
 }
@@ -278,14 +278,14 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot)
     if (watch.skip[key.id] && key.screen != key.manual && key.screen != key.bright && key.screen != key.duration)
     {
         setFont(u8g2_font_pressstart2p_8f);
-        textAlign("SKIP", PositionX::centerX, downHalf);
+        textAlign("SKIP", centerX, downHalf);
     }
 
     else if (key.screen == key.manual)
     {
         setFont(u8g2_font_pixelmordred_tf);
 
-        textAlign("manual", PositionX::leftHalf, downHalf);
+        textAlign("manual", leftHalf, downHalf);
         brightInfo(pot, key, timer);
     }
 
@@ -304,13 +304,13 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright)
     if (watch.skip[key.id] && key.screen != key.manual && key.screen != key.bright && key.screen != key.duration)
     {
         setFont(u8g2_font_pressstart2p_8f);
-        textAlign("SKIP", PositionX::centerX, downHalf);
+        textAlign("SKIP", centerX, downHalf);
     }
 
     else if (key.screen == key.manual)
     {
         setFont(u8g2_font_pixelmordred_tf);
-        textAlign("manual", PositionX::leftHalf, downHalf);
+        textAlign("manual", leftHalf, downHalf);
 
         brightInfo(bright, key, timer);
     }
@@ -329,13 +329,13 @@ void Screen::lampInfo(Watch &watch, Key &key)
 {
     setFont(u8g2_font_courB08_tf);
 
-    stringAlign(WavelengthSMD[key.id], 21, PositionX::left, upHalf);
+    stringAlign(WavelengthSMD[key.id], 21, left, upHalf);
 
     setFont(u8g2_font_courB18_tr);
 
-    stringAlign(lightColor[key.id], 4, PositionX::leftHalf, centerY);
+    stringAlign(lightColor[key.id], 4, leftHalf, centerY);
 
-    stringAlign(state[watch.autoSwitch[key.id] || key.buttonSwitch[key.id]], 4, PositionX::rightHalf, centerY);
+    stringAlign(state[watch.autoSwitch[key.id] || key.buttonSwitch[key.id]], 4, rightHalf, centerY);
 }
 
 void Screen::headerTime(Watch &watch)
@@ -360,7 +360,7 @@ void Screen::headerDate(Watch &watch)
     showStringDate(now.day(), now.month(), now.year());
 
     setY = 16;
-    textAlign(daysOfTheWeek[now.dayOfTheWeek()], PositionX::left, customY);
+    textAlign(daysOfTheWeek[now.dayOfTheWeek()], left, customY);
 }
 
 void Screen::showBrightScreen(Bright &bright, Key &key, Timer &timer)
@@ -372,17 +372,17 @@ void Screen::showBrightScreen(Bright &bright, Key &key, Timer &timer)
         {
             setFont(u8g2_font_pressstart2p_8f);
 
-            textAlign("Max Bright", PositionX::centerX, upSpace);
+            textAlign("Max Bright", centerX, upSpace);
 
             setFont(u8g2_font_courB18_tr);
 
-            stringAlign(lightColor[key.id], 4, PositionX::leftHalf, centerY);
+            stringAlign(lightColor[key.id], 4, leftHalf, centerY);
 
-            digAlign(bright.maxBright[key.id], PositionX::rightHalf, centerY);
+            digAlign(bright.maxBright[key.id], rightHalf, centerY);
 
             if (timer.blinkReady())
             {
-                frameAlign(getDigWidth(bright.maxBright[key.id]), getMaxCharWidth(), PositionX::rightHalf, centerFrame);
+                frameAlign(getDigWidth(bright.maxBright[key.id]), getMaxCharWidth(), rightHalf, centerFrame);
             }
         } while (nextPage());
     }
