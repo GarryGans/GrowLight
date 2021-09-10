@@ -23,9 +23,9 @@ private:
 
     char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
-    enum class PositionX
+    enum class PosX
     {
-        centerX,
+        center,
         left,
         leftSpace,
         leftHalf,
@@ -35,9 +35,9 @@ private:
         customX
     } position_x;
 
-    enum class PositionY
+    enum class PosY
     {
-        centerY,
+        center,
         up,
         upSpace,
         upHalf,
@@ -82,13 +82,13 @@ public:
 
     byte getDigWidth(byte value);
 
-    void align(byte WH, byte H, PositionX position_x, PositionY position_y);
-    void frameAlign(byte W, byte H, PositionX position_x, PositionY position_y);
-    void iconAlign(int icon, byte iconWH, PositionX position_x, PositionY position_y);
-    void digStringAlign(byte dig, const char *string, PositionX position_x, PositionY position_y);
-    void digAlign(byte dig, PositionX position_x, PositionY position_y);
-    void textAlign(const char *string, PositionX position_x, PositionY position_y);
-    void stringAlign(String str, byte size, PositionX position_x, PositionY position_y);
+    void align(byte WH, byte H, PosX position_x, PosY position_y);
+    void frameAlign(byte W, byte H, PosX position_x, PosY position_y);
+    void iconAlign(int icon, byte iconWH, PosX position_x, PosY position_y);
+    void digStringAlign(byte dig, const char *string, PosX position_x, PosY position_y);
+    void digAlign(byte dig, PosX position_x, PosY position_y);
+    void textAlign(const char *string, PosX position_x, PosY position_y);
+    void stringAlign(String str, byte size, PosX position_x, PosY position_y);
 
     void mover(byte deep_x);
     void moveString(Timer &timer, byte end_x, byte bottom_y, const char *string);

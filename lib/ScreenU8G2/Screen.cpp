@@ -15,39 +15,39 @@ Screen::~Screen()
 {
 }
 
-void Screen::align(byte W, byte H, PositionX position_x, PositionY position_y)
+void Screen::align(byte W, byte H, PosX position_x, PosY position_y)
 {
     switch (position_x)
     {
-    case PositionX::centerX:
+    case PosX::center:
         x = (screenWidth - W) / 2;
         break;
 
-    case PositionX::left:
+    case PosX::left:
         x = 0;
         break;
 
-    case PositionX::leftSpace:
+    case PosX::leftSpace:
         x = W / 8;
         break;
 
-    case PositionX::leftHalf:
+    case PosX::leftHalf:
         x = (screenWidth / 2 - W) / 2;
         break;
 
-    case PositionX::right:
+    case PosX::right:
         x = screenWidth - W;
         break;
 
-    case PositionX::rightSpace:
+    case PosX::rightSpace:
         x = screenWidth - (W + W / 8);
         break;
 
-    case PositionX::rightHalf:
+    case PosX::rightHalf:
         x = (screenWidth + screenWidth / 2 - W) / 2;
         break;
 
-    case PositionX::customX:
+    case PosX::custom:
         x = setX;
         break;
 
@@ -57,55 +57,55 @@ void Screen::align(byte W, byte H, PositionX position_x, PositionY position_y)
 
     switch (position_y)
     {
-    case centerY:
+    case PosY::center:
         y = (screenHeight + H) / 2;
         break;
 
-    case up:
+    case PosY::up:
         y = H;
         break;
 
-    case upSpace:
+    case PosY::upSpace:
         y = H + H / 4;
         break;
 
-    case upHalf:
+    case PosY::upHalf:
         y = (screenHeight / 2 - H) / 2 + H;
         break;
 
-    case down:
+    case PosY::down:
         y = screenHeight;
         break;
 
-    case downSpace:
+    case PosY::downSpace:
         y = screenHeight - H / 4;
         break;
 
-    case downHalf:
+    case PosY::downHalf:
         y = (screenHeight + screenHeight / 2 - H) / 2 + H;
         break;
 
-    case centerFrame:
+    case PosY::centerFrame:
         y = (screenHeight - H) / 2;
         break;
 
-    case upFrame:
+    case PosY::upFrame:
         y = 0;
         break;
 
-    case upFrameHalf:
+    case PosY::upFrameHalf:
         y = (screenHeight / 2 - H) / 2;
         break;
 
-    case downFrame:
+    case PosY::downFrame:
         y = screenHeight - H;
         break;
 
-    case downFrameHalf:
+    case PosY::downFrameHalf:
         y = (screenHeight + screenHeight / 2 - H) / 2;
         break;
 
-    case customY:
+    case PosY::custom:
         y = setY;
         break;
 
@@ -122,7 +122,7 @@ byte Screen::getDigWidth(byte value)
     return getStrWidth(val);
 }
 
-void Screen::textAlign(const char *string, PositionX position_x, PositionY position_y)
+void Screen::textAlign(const char *string, PosX position_x, PosY position_y)
 {
     align(getStrWidth(string), getMaxCharWidth(), position_x, position_y);
 
@@ -130,7 +130,7 @@ void Screen::textAlign(const char *string, PositionX position_x, PositionY posit
     print(string);
 }
 
-void Screen::stringAlign(String str, byte size, PositionX position_x, PositionY position_y)
+void Screen::stringAlign(String str, byte size, PosX position_x, PosY position_y)
 {
     char light[size];
 
@@ -139,7 +139,7 @@ void Screen::stringAlign(String str, byte size, PositionX position_x, PositionY 
     textAlign(light, position_x, position_y);
 }
 
-void Screen::digStringAlign(byte dig, const char *string, PositionX position_x, PositionY position_y)
+void Screen::digStringAlign(byte dig, const char *string, PosX position_x, PosY position_y)
 {
     align(getDigWidth(dig) + getStrWidth(string), getMaxCharWidth(), position_x, position_y);
 
@@ -149,7 +149,7 @@ void Screen::digStringAlign(byte dig, const char *string, PositionX position_x, 
     print(string);
 }
 
-void Screen::digAlign(byte dig, PositionX position_x, PositionY position_y)
+void Screen::digAlign(byte dig, PosX position_x, PosY position_y)
 {
     align(getDigWidth(dig), getMaxCharWidth(), position_x, position_y);
 
@@ -157,7 +157,7 @@ void Screen::digAlign(byte dig, PositionX position_x, PositionY position_y)
     print(dig);
 }
 
-void Screen::frameAlign(byte W, byte H, PositionX position_x, PositionY position_y)
+void Screen::frameAlign(byte W, byte H, PosX position_x, PosY position_y)
 {
     W += W / 4;
     H += H / 2;
@@ -166,7 +166,7 @@ void Screen::frameAlign(byte W, byte H, PositionX position_x, PositionY position
     drawFrame(x, y, W, H);
 }
 
-void Screen::iconAlign(int icon, byte iconWH, PositionX position_x, PositionY position_y)
+void Screen::iconAlign(int icon, byte iconWH, PosX position_x, PosY position_y)
 {
     align(iconWH, iconWH, position_x, position_y);
     drawGlyph(x, y, icon);
@@ -251,8 +251,8 @@ void Screen::iGorLogo()
     do
     {
         setFont(u8g2_font_timB14_tf);
-        textAlign("Smart Garden", PositionX::centerX, up);
-        textAlign("iGor_2019", PositionX::centerX, centerY);
+        textAlign("Smart Garden", PosX::center, PosY::up);
+        textAlign("iGor_2019", PosX::center, PosY::center);
 
     } while (nextPage());
 }
@@ -278,14 +278,14 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot)
     if (watch.skip[key.id] && key.screen != key.manual && key.screen != key.bright && key.screen != key.duration)
     {
         setFont(u8g2_font_pressstart2p_8f);
-        textAlign("SKIP", PositionX::centerX, downHalf);
+        textAlign("SKIP", PosX::center, PosY::downHalf);
     }
 
     else if (key.screen == key.manual)
     {
         setFont(u8g2_font_pixelmordred_tf);
 
-        textAlign("manual", PositionX::leftHalf, downHalf);
+        textAlign("manual", PosX::leftHalf, PosY::downHalf);
         brightInfo(pot, key, timer);
     }
 
@@ -304,13 +304,13 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright)
     if (watch.skip[key.id] && key.screen != key.manual && key.screen != key.bright && key.screen != key.duration)
     {
         setFont(u8g2_font_pressstart2p_8f);
-        textAlign("SKIP", PositionX::centerX, downHalf);
+        textAlign("SKIP", PosX::center, PosY::downHalf);
     }
 
     else if (key.screen == key.manual)
     {
         setFont(u8g2_font_pixelmordred_tf);
-        textAlign("manual", PositionX::leftHalf, downHalf);
+        textAlign("manual", PosX::leftHalf, PosY::downHalf);
 
         brightInfo(bright, key, timer);
     }
@@ -329,13 +329,13 @@ void Screen::lampInfo(Watch &watch, Key &key)
 {
     setFont(u8g2_font_courB08_tf);
 
-    stringAlign(WavelengthSMD[key.id], 21, PositionX::left, upHalf);
+    stringAlign(WavelengthSMD[key.id], 21, PosX::left, PosY::upHalf);
 
     setFont(u8g2_font_courB18_tr);
 
-    stringAlign(lightColor[key.id], 4, PositionX::leftHalf, centerY);
+    stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
 
-    stringAlign(state[watch.autoSwitch[key.id] || key.buttonSwitch[key.id]], 4, PositionX::rightHalf, centerY);
+    stringAlign(state[watch.autoSwitch[key.id] || key.buttonSwitch[key.id]], 4, PosX::rightHalf, PosY::center);
 }
 
 void Screen::headerTime(Watch &watch)
@@ -360,7 +360,7 @@ void Screen::headerDate(Watch &watch)
     showStringDate(now.day(), now.month(), now.year());
 
     setY = 16;
-    textAlign(daysOfTheWeek[now.dayOfTheWeek()], PositionX::left, customY);
+    textAlign(daysOfTheWeek[now.dayOfTheWeek()], PosX::left, PosY::custom);
 }
 
 void Screen::showBrightScreen(Bright &bright, Key &key, Timer &timer)
@@ -372,17 +372,17 @@ void Screen::showBrightScreen(Bright &bright, Key &key, Timer &timer)
         {
             setFont(u8g2_font_pressstart2p_8f);
 
-            textAlign("Max Bright", PositionX::centerX, upSpace);
+            textAlign("Max Bright", PosX::center, PosY::upSpace);
 
             setFont(u8g2_font_courB18_tr);
 
-            stringAlign(lightColor[key.id], 4, PositionX::leftHalf, centerY);
+            stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
 
-            digAlign(bright.maxBright[key.id], PositionX::rightHalf, centerY);
+            digAlign(bright.maxBright[key.id], PosX::rightHalf, PosY::center);
 
             if (timer.blinkReady())
             {
-                frameAlign(getDigWidth(bright.maxBright[key.id]), getMaxCharWidth(), PositionX::rightHalf, centerFrame);
+                frameAlign(getDigWidth(bright.maxBright[key.id]), getMaxCharWidth(), PosX::rightHalf, PosY::centerFrame);
             }
         } while (nextPage());
     }
