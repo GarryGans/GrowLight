@@ -16,145 +16,6 @@ Screen::~Screen()
 {
 }
 
-
-byte Screen::getDigWidth(byte value)
-{
-    char val[4];
-    String(value).toCharArray(val, 4);
-
-    return getStrWidth(val);
-}
-
-void Screen::textAlign(const char *string, PosX position_x, PosY position_y)
-{
-    alignSimbols(getStrWidth(string), getMaxCharWidth(), position_x, position_y);
-
-    setCursor(x, y);
-    print(string);
-}
-
-void Screen::stringAlign(String str, byte size, PosX position_x, PosY position_y)
-{
-    char light[size];
-
-    String(str).toCharArray(light, size);
-
-    textAlign(light, position_x, position_y);
-}
-
-void Screen::digStringAlign(byte dig, const char *string, PosX position_x, PosY position_y)
-{
-    alignSimbols(getDigWidth(dig) + getStrWidth(string), getMaxCharWidth(), position_x, position_y);
-
-    setCursor(x, y);
-
-    print(dig);
-    print(string);
-}
-
-void Screen::digAlign(byte dig, PosX position_x, PosY position_y)
-{
-    alignSimbols(getDigWidth(dig), getMaxCharWidth(), position_x, position_y);
-
-    setCursor(x, y);
-    print(dig);
-}
-
-void Screen::setPosition(const char *string, PosX position_x, PosY position_y)
-{
-    alignSimbols(getStrWidth(string), getMaxCharWidth(), position_x, position_y);
-
-    setCursor(x, y);
-}
-
-void Screen::iconAlign(int icon, byte iconWH, PosX position_x, PosY position_y)
-{
-    alignSimbols(iconWH, iconWH, position_x, position_y);
-    drawGlyph(x, y, icon);
-}
-
-byte Screen::nextX(byte value, byte prewX = 0, const char *simbol = 0)
-{
-    return (getDigWidth(value) + prewX + getStrWidth(simbol));
-}
-
-void Screen::frameAlign(byte W, byte H, PosX position_x, PosY position_y)
-{
-    W += W / 4;
-    H += H / 2;
-
-    alignSimbols(W, H, position_x, position_y);
-    drawFrame(x, y, W, H);
-}
-
-void Screen::blinkFrame(byte value, byte x, byte y, Timer &timer)
-{
-    if (timer.blinkReady())
-    {
-        drawFrame(x, y - getMaxCharWidth(), getDigWidth(value) + 4, getMaxCharWidth() + 4);
-    }
-}
-
-void Screen::mover(byte deep_x)
-{
-    if (move_x > (start_x - deep_x) && moveLeft)
-    {
-        move_x--;
-        if (move_x == start_x - deep_x)
-        {
-            moveLeft = false;
-            moveRight = true;
-        }
-    }
-    else if (move_x < (deep_x + start_x) && moveRight)
-    {
-        move_x++;
-        if (move_x == deep_x + start_x)
-        {
-            moveRight = false;
-            moveLeft = true;
-        }
-    }
-}
-
-void Screen::moveString(Timer &timer, byte deep_x, byte bottom_y, const char *string)
-{
-    if (!move)
-    {
-        move_x = (screenWidth - getStrWidth(string)) / 2;
-        move = true;
-        moveLeft = true;
-        moveRight = false;
-    }
-
-    setCursor(move_x, bottom_y);
-    print(string);
-
-    if (timer.moveReady())
-    {
-        start_x = (screenWidth - getStrWidth(string)) / 2;
-        deep_x = constrain(deep_x, 0, start_x);
-        mover(deep_x);
-    }
-}
-
-void Screen::escapeBar(Timer &timer)
-{
-    if (!timer.escBar)
-    {
-        blockWidth = screenWidth / timer.maxEscapeCounter;
-        timer.escBar = true;
-    }
-
-    width = blockWidth * (timer.maxEscapeCounter - timer.escapeCounter);
-    drawBox(0, 58, width, 6);
-
-    if (width == blockWidth * timer.maxEscapeCounter)
-    {
-        timer.escBar = false;
-    }
-}
-
 void Screen::iGorLogo()
 {
     firstPage();
@@ -461,32 +322,6 @@ void Screen::blinkFrameYear(int year, byte x, byte y, Timer &timer)
     }
 }
 
-void Screen::showSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
-{
-    setFont(u8g2_font_courB08_tf);
-
-    setCursor(5, 30);
-    print("Sun Rise:");
-
-    setFont(u8g2_font_pressstart2p_8f);
-
-    setCursor(60, 30);
-    showStringTime(hh, mm);
-}
-
-void Screen::showSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
-{
-    setFont(u8g2_font_courB08_tf);
-
-    setCursor(5, 52);
-    print("Sun Set:");
-
-    setFont(u8g2_font_pressstart2p_8f);
-
-    setCursor(60, 52);
-    showStringTime(hh, mm);
-}
-
 void Screen::blinkHeaderTime(Key &key, Watch &watch, Timer &timer)
 {
     setFont(u8g2_font_courB08_tn);
@@ -564,51 +399,43 @@ void Screen::setWatchScreen(Watch &watch, Key &key, Timer &timer)
     }
 }
 
-void Screen::blinkSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
+void Screen::showSunTime(Watch &watch)
 {
-    setFont(u8g2_font_timB14_tr);
+    setFont(u8g2_font_pressstart2p_8f);
+    textAlign("Sun Rise:", PosX::leftSpace, PosY::upHalf);
 
-    textAlign("Sun Set:", PosX::center, PosY::upSpace);
+    setFont(u8g2_font_timB14_tr);
+    setPosition("00:00", PosX::rightSpace, PosY::upHalf);
+    showStringTime(watch.RiseHour, watch.RiseMin);
 
     setFont(u8g2_font_pressstart2p_8f);
-    setPosition("00:00", PosX::center, PosY::upHalf);
+    textAlign("Sun Set:", PosX::leftSpace, PosY::downHalf);
 
-    showStringTime(hh, mm);
+    setFont(u8g2_font_timB14_tr);
+    setPosition("00:00", PosX::rightSpace, PosY::downHalf);
+    showStringTime(watch.SetHour, watch.SetMin);
+}
+
+void Screen::blinkSunTime(Key &key, Timer &timer, Watch &watch)
+{
+    showSunTime(watch);
 
     switch (watch.cursorDay)
     {
     case 0:
-        blinkFrame(hh, 60, 30, timer);
+        blinkFrame(watch.RiseHour, 60, 30, timer);
         break;
 
     case 1:
-        blinkFrame(mm, 60 + getStrWidth("00:"), 30, timer);
+        blinkFrame(watch.RiseMin, 60 + getStrWidth("00:"), 30, timer);
         break;
 
-    default:
-        break;
-    }
-}
-
-void Screen::blinkSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
-{
-    setFont(u8g2_font_timB14_tr);
-    print("Sun Set:");
-
-
-    setFont(u8g2_font_pressstart2p_8f);
-    setPosition("00:00", PosX::center, PosY::downHalf);
-
-    showStringTime(hh, mm);
-
-    switch (watch.cursorDay)
-    {
     case 2:
-        blinkFrame(hh, 60, 52, timer);
+        blinkFrame(watch.SetHour, 60, 52, timer);
         break;
 
     case 3:
-        blinkFrame(mm, 60 + getStrWidth("00:"), 52, timer);
+        blinkFrame(watch.SetMin, 60 + getStrWidth("00:"), 52, timer);
         break;
 
     default:
@@ -623,8 +450,9 @@ void Screen::sunTimeScreen(Watch &watch, Key &key, Timer &timer)
         firstPage();
         do
         {
-            blinkSunRise(key, timer, watch, watch.RiseHour, watch.RiseMin);
-            blinkSunSet(key, timer, watch, watch.SetHour, watch.SetMin);
+            setFont(u8g2_font_pressstart2p_8f);
+            textAlign("Set SunTime", PosX::center, PosY::up);
+            blinkSunTime(key, timer, watch);
 
         } while (nextPage());
 
@@ -648,8 +476,7 @@ void Screen::startScreen(Watch &watch, Key &key, Timer &timer)
             headerDate(watch);
             headerTime(watch);
 
-            showSunRise(key, timer, watch, watch.RiseHour, watch.RiseMin);
-            showSunSet(key, timer, watch, watch.SetHour, watch.SetMin);
+            showSunTime(watch);
 
         } while (nextPage());
 

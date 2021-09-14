@@ -123,11 +123,9 @@ public:
     void blinkHeaderDate(Key &key, Watch &watch, Timer &timer);
     void blinkHeaderTime(Key &key, Watch &watch, Timer &timer);
 
-    void blinkSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm);
-    void blinkSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm);
+    void showSunTime(Watch &watch);
 
-    void showSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm);
-    void showSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm);
+    void blinkSunTime(Key &key, Timer &timer, Watch &watch);
 
     void timerScreen(Watch &watch, Timer &timer, Key &key);
 
