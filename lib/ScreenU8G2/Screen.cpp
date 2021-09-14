@@ -1,4 +1,5 @@
 #include "Screen.h"
+#include "Css.cpp"
 
 // Screen::Screen(String WavelengthSMD[], String lightColor[]) : U8G2_SH1106_128X64_NONAME_1_HW_I2C(U8G2_R0, /* reset=*/U8X8_PIN_NONE)
 Screen::Screen(String WavelengthSMD[], String lightColor[]) : U8G2_SSD1306_128X64_NONAME_1_HW_I2C(U8G2_R0, /* reset=*/U8X8_PIN_NONE)
@@ -15,104 +16,6 @@ Screen::~Screen()
 {
 }
 
-void Screen::align(byte W, byte H, PosX position_x, PosY position_y)
-{
-    switch (position_x)
-    {
-    case PosX::center:
-        x = (screenWidth - W) / 2;
-        break;
-
-    case PosX::left:
-        x = 0;
-        break;
-
-    case PosX::leftSpace:
-        x = W / 8;
-        break;
-
-    case PosX::leftHalf:
-        x = (screenWidth / 2 - W) / 2;
-        break;
-
-    case PosX::right:
-        x = screenWidth - W;
-        break;
-
-    case PosX::rightSpace:
-        x = screenWidth - (W + W / 8);
-        break;
-
-    case PosX::rightHalf:
-        x = (screenWidth + screenWidth / 2 - W) / 2;
-        break;
-
-    case PosX::custom:
-        x = setX;
-        break;
-
-    default:
-        break;
-    }
-
-    switch (position_y)
-    {
-    case PosY::center:
-        y = (screenHeight + H) / 2;
-        break;
-
-    case PosY::up:
-        y = H;
-        break;
-
-    case PosY::upSpace:
-        y = H + H / 4;
-        break;
-
-    case PosY::upHalf:
-        y = (screenHeight / 2 - H) / 2 + H;
-        break;
-
-    case PosY::down:
-        y = screenHeight;
-        break;
-
-    case PosY::downSpace:
-        y = screenHeight - H / 4;
-        break;
-
-    case PosY::downHalf:
-        y = (screenHeight + screenHeight / 2 - H) / 2 + H;
-        break;
-
-    case PosY::centerFrame:
-        y = (screenHeight - H) / 2;
-        break;
-
-    case PosY::upFrame:
-        y = 0;
-        break;
-
-    case PosY::upFrameHalf:
-        y = (screenHeight / 2 - H) / 2;
-        break;
-
-    case PosY::downFrame:
-        y = screenHeight - H;
-        break;
-
-    case PosY::downFrameHalf:
-        y = (screenHeight + screenHeight / 2 - H) / 2;
-        break;
-
-    case PosY::custom:
-        y = setY;
-        break;
-
-    default:
-        break;
-    }
-}
 
 byte Screen::getDigWidth(byte value)
 {
@@ -124,7 +27,7 @@ byte Screen::getDigWidth(byte value)
 
 void Screen::textAlign(const char *string, PosX position_x, PosY position_y)
 {
-    align(getStrWidth(string), getMaxCharWidth(), position_x, position_y);
+    alignSimbols(getStrWidth(string), getMaxCharWidth(), position_x, position_y);
 
     setCursor(x, y);
     print(string);
@@ -141,7 +44,7 @@ void Screen::stringAlign(String str, byte size, PosX position_x, PosY position_y
 
 void Screen::digStringAlign(byte dig, const char *string, PosX position_x, PosY position_y)
 {
-    align(getDigWidth(dig) + getStrWidth(string), getMaxCharWidth(), position_x, position_y);
+    alignSimbols(getDigWidth(dig) + getStrWidth(string), getMaxCharWidth(), position_x, position_y);
 
     setCursor(x, y);
 
@@ -151,22 +54,22 @@ void Screen::digStringAlign(byte dig, const char *string, PosX position_x, PosY 
 
 void Screen::digAlign(byte dig, PosX position_x, PosY position_y)
 {
-    align(getDigWidth(dig), getMaxCharWidth(), position_x, position_y);
+    alignSimbols(getDigWidth(dig), getMaxCharWidth(), position_x, position_y);
 
     setCursor(x, y);
     print(dig);
 }
 
-void Screen::getSetCursor(const char *string, PosX position_x, PosY position_y)
+void Screen::setPosition(const char *string, PosX position_x, PosY position_y)
 {
-    align(getStrWidth(string), getMaxCharWidth(), position_x, position_y);
+    alignSimbols(getStrWidth(string), getMaxCharWidth(), position_x, position_y);
 
     setCursor(x, y);
 }
 
 void Screen::iconAlign(int icon, byte iconWH, PosX position_x, PosY position_y)
 {
-    align(iconWH, iconWH, position_x, position_y);
+    alignSimbols(iconWH, iconWH, position_x, position_y);
     drawGlyph(x, y, icon);
 }
 
@@ -180,7 +83,7 @@ void Screen::frameAlign(byte W, byte H, PosX position_x, PosY position_y)
     W += W / 4;
     H += H / 2;
 
-    align(W, H, position_x, position_y);
+    alignSimbols(W, H, position_x, position_y);
     drawFrame(x, y, W, H);
 }
 
@@ -297,7 +200,7 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot)
     else
     {
         setFont(u8g2_font_courB08_tn);
-        getSetCursor("00:00-00:00", PosX::leftSpace, PosY::downSpace);
+        setPosition("00:00-00:00", PosX::leftSpace, PosY::downSpace);
 
         showSpectrumTime(watch, key.id);
         brightInfo(pot, key, timer);
@@ -323,7 +226,7 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright)
     else
     {
         setFont(u8g2_font_courB08_tn);
-        getSetCursor("00:00-00:00", PosX::leftSpace, PosY::downSpace);
+        setPosition("00:00-00:00", PosX::leftSpace, PosY::downSpace);
 
         showSpectrumTime(watch, key.id);
         brightInfo(bright, key, timer);
@@ -347,7 +250,7 @@ void Screen::headerTime(Watch &watch)
 {
     setFont(u8g2_font_courB08_tn);
 
-    getSetCursor("00:00:00", PosX::rightSpace, PosY::upSpace);
+    setPosition("00:00:00", PosX::rightSpace, PosY::upSpace);
 
     Time now = watch.time();
 
@@ -358,7 +261,7 @@ void Screen::headerDate(Watch &watch)
 {
     setFont(u8g2_font_courB08_tf);
 
-    getSetCursor("00/00/0000", PosX::leftHalf, PosY::upSpace);
+    setPosition("00/00/0000", PosX::leftHalf, PosY::upSpace);
 
     Date now = watch.date();
 
@@ -431,11 +334,11 @@ void Screen::timerScreen(Watch &watch, Timer &timer, Key &key)
 
             setFont(u8g2_font_courB08_tn);
 
-            getSetCursor("00:00", PosX::center, PosY::upHalf);
+            setPosition("00:00", PosX::center, PosY::upHalf);
 
             showStringTime(watch.startHour[key.id], watch.startMinute[key.id]);
 
-            getSetCursor("00:00", PosX::center, PosY::downSpace);
+            setPosition("00:00", PosX::center, PosY::downSpace);
 
             showStringTime(watch.finishHour[key.id], watch.finishMinute[key.id]);
 
@@ -588,7 +491,7 @@ void Screen::blinkHeaderTime(Key &key, Watch &watch, Timer &timer)
 {
     setFont(u8g2_font_courB08_tn);
 
-    getSetCursor("00:00:00", PosX::center, PosY::downHalf);
+    setPosition("00:00:00", PosX::center, PosY::downHalf);
 
     showStringWatch(watch.hour, watch.min, watch.sec);
 
@@ -615,7 +518,7 @@ void Screen::blinkHeaderDate(Key &key, Watch &watch, Timer &timer)
 {
     setFont(u8g2_font_courB08_tf);
 
-    getSetCursor("00/00/0000", PosX::center, PosY::upHalf);
+    setPosition("00/00/0000", PosX::center, PosY::upHalf);
 
     showStringDate(watch.day, watch.month, watch.year);
 
@@ -663,11 +566,12 @@ void Screen::setWatchScreen(Watch &watch, Key &key, Timer &timer)
 
 void Screen::blinkSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
 {
-    // setFont(u8g2_font_courB08_tf);
-    // print("Sun Set:");
+    setFont(u8g2_font_timB14_tr);
+
+    textAlign("Sun Set:", PosX::center, PosY::upSpace);
 
     setFont(u8g2_font_pressstart2p_8f);
-    getSetCursor("00:00", PosX::center, PosY::upHalf);
+    setPosition("00:00", PosX::center, PosY::upHalf);
 
     showStringTime(hh, mm);
 
@@ -688,12 +592,12 @@ void Screen::blinkSunRise(Key &key, Timer &timer, Watch &watch, byte hh, byte mm
 
 void Screen::blinkSunSet(Key &key, Timer &timer, Watch &watch, byte hh, byte mm)
 {
-    // setFont(u8g2_font_courB08_tf);
-    // print("Sun Set:");
+    setFont(u8g2_font_timB14_tr);
+    print("Sun Set:");
 
 
     setFont(u8g2_font_pressstart2p_8f);
-    getSetCursor("00:00", PosX::center, PosY::downHalf);
+    setPosition("00:00", PosX::center, PosY::downHalf);
 
     showStringTime(hh, mm);
 

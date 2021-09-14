@@ -82,12 +82,12 @@ public:
 
     byte getDigWidth(byte value);
 
-    void align(byte WH, byte H, PosX position_x, PosY position_y);
+    void alignSimbols(byte WH, byte H, PosX position_x, PosY position_y);
     void frameAlign(byte W, byte H, PosX position_x, PosY position_y);
     void iconAlign(int icon, byte iconWH, PosX position_x, PosY position_y);
     void digStringAlign(byte dig, const char *string, PosX position_x, PosY position_y);
     void digAlign(byte dig, PosX position_x, PosY position_y);
-    void getSetCursor(const char *string, PosX position_x, PosY position_y);
+    void setPosition(const char *string, PosX position_x, PosY position_y);
     void textAlign(const char *string, PosX position_x, PosY position_y);
     void stringAlign(String str, byte size, PosX position_x, PosY position_y);
 
