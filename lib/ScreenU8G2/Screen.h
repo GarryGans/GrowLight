@@ -18,10 +18,13 @@ class Screen : public U8G2_SSD1306_128X64_NONAME_1_HW_I2C
 {
 private:
     String WavelengthSMD[lampAmount];
-    char *lightColor[lampAmount];
+    String lightColor[lampAmount];
     const char *state[2] = {"OFF", "ON"};
+    const char *solution[2] = {"MANUAL", "SKIP"};
 
     char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+
+    byte screen = 255;
 
     enum class PosX
     {
@@ -65,6 +68,8 @@ private:
     byte width;
     byte height;
 
+    char *string;
+
     byte x;
     byte y;
     byte setX;
@@ -84,23 +89,23 @@ private:
     byte WH = 48;
 
 public:
-    Screen(String WavelengthSMD[], const char *lightColor[]);
+    Screen(String WavelengthSMD[], String lightColor[]);
     ~Screen();
 
     byte getDigWidth(byte value);
 
-    void alignSimbols(byte WH, byte H, PosX position_x, PosY position_y);
-    void frameAlign(byte W, byte H, PosX position_x, PosY position_y);
-    void iconAlign(int icon, byte iconWH, PosX position_x, PosY position_y);
-    void digStringAlign(byte dig, const char *string, PosX position_x, PosY position_y);
-    void digAlign(byte dig, PosX position_x, PosY position_y);
-    void setPosition(const char *format, PosX position_x, PosY position_y);
-    void textAlign(const char *string, PosX position_x, PosY position_y);
-    void stringAlign(String str, byte size, PosX position_x, PosY position_y);
+    void alignSimbols(byte WH, byte H, PosX pos_x, PosY pos_y);
+    void frameAlign(byte W, byte H, PosX pos_x, PosY pos_y);
+    void iconAlign(int icon, byte iconWH, PosX pos_x, PosY pos_y);
+    void digStringAlign(byte dig, const char *string, PosX pos_x, PosY pos_y);
+    void digAlign(byte dig, PosX pos_x, PosY pos_y);
+    void setPosition(const char *format, PosX pos_x, PosY pos_y);
+    void textAlign(const char *string, PosX pos_x, PosY pos_y);
+    void stringAlign(String str, byte size, PosX pos_x, PosY pos_y);
     void setHeight(const uint8_t *font);
 
     void mover(byte &move_x, byte deep_x);
-    void moveString(const char *string, PosX position_x, PosY position_y, Timer &timer);
+    void moveString(const char *string, PosX pos_x, PosY pos_y, Key &key, Timer &timer);
     void escapeBar(Timer &timer);
 
     void iGorLogo();
@@ -110,7 +115,7 @@ public:
     void headerTime(Watch &watch);
     void headerDate(Watch &watch);
 
-    void blinkFrame(byte value, boolean dig, PosX position_x, PosY position_y, Timer &timer);
+    void blinkFrame(byte value, boolean dig, PosX pos_x, PosY pos_y, Timer &timer);
     void blinkFrame(const char *format, byte digAmount, PosX pos_x, PosY pos_y, Timer &timer);
 
     void showStringTime(byte hh, byte mm);
@@ -124,7 +129,7 @@ public:
     void bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot);
     void bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright);
 
-    void lampInfo(Watch &watch, Key &key);
+    void lampInfo(Watch &watch, Key &key, Timer &timer);
 
     void blinkHeaderDate(Key &key, Watch &watch, Timer &timer);
     void blinkHeaderTime(Key &key, Watch &watch, Timer &timer);

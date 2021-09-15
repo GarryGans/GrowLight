@@ -85,19 +85,14 @@ byte keyPin[] = {32, 34, 36, 38, 40, 42, 44, 46};
      CREE Ultraviolet FarRed Red Blue
  */
 
-String WavelengthSMD[] = {
+String WavelengthSMD[lampAmount] = {
     "3000K",
     "730nm",
     "660nm",
     "440nm",
     "365nm+385nm"};
 
-const char *lightColor[] = {
-    "CXB",
-    "FR",
-    "RED",
-    "BL",
-    "UV"};
+String lightColor[lampAmount] = {"CXB", "FR", "RED", "BL", "UV"};
 
 // SpectrTEST ver. //
 // String specWavelengthSMD[] = {"365nm+385nm", "440nm", "660nm", "730nm", "3000K"};

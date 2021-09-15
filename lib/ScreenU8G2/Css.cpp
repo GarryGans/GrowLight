@@ -1,8 +1,8 @@
 #include "Screen.h"
 
-void Screen::alignSimbols(byte W, byte H, PosX position_x, PosY position_y)
+void Screen::alignSimbols(byte W, byte H, PosX pos_x, PosY pos_y)
 {
-    switch (position_x)
+    switch (pos_x)
     {
     case PosX::center:
         x = (screenWidth - W) / 2;
@@ -52,7 +52,7 @@ void Screen::alignSimbols(byte W, byte H, PosX position_x, PosY position_y)
         break;
     }
 
-    switch (position_y)
+    switch (pos_y)
     {
     case PosY::center:
         y = (screenHeight + H) / 2;
@@ -142,11 +142,11 @@ void Screen::setHeight(const uint8_t *font)
         height = 12;
     }
 
-    else if (font == u8g2_font_profont22_tn || font == u8g2_font_9x18_tn || font == u8g2_font_crox4h_tf)
+    else if (font == u8g2_font_profont22_tn || font == u8g2_font_9x18_tn || font == u8g2_font_crox4h_tf || font == u8g2_font_crox4hb_tf)
     {
         height = 14;
     }
-    else if (font == u8g2_font_crox5tb_tf)
+    else if (font == u8g2_font_crox5tb_tf || font == u8g2_font_crox5tb_tf)
     {
         height = 16;
     }
@@ -161,26 +161,26 @@ void Screen::setHeight(const uint8_t *font)
     // }
 }
 
-void Screen::textAlign(const char *string, PosX position_x, PosY position_y)
+void Screen::textAlign(const char *string, PosX pos_x, PosY pos_y)
 {
-    alignSimbols(getStrWidth(string), height, position_x, position_y);
+    alignSimbols(getStrWidth(string), height, pos_x, pos_y);
 
     setCursor(x, y);
     print(string);
 }
 
-void Screen::stringAlign(String str, byte size, PosX position_x, PosY position_y)
+void Screen::stringAlign(String str, byte size, PosX pos_x, PosY pos_y)
 {
     char light[size];
 
     String(str).toCharArray(light, size);
 
-    textAlign(light, position_x, position_y);
+    textAlign(light, pos_x, pos_y);
 }
 
-void Screen::digStringAlign(byte dig, const char *string, PosX position_x, PosY position_y)
+void Screen::digStringAlign(byte dig, const char *string, PosX pos_x, PosY pos_y)
 {
-    alignSimbols(getDigWidth(dig) + getStrWidth(string), height, position_x, position_y);
+    alignSimbols(getDigWidth(dig) + getStrWidth(string), height, pos_x, pos_y);
 
     setCursor(x, y);
 
@@ -188,28 +188,28 @@ void Screen::digStringAlign(byte dig, const char *string, PosX position_x, PosY 
     print(string);
 }
 
-void Screen::digAlign(byte dig, PosX position_x, PosY position_y)
+void Screen::digAlign(byte dig, PosX pos_x, PosY pos_y)
 {
-    alignSimbols(getDigWidth(dig), height, position_x, position_y);
+    alignSimbols(getDigWidth(dig), height, pos_x, pos_y);
 
     setCursor(x, y);
     print(dig);
 }
 
-void Screen::setPosition(const char *format, PosX position_x, PosY position_y)
+void Screen::setPosition(const char *format, PosX pos_x, PosY pos_y)
 {
-    alignSimbols(getStrWidth(format), height, position_x, position_y);
+    alignSimbols(getStrWidth(format), height, pos_x, pos_y);
 
     setCursor(x, y);
 }
 
-void Screen::iconAlign(int icon, byte iconWH, PosX position_x, PosY position_y)
+void Screen::iconAlign(int icon, byte iconWH, PosX pos_x, PosY pos_y)
 {
-    alignSimbols(iconWH, iconWH, position_x, position_y);
+    alignSimbols(iconWH, iconWH, pos_x, pos_y);
     drawGlyph(x, y, icon);
 }
 
-void Screen::frameAlign(byte W, byte H, PosX position_x, PosY position_y)
+void Screen::frameAlign(byte W, byte H, PosX pos_x, PosY pos_y)
 {
     borderW = 6;
     borderH = 6;
@@ -217,11 +217,11 @@ void Screen::frameAlign(byte W, byte H, PosX position_x, PosY position_y)
     W += borderW;
     H += borderH;
 
-    alignSimbols(W, H, position_x, position_y);
+    alignSimbols(W, H, pos_x, pos_y);
     drawFrame(x, y, W, H);
 }
 
-void Screen::blinkFrame(byte value, boolean dig, PosX position_x, PosY position_y, Timer &timer)
+void Screen::blinkFrame(byte value, boolean dig, PosX pos_x, PosY pos_y, Timer &timer)
 {
     if (timer.blinkReady())
     {
@@ -234,7 +234,7 @@ void Screen::blinkFrame(byte value, boolean dig, PosX position_x, PosY position_
             width = getDigWidth(value);
         }
 
-        frameAlign(width, height, position_x, position_y);
+        frameAlign(width, height, pos_x, pos_y);
     }
 }
 
@@ -278,14 +278,17 @@ void Screen::mover(byte &move_x, byte deep_x)
     }
 }
 
-void Screen::moveString(const char *string, PosX position_x, PosY position_y, Timer &timer)
+void Screen::moveString(const char *string, PosX pos_x, PosY pos_y, Key &key, Timer &timer)
 {
-    setPosition(string, PosX::center, PosY::upSpace);
+    
 
-    if (!move)
+    setPosition(string, pos_x, pos_y);
+
+    if (!move || this->string != string)
     {
-        move_x = start_x = x;
+        this->string = string;
 
+        move_x = start_x = x;
         move = true;
         moveLeft = true;
         moveRight = false;
