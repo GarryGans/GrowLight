@@ -8,6 +8,10 @@ void Screen::alignSimbols(byte W, byte H, PosX position_x, PosY position_y)
         x = (screenWidth - W) / 2;
         break;
 
+    case PosX::centerFrame:
+        x = (screenWidth - W) / 2 + width + width / 2;
+        break;
+
     case PosX::left:
         x = 0;
         break;
@@ -197,15 +201,10 @@ void Screen::iconAlign(int icon, byte iconWH, PosX position_x, PosY position_y)
     drawGlyph(x, y, icon);
 }
 
-byte Screen::nextX(byte value, byte prewX = 0, const char *simbol = 0)
-{
-    return (getDigWidth(value) + prewX + getStrWidth(simbol));
-}
-
 void Screen::frameAlign(byte W, byte H, PosX position_x, PosY position_y)
 {
-    borderW = 8;
-    borderH = 8;
+    borderW = 6;
+    borderH = 6;
 
     W += borderW;
     H += borderH;
@@ -231,16 +230,16 @@ void Screen::blinkFrame(byte value, boolean dig, PosX position_x, PosY position_
     }
 }
 
-void Screen::blinkFrame(const char *format, PosX pos_x, PosY pos_y, Timer &timer)
+void Screen::blinkFrame(const char *format, byte digAmount, PosX pos_x, PosY pos_y, Timer &timer)
 {
     if (timer.blinkReady())
     {
-        width = getMaxCharWidth() * 2;
+        width = getMaxCharWidth() * digAmount;
 
         setPosition(format, pos_x, pos_y);
 
-        borderW = 0;
-        borderH = 0;
+        borderW = 6;
+        borderH = 6;
 
         width += borderW;
         height += borderH;
@@ -271,22 +270,26 @@ void Screen::mover(byte &move_x, byte deep_x)
     }
 }
 
-void Screen::moveString(Timer &timer, byte deep_x, byte bottom_y, const char *string)
+void Screen::moveString(const char *string, PosX position_x, PosY position_y, Timer &timer)
 {
+    byte y;
     if (!move)
     {
-        move_x = start_x = deep_x;
+        setPosition(string, PosX::center, PosY::upSpace);
+        move_x = start_x = x;
+        y = this->y;
+
         move = true;
         moveLeft = true;
         moveRight = false;
     }
 
-    setCursor(move_x, bottom_y);
+    setCursor(move_x, y);
     print(string);
 
     if (timer.moveReady())
     {
-        mover(move_x, deep_x);
+        mover(move_x, start_x);
     }
 }
 

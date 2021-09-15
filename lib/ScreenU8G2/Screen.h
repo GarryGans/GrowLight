@@ -32,6 +32,7 @@ private:
         right,
         rightSpace,
         rightHalf,
+        centerFrame,
         rightFrameSide,
         custom
     } pos_x;
@@ -98,10 +99,8 @@ public:
     void setHeight(const uint8_t *font);
 
     void mover(byte &move_x, byte deep_x);
-    void moveString(Timer &timer, byte end_x, byte bottom_y, const char *string);
+    void moveString(const char *string, PosX position_x, PosY position_y, Timer &timer);
     void escapeBar(Timer &timer);
-
-    byte nextX(byte value, byte prewX, const char *simbol);
 
     void iGorLogo();
 
@@ -111,8 +110,7 @@ public:
     void headerDate(Watch &watch);
 
     void blinkFrame(byte value, boolean dig, PosX position_x, PosY position_y, Timer &timer);
-    void blinkFrame(const char *format, PosX pos_x, PosY pos_y, Timer &timer);
-    void blinkFrameYear(int year, byte x, byte y, Timer &timer);
+    void blinkFrame(const char *format, byte digAmount, PosX pos_x, PosY pos_y, Timer &timer);
 
     void showStringTime(byte hh, byte mm);
     void showStringWatch(byte hh, byte mm, byte ss);

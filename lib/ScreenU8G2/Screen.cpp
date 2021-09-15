@@ -185,17 +185,17 @@ void Screen::timerScreen(Watch &watch, Timer &timer, Key &key)
         firstPage();
         do
         {
+            setHeight(u8g2_font_pressstart2p_8f);
+
+            moveString("Set SpecTime", PosX::center, PosY::upSpace, timer);
+
             setHeight(u8g2_font_courB08_tn);
 
-            textAlign("Set Spectrum Time", PosX::center, PosY::upSpace);
-
-            setHeight(u8g2_font_courB08_tn);
-
-            setPosition("00:00", PosX::center, PosY::upHalf);
+            setPosition("00:00", PosX::rightHalf, PosY::upHalf);
 
             showStringTime(watch.startHour[key.id], watch.startMinute[key.id]);
 
-            setPosition("00:00", PosX::center, PosY::downSpace);
+            setPosition("00:00", PosX::rightHalf, PosY::downSpace);
 
             showStringTime(watch.finishHour[key.id], watch.finishMinute[key.id]);
 
@@ -307,20 +307,9 @@ void Screen::showSpectrumTime(Watch &watch, byte id)
     showStringTime(watch.finishHour[id], watch.finishMinute[id]);
 }
 
-void Screen::blinkFrameYear(int year, byte x, byte y, Timer &timer)
-{
-    char val[5];
-    String(year).toCharArray(val, 5);
-
-    if (timer.blinkReady())
-    {
-        drawFrame(x, y, getStrWidth(val) + 3, getMaxCharWidth());
-    }
-}
-
 void Screen::blinkHeaderTime(Key &key, Watch &watch, Timer &timer)
 {
-    setHeight(u8g2_font_courB08_tn);
+    setHeight(u8g2_font_pressstart2p_8f);
 
     setPosition("00:00:00", PosX::center, PosY::downHalf);
 
@@ -329,15 +318,15 @@ void Screen::blinkHeaderTime(Key &key, Watch &watch, Timer &timer)
     switch (watch.cursorDateTime)
     {
     case 3:
-        // blinkFrame(watch.hour, 74, 0, timer);
+        blinkFrame("00:00:00", 2, PosX::center, PosY::downFrameHalf, timer);
         break;
 
     case 4:
-        // blinkFrame(watch.min, 74 + getStrWidth("00:"), 0, timer);
+        blinkFrame("00:00:00", 2, PosX::centerFrame, PosY::downFrameHalf, timer);
         break;
 
     case 5:
-        // blinkFrame(watch.sec, 74 + getStrWidth("00:00:"), 0, timer);
+        blinkFrame("00:00:00", 2, PosX::rightFrameSide, PosY::downFrameHalf, timer);
         break;
 
     default:
@@ -347,7 +336,7 @@ void Screen::blinkHeaderTime(Key &key, Watch &watch, Timer &timer)
 
 void Screen::blinkHeaderDate(Key &key, Watch &watch, Timer &timer)
 {
-    setHeight(u8g2_font_courB08_tf);
+    setHeight(u8g2_font_pressstart2p_8f);
 
     setPosition("00/00/0000", PosX::center, PosY::upHalf);
 
@@ -358,15 +347,15 @@ void Screen::blinkHeaderDate(Key &key, Watch &watch, Timer &timer)
     switch (watch.cursorDateTime)
     {
     case 0:
-        // blinkFrame(watch.day, 0, 0, timer);
+        blinkFrame("00/00/0000", 2, PosX::center, PosY::upFrameHalf, timer);
         break;
 
     case 1:
-        // blinkFrame(watch.month, getStrWidth("00/"), 0, timer);
+        blinkFrame("00/00/0000", 2, PosX::centerFrame, PosY::upFrameHalf, timer);
         break;
 
     case 2:
-        // blinkFrameYear(watch.year, getStrWidth("00/00/"), 0, timer);
+        blinkFrame("00/00/0000", 4, PosX::rightFrameSide, PosY::upFrameHalf, timer);
         break;
 
     default:
@@ -418,19 +407,19 @@ void Screen::blinkSunTime(Key &key, Timer &timer, Watch &watch)
     switch (watch.cursorDay)
     {
     case 0:
-        blinkFrame("00:00", PosX::center, PosY::centerFrame, timer);
+        blinkFrame("00:00", 2, PosX::center, PosY::centerFrame, timer);
         break;
 
     case 1:
-        blinkFrame("00:00", PosX::rightFrameSide, PosY::centerFrame, timer);
+        blinkFrame("00:00", 2, PosX::rightFrameSide, PosY::centerFrame, timer);
         break;
 
     case 2:
-        blinkFrame("00:00", PosX::center, PosY::downFrameSpace, timer);
+        blinkFrame("00:00", 2, PosX::center, PosY::downFrameSpace, timer);
         break;
 
     case 3:
-        blinkFrame("00:00", PosX::rightFrameSide, PosY::downFrameSpace, timer);
+        blinkFrame("00:00", 2, PosX::rightFrameSide, PosY::downFrameSpace, timer);
         break;
 
     default:
@@ -446,9 +435,7 @@ void Screen::sunTimeScreen(Watch &watch, Key &key, Timer &timer)
         do
         {
             setHeight(u8g2_font_pressstart2p_8f);
-
-            setPosition("Set SunTime", PosX::center, PosY::upSpace);
-            moveString(timer, x, y, "Set SunTime");
+            moveString("Set SunTime", PosX::center, PosY::upSpace, timer);
             blinkSunTime(key, timer, watch);
         } while (nextPage());
 
