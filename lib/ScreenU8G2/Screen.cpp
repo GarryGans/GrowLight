@@ -2,7 +2,7 @@
 #include "Css.cpp"
 
 // Screen::Screen(String WavelengthSMD[], String lightColor[]) : U8G2_SH1106_128X64_NONAME_1_HW_I2C(U8G2_R0, /* reset=*/U8X8_PIN_NONE)
-Screen::Screen(String WavelengthSMD[], String lightColor[]) : U8G2_SSD1306_128X64_NONAME_1_HW_I2C(U8G2_R0, /* reset=*/U8X8_PIN_NONE)
+Screen::Screen(String WavelengthSMD[], const char *lightColor[]) : U8G2_SSD1306_128X64_NONAME_1_HW_I2C(U8G2_R0, /* reset=*/U8X8_PIN_NONE)
 
 {
     for (byte i = 0; i < lampAmount; i++)
@@ -98,11 +98,12 @@ void Screen::lampInfo(Watch &watch, Key &key)
 {
     setHeight(u8g2_font_courB08_tf);
 
-    stringAlign(WavelengthSMD[key.id], 21, PosX::left, PosY::upHalf);
+    stringAlign(WavelengthSMD[key.id], 21, PosX::center, PosY::upHalf);
 
     setHeight(u8g2_font_crox5tb_tf);
 
-    stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
+    // stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
+    // textAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
 
     stringAlign(state[watch.autoSwitch[key.id] || key.buttonSwitch[key.id]], 4, PosX::rightHalf, PosY::center);
 }
@@ -185,36 +186,34 @@ void Screen::timerScreen(Watch &watch, Timer &timer, Key &key)
         firstPage();
         do
         {
-            setHeight(u8g2_font_pressstart2p_8f);
+            setHeight(u8g2_font_ncenB18_tf);
 
-            moveString("Set SpecTime", PosX::center, PosY::upSpace, timer);
+            stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
 
-            setHeight(u8g2_font_courB08_tn);
+            setHeight(u8g2_font_profont22_tn);
 
             setPosition("00:00", PosX::rightHalf, PosY::upHalf);
-
             showStringTime(watch.startHour[key.id], watch.startMinute[key.id]);
 
-            setPosition("00:00", PosX::rightHalf, PosY::downSpace);
-
+            setPosition("00:00", PosX::rightHalf, PosY::downHalf);
             showStringTime(watch.finishHour[key.id], watch.finishMinute[key.id]);
 
             switch (watch.cursorSpectrum)
             {
             case 0:
-                // blinkFrame(watch.startHour[key.id], x, 57, timer);
+                blinkFrame("00:00", 2, PosX::rightHalf, PosY::upFrameHalf, timer);
                 break;
 
             case 1:
-                // blinkFrame(watch.startMinute[key.id], nextX(watch.startHour[key.id], 5, ":"), 57, timer);
+                blinkFrame("00:00", 2, PosX::rightFrameHalfSide, PosY::upFrameHalf, timer);
                 break;
 
             case 2:
-                // blinkFrame(watch.finishHour[key.id], 5 + getStrWidth("00:00-"), 57, timer);
+                blinkFrame("00:00", 2, PosX::rightHalf, PosY::downFrameHalf, timer);
                 break;
 
             case 3:
-                // blinkFrame(watch.finishMinute[key.id], 5 + getStrWidth("00:00-00:"), 57, timer);
+                blinkFrame("00:00", 2, PosX::rightFrameHalfSide, PosY::downFrameHalf, timer);
                 break;
 
             default:
@@ -401,6 +400,7 @@ void Screen::blinkSunTime(Key &key, Timer &timer, Watch &watch)
 
     setPosition("00:00", PosX::center, PosY::center);
     showStringTime(watch.RiseHour, watch.RiseMin);
+
     setPosition("00:00", PosX::center, PosY::downSpace);
     showStringTime(watch.SetHour, watch.SetMin);
 

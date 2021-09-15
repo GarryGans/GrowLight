@@ -92,7 +92,7 @@ String WavelengthSMD[] = {
     "440nm",
     "365nm+385nm"};
 
-String lightColor[] = {
+const char *lightColor[] = {
     "CXB",
     "FR",
     "RED",

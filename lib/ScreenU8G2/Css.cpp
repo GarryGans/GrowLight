@@ -37,7 +37,11 @@ void Screen::alignSimbols(byte W, byte H, PosX position_x, PosY position_y)
         break;
 
     case PosX::rightFrameSide:
-        x = screenWidth - (screenWidth - W) / 2 - width;
+        x = screenWidth - width - (screenWidth - W) / 2;
+        break;
+
+    case PosX::rightFrameHalfSide:
+        x = screenWidth - width - (screenWidth / 2 - W) / 2;
         break;
 
     case PosX::custom:
@@ -145,6 +149,10 @@ void Screen::setHeight(const uint8_t *font)
     else if (font == u8g2_font_crox5tb_tf)
     {
         height = 16;
+    }
+    else if (font == u8g2_font_ncenB18_tf)
+    {
+        height = 18;
     }
 
     // else
@@ -272,12 +280,11 @@ void Screen::mover(byte &move_x, byte deep_x)
 
 void Screen::moveString(const char *string, PosX position_x, PosY position_y, Timer &timer)
 {
-    byte y;
+    setPosition(string, PosX::center, PosY::upSpace);
+
     if (!move)
     {
-        setPosition(string, PosX::center, PosY::upSpace);
         move_x = start_x = x;
-        y = this->y;
 
         move = true;
         moveLeft = true;

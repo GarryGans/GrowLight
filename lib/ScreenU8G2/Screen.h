@@ -18,8 +18,8 @@ class Screen : public U8G2_SSD1306_128X64_NONAME_1_HW_I2C
 {
 private:
     String WavelengthSMD[lampAmount];
-    String lightColor[lampAmount];
-    const String state[2] = {"OFF", "ON"};
+    char *lightColor[lampAmount];
+    const char *state[2] = {"OFF", "ON"};
 
     char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
@@ -34,6 +34,7 @@ private:
         rightHalf,
         centerFrame,
         rightFrameSide,
+        rightFrameHalfSide,
         custom
     } pos_x;
 
@@ -83,7 +84,7 @@ private:
     byte WH = 48;
 
 public:
-    Screen(String WavelengthSMD[], String lightColor[]);
+    Screen(String WavelengthSMD[], const char *lightColor[]);
     ~Screen();
 
     byte getDigWidth(byte value);
