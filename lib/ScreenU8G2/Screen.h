@@ -32,6 +32,7 @@ private:
         right,
         rightSpace,
         rightHalf,
+        rightFrameSide,
         custom
     } pos_x;
 
@@ -48,6 +49,7 @@ private:
         upFrame,
         upFrameHalf,
         downFrame,
+        downFrameSpace,
         downFrameHalf,
         custom
     } pos_y;
@@ -60,6 +62,7 @@ private:
 
     byte width;
     byte height;
+
     byte x;
     byte y;
     byte setX;
@@ -107,8 +110,8 @@ public:
     void headerTime(Watch &watch);
     void headerDate(Watch &watch);
 
-    void blinkFrame(byte value, PosX position_x, PosY position_y, Timer &timer);
-    void blinkFrame(byte x, byte y, Timer &timer);
+    void blinkFrame(byte value, boolean dig, PosX position_x, PosY position_y, Timer &timer);
+    void blinkFrame(const char *format, PosX pos_x, PosY pos_y, Timer &timer);
     void blinkFrameYear(int year, byte x, byte y, Timer &timer);
 
     void showStringTime(byte hh, byte mm);

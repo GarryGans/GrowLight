@@ -32,6 +32,10 @@ void Screen::alignSimbols(byte W, byte H, PosX position_x, PosY position_y)
         x = (screenWidth + screenWidth / 2 - W) / 2;
         break;
 
+    case PosX::rightFrameSide:
+        x = screenWidth - (screenWidth - W) / 2 - width;
+        break;
+
     case PosX::custom:
         x = setX;
         break;
@@ -86,6 +90,10 @@ void Screen::alignSimbols(byte W, byte H, PosX position_x, PosY position_y)
         y = screenHeight - H;
         break;
 
+    case PosY::downFrameSpace:
+        y = screenHeight - H - H / 4;
+        break;
+
     case PosY::downFrameHalf:
         y = (screenHeight + screenHeight / 2 - H) / 2;
         break;
@@ -111,14 +119,34 @@ void Screen::setHeight(const uint8_t *font)
 {
     setFont(font);
 
-    if (font == u8g2_font_pressstart2p_8f)
+    if (font == u8g2_font_courB08_tn || font == u8g2_font_courB08_tf)
+    {
+        height = 6;
+    }
+
+    else if (font == u8g2_font_pressstart2p_8f)
     {
         height = 8;
     }
-    else if (font == u8g2_font_profont22_tn || font == u8g2_font_9x18_tn)
+
+    else if (font == u8g2_font_pixelmordred_tf)
+    {
+        height = 12;
+    }
+
+    else if (font == u8g2_font_profont22_tn || font == u8g2_font_9x18_tn || font == u8g2_font_crox4h_tf)
     {
         height = 14;
     }
+    else if (font == u8g2_font_crox5tb_tf)
+    {
+        height = 16;
+    }
+
+    // else
+    // {
+    //     Serial.println("undefiner");
+    // }
 }
 
 void Screen::textAlign(const char *string, PosX position_x, PosY position_y)
@@ -169,43 +197,55 @@ void Screen::iconAlign(int icon, byte iconWH, PosX position_x, PosY position_y)
     drawGlyph(x, y, icon);
 }
 
-void Screen::frameAlign(byte W, byte H, PosX position_x, PosY position_y)
-{
-    // W += W / 4;
-    // H += H / 2;
-
-    alignSimbols(W, H, position_x, position_y);
-    drawFrame(x, y, W, H);
-}
-
-void Screen::blinkFrame(byte value, PosX position_x, PosY position_y, Timer &timer)
-{
-    if (timer.blinkReady())
-    {
-        frameAlign(getDigWidth(value), height, position_x, position_y);
-    }
-}
-
 byte Screen::nextX(byte value, byte prewX = 0, const char *simbol = 0)
 {
     return (getDigWidth(value) + prewX + getStrWidth(simbol));
 }
 
-void Screen::blinkFrame(byte x, byte y,Timer &timer)
+void Screen::frameAlign(byte W, byte H, PosX position_x, PosY position_y)
+{
+    borderW = 8;
+    borderH = 8;
+
+    W += borderW;
+    H += borderH;
+
+    alignSimbols(W, H, position_x, position_y);
+    drawFrame(x, y, W, H);
+}
+
+void Screen::blinkFrame(byte value, boolean dig, PosX position_x, PosY position_y, Timer &timer)
 {
     if (timer.blinkReady())
     {
-        byte W = getMaxCharWidth() * 2;
+        if (dig)
+        {
+            width = getMaxCharWidth() * 2;
+        }
+        else
+        {
+            width = getDigWidth(value);
+        }
 
-        byte H = height;
+        frameAlign(width, height, position_x, position_y);
+    }
+}
 
-        borderW = 8;
-        borderH = 8;
+void Screen::blinkFrame(const char *format, PosX pos_x, PosY pos_y, Timer &timer)
+{
+    if (timer.blinkReady())
+    {
+        width = getMaxCharWidth() * 2;
 
-        W += borderW;
-        H += borderH;
+        setPosition(format, pos_x, pos_y);
 
-        drawFrame(x - borderW / 2, (y + borderH / 2) - H, W, H);
+        borderW = 0;
+        borderH = 0;
+
+        width += borderW;
+        height += borderH;
+
+        drawFrame(x - borderW / 2, y - borderH / 2, width, height);
     }
 }
 

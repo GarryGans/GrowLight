@@ -21,7 +21,7 @@ void Screen::iGorLogo()
     firstPage();
     do
     {
-        setHeight(u8g2_font_timB14_tf);
+        setHeight(u8g2_font_crox4h_tf);
         textAlign("Smart Garden", PosX::center, PosY::up);
         textAlign("iGor_2019", PosX::center, PosY::center);
 
@@ -100,7 +100,7 @@ void Screen::lampInfo(Watch &watch, Key &key)
 
     stringAlign(WavelengthSMD[key.id], 21, PosX::left, PosY::upHalf);
 
-    setHeight(u8g2_font_courB18_tr);
+    setHeight(u8g2_font_crox5tb_tf);
 
     stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
 
@@ -143,16 +143,14 @@ void Screen::showBrightScreen(Pot &pot, Key &key, Timer &timer)
 
             textAlign("Max Bright", PosX::center, PosY::upSpace);
 
-            setHeight(u8g2_font_courB18_tr);
+            setHeight(u8g2_font_crox5tb_tf);
 
             stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
 
             digAlign(pot.maxBright[key.id], PosX::rightHalf, PosY::center);
 
-            if (timer.blinkReady())
-            {
-                frameAlign(getDigWidth(pot.maxBright[key.id]), getMaxCharWidth(), PosX::rightHalf, PosY::centerFrame);
-            }
+            blinkFrame(pot.maxBright[key.id], false, PosX::rightHalf, PosY::centerFrame, timer);
+
         } while (nextPage());
     }
 }
@@ -168,13 +166,13 @@ void Screen::showBrightScreen(Bright &bright, Key &key, Timer &timer)
 
             textAlign("Max Bright", PosX::center, PosY::upSpace);
 
-            setHeight(u8g2_font_courB18_tr);
+            setHeight(u8g2_font_crox5tb_tf);
 
             stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
 
             digAlign(bright.maxBright[key.id], PosX::rightHalf, PosY::center);
 
-            blinkFrame(bright.maxBright[key.id], PosX::rightHalf, PosY::centerFrame, timer);
+            blinkFrame(bright.maxBright[key.id], false, PosX::rightHalf, PosY::centerFrame, timer);
 
         } while (nextPage());
     }
@@ -420,26 +418,24 @@ void Screen::blinkSunTime(Key &key, Timer &timer, Watch &watch)
     switch (watch.cursorDay)
     {
     case 0:
-        setPosition("00:00", PosX::center, PosY::center);
+        blinkFrame("00:00", PosX::center, PosY::centerFrame, timer);
         break;
 
     case 1:
-        setPosition("00:00", PosX::center, PosY::centerFrame);
+        blinkFrame("00:00", PosX::rightFrameSide, PosY::centerFrame, timer);
         break;
 
     case 2:
-        setPosition("00:00", PosX::center, PosY::downSpace);
+        blinkFrame("00:00", PosX::center, PosY::downFrameSpace, timer);
         break;
 
     case 3:
-        // blinkFrame(watch.SetMin, 60 + getStrWidth("00:"), 52, timer);
+        blinkFrame("00:00", PosX::rightFrameSide, PosY::downFrameSpace, timer);
         break;
 
     default:
         break;
     }
-
-    blinkFrame(x, y, timer);
 }
 
 void Screen::sunTimeScreen(Watch &watch, Key &key, Timer &timer)
