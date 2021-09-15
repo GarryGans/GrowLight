@@ -107,6 +107,16 @@ byte Screen::getDigWidth(byte value)
     return getStrWidth(val);
 }
 
+void Screen::setFontGetHeight(const uint8_t *font)
+{
+    setFont(font);
+
+    if (font == u8g2_font_profont22_tn)
+    {
+        height = 14;
+    }
+}
+
 void Screen::textAlign(const char *string, PosX position_x, PosY position_y)
 {
     alignSimbols(getStrWidth(string), getMaxCharWidth(), position_x, position_y);
@@ -142,9 +152,9 @@ void Screen::digAlign(byte dig, PosX position_x, PosY position_y)
     print(dig);
 }
 
-void Screen::setPosition(const char *string, PosX position_x, PosY position_y)
+void Screen::setPosition(const char *format, PosX position_x, PosY position_y)
 {
-    alignSimbols(getStrWidth(string), getMaxCharWidth(), position_x, position_y);
+    alignSimbols(getStrWidth(format), height, position_x, position_y);
 
     setCursor(x, y);
 }
@@ -155,29 +165,47 @@ void Screen::iconAlign(int icon, byte iconWH, PosX position_x, PosY position_y)
     drawGlyph(x, y, icon);
 }
 
-byte Screen::nextX(byte value, byte prewX = 0, const char *simbol = 0)
-{
-    return (getDigWidth(value) + prewX + getStrWidth(simbol));
-}
-
 void Screen::frameAlign(byte W, byte H, PosX position_x, PosY position_y)
 {
-    W += W / 4;
-    H += H / 2;
+    // W += W / 4;
+    // H += H / 2;
 
     alignSimbols(W, H, position_x, position_y);
     drawFrame(x, y, W, H);
 }
 
-void Screen::blinkFrame(byte value, byte x, byte y, Timer &timer)
+void Screen::blinkFrame(byte value, PosX position_x, PosY position_y, Timer &timer)
 {
     if (timer.blinkReady())
     {
-        drawFrame(x, y - getMaxCharWidth(), getDigWidth(value) + 4, getMaxCharWidth() + 4);
+        frameAlign(getDigWidth(value), getMaxCharWidth(), position_x, position_y);
     }
 }
 
-void Screen::mover(byte deep_x)
+byte Screen::nextX(byte value, byte prewX = 0, const char *simbol = 0)
+{
+    return (getDigWidth(value) + prewX + getStrWidth(simbol));
+}
+
+void Screen::blinkFrame(byte x, byte y, byte H, Timer &timer)
+{
+    if (timer.blinkReady())
+    {
+        byte W = getMaxCharWidth() * 2;
+
+        byte H = 14;
+
+        borderW = 8;
+        borderH = 8;
+
+        W += borderW;
+        H += borderH;
+
+        drawFrame(x - borderW / 2, (y + borderH / 2) - H, W, H);
+    }
+}
+
+void Screen::mover(byte &move_x, byte deep_x)
 {
     if (move_x > (start_x - deep_x) && moveLeft)
     {
@@ -203,7 +231,7 @@ void Screen::moveString(Timer &timer, byte deep_x, byte bottom_y, const char *st
 {
     if (!move)
     {
-        move_x = (screenWidth - getStrWidth(string)) / 2;
+        move_x = start_x = deep_x;
         move = true;
         moveLeft = true;
         moveRight = false;
@@ -214,9 +242,7 @@ void Screen::moveString(Timer &timer, byte deep_x, byte bottom_y, const char *st
 
     if (timer.moveReady())
     {
-        start_x = (screenWidth - getStrWidth(string)) / 2;
-        deep_x = constrain(deep_x, 0, start_x);
-        mover(deep_x);
+        mover(move_x, deep_x);
     }
 }
 

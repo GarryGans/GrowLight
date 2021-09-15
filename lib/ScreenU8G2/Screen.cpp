@@ -174,10 +174,8 @@ void Screen::showBrightScreen(Bright &bright, Key &key, Timer &timer)
 
             digAlign(bright.maxBright[key.id], PosX::rightHalf, PosY::center);
 
-            if (timer.blinkReady())
-            {
-                frameAlign(getDigWidth(bright.maxBright[key.id]), getMaxCharWidth(), PosX::rightHalf, PosY::centerFrame);
-            }
+            blinkFrame(bright.maxBright[key.id], PosX::rightHalf, PosY::centerFrame, timer);
+
         } while (nextPage());
     }
 }
@@ -206,19 +204,19 @@ void Screen::timerScreen(Watch &watch, Timer &timer, Key &key)
             switch (watch.cursorSpectrum)
             {
             case 0:
-                blinkFrame(watch.startHour[key.id], x, 57, timer);
+                // blinkFrame(watch.startHour[key.id], x, 57, timer);
                 break;
 
             case 1:
-                blinkFrame(watch.startMinute[key.id], nextX(watch.startHour[key.id], 5, ":"), 57, timer);
+                // blinkFrame(watch.startMinute[key.id], nextX(watch.startHour[key.id], 5, ":"), 57, timer);
                 break;
 
             case 2:
-                blinkFrame(watch.finishHour[key.id], 5 + getStrWidth("00:00-"), 57, timer);
+                // blinkFrame(watch.finishHour[key.id], 5 + getStrWidth("00:00-"), 57, timer);
                 break;
 
             case 3:
-                blinkFrame(watch.finishMinute[key.id], 5 + getStrWidth("00:00-00:"), 57, timer);
+                // blinkFrame(watch.finishMinute[key.id], 5 + getStrWidth("00:00-00:"), 57, timer);
                 break;
 
             default:
@@ -333,15 +331,15 @@ void Screen::blinkHeaderTime(Key &key, Watch &watch, Timer &timer)
     switch (watch.cursorDateTime)
     {
     case 3:
-        blinkFrame(watch.hour, 74, 0, timer);
+        // blinkFrame(watch.hour, 74, 0, timer);
         break;
 
     case 4:
-        blinkFrame(watch.min, 74 + getStrWidth("00:"), 0, timer);
+        // blinkFrame(watch.min, 74 + getStrWidth("00:"), 0, timer);
         break;
 
     case 5:
-        blinkFrame(watch.sec, 74 + getStrWidth("00:00:"), 0, timer);
+        // blinkFrame(watch.sec, 74 + getStrWidth("00:00:"), 0, timer);
         break;
 
     default:
@@ -362,15 +360,15 @@ void Screen::blinkHeaderDate(Key &key, Watch &watch, Timer &timer)
     switch (watch.cursorDateTime)
     {
     case 0:
-        blinkFrame(watch.day, 0, 0, timer);
+        // blinkFrame(watch.day, 0, 0, timer);
         break;
 
     case 1:
-        blinkFrame(watch.month, getStrWidth("00/"), 0, timer);
+        // blinkFrame(watch.month, getStrWidth("00/"), 0, timer);
         break;
 
     case 2:
-        blinkFrameYear(watch.year, getStrWidth("00/00/"), 0, timer);
+        // blinkFrameYear(watch.year, getStrWidth("00/00/"), 0, timer);
         break;
 
     default:
@@ -401,46 +399,48 @@ void Screen::setWatchScreen(Watch &watch, Key &key, Timer &timer)
 
 void Screen::showSunTime(Watch &watch)
 {
-    setFont(u8g2_font_pressstart2p_8f);
-    textAlign("Sun Rise:", PosX::leftSpace, PosY::upHalf);
+    setFontGetHeight(u8g2_font_9x18_tn);
 
-    setFont(u8g2_font_timB14_tr);
-    setPosition("00:00", PosX::rightSpace, PosY::upHalf);
+    setPosition("00:00", PosX::rightSpace, PosY::center);
     showStringTime(watch.RiseHour, watch.RiseMin);
 
-    setFont(u8g2_font_pressstart2p_8f);
-    textAlign("Sun Set:", PosX::leftSpace, PosY::downHalf);
-
-    setFont(u8g2_font_timB14_tr);
-    setPosition("00:00", PosX::rightSpace, PosY::downHalf);
+    setPosition("00:00", PosX::rightSpace, PosY::downSpace);
     showStringTime(watch.SetHour, watch.SetMin);
 }
 
 void Screen::blinkSunTime(Key &key, Timer &timer, Watch &watch)
 {
-    showSunTime(watch);
+    // setFont(u8g2_font_profont22_tn);
+    setFontGetHeight(u8g2_font_profont22_tn);
+
+    setPosition("00:00", PosX::center, PosY::center);
+    showStringTime(watch.RiseHour, watch.RiseMin);
+    setPosition("00:00", PosX::center, PosY::downSpace);
+    showStringTime(watch.SetHour, watch.SetMin);
 
     switch (watch.cursorDay)
     {
     case 0:
-        blinkFrame(watch.RiseHour, 60, 30, timer);
+        setPosition("00:00", PosX::center, PosY::center);
         break;
 
     case 1:
-        blinkFrame(watch.RiseMin, 60 + getStrWidth("00:"), 30, timer);
+        setPosition("00:00", PosX::center, PosY::centerFrame);
         break;
 
     case 2:
-        blinkFrame(watch.SetHour, 60, 52, timer);
+        setPosition("00:00", PosX::center, PosY::downSpace);
         break;
 
     case 3:
-        blinkFrame(watch.SetMin, 60 + getStrWidth("00:"), 52, timer);
+        // blinkFrame(watch.SetMin, 60 + getStrWidth("00:"), 52, timer);
         break;
 
     default:
         break;
     }
+
+    blinkFrame(x, y, H, timer);
 }
 
 void Screen::sunTimeScreen(Watch &watch, Key &key, Timer &timer)
@@ -451,9 +451,9 @@ void Screen::sunTimeScreen(Watch &watch, Key &key, Timer &timer)
         do
         {
             setFont(u8g2_font_pressstart2p_8f);
-            textAlign("Set SunTime", PosX::center, PosY::up);
+            setPosition("Set SunTime", PosX::center, PosY::upSpace, 8);
+            moveString(timer, x, y, "Set SunTime");
             blinkSunTime(key, timer, watch);
-
         } while (nextPage());
 
         // if (timer.unfrize())

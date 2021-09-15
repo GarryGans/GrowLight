@@ -55,17 +55,19 @@ private:
     const byte screenWidth = 128;
     const byte screenHeight = 64;
 
+    byte borderW;
+    byte borderH;
+
     byte width;
-    byte x;
+    byte height;
+        byte x;
     byte y;
     byte setX;
     byte setY;
     byte blockWidth;
 
-    const byte deep_x = 30;
-    byte start_x;
     byte move_x;
-    byte bottom_y = 59;
+    byte start_x;
 
     boolean moveLeft;
     boolean moveRight;
@@ -87,11 +89,12 @@ public:
     void iconAlign(int icon, byte iconWH, PosX position_x, PosY position_y);
     void digStringAlign(byte dig, const char *string, PosX position_x, PosY position_y);
     void digAlign(byte dig, PosX position_x, PosY position_y);
-    void setPosition(const char *string, PosX position_x, PosY position_y);
+    void setPosition(const char *format, PosX position_x, PosY position_y);
     void textAlign(const char *string, PosX position_x, PosY position_y);
     void stringAlign(String str, byte size, PosX position_x, PosY position_y);
+    void setFontGetHeight(const uint8_t *font);
 
-    void mover(byte deep_x);
+    void mover(byte &move_x, byte deep_x);
     void moveString(Timer &timer, byte end_x, byte bottom_y, const char *string);
     void escapeBar(Timer &timer);
 
@@ -104,7 +107,8 @@ public:
     void headerTime(Watch &watch);
     void headerDate(Watch &watch);
 
-    void blinkFrame(byte value, byte x, byte y, Timer &timer);
+    void blinkFrame(byte value, PosX position_x, PosY position_y, Timer &timer);
+    void blinkFrame(byte x, byte y, byte H, Timer &timer);
     void blinkFrameYear(int year, byte x, byte y, Timer &timer);
 
     void showStringTime(byte hh, byte mm);
