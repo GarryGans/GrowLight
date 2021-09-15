@@ -21,10 +21,9 @@ private:
     String lightColor[lampAmount];
     const char *state[2] = {"OFF", "ON"};
     const char *solution[2] = {"MANUAL", "SKIP"};
+    const char *advise[2] = {"Set SunTime", "Set MaxBright"};
 
     char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-
-    byte screen = 255;
 
     enum class PosX
     {
@@ -68,20 +67,18 @@ private:
     byte width;
     byte height;
 
-    char *string;
-
     byte x;
     byte y;
     byte setX;
     byte setY;
     byte blockWidth;
 
-    byte move_x;
-    byte start_x;
-
-    boolean moveLeft;
-    boolean moveRight;
-    boolean move;
+    byte move_x[10];
+    boolean move[10];
+    boolean moveLeft[10];
+    boolean moveRight[10];
+    byte start_x[10];
+    byte start_y[10];
 
     int icon;
     int lock = 79;
@@ -90,6 +87,7 @@ private:
 
 public:
     Screen(String WavelengthSMD[], String lightColor[]);
+    Screen();
     ~Screen();
 
     byte getDigWidth(byte value);
@@ -104,8 +102,8 @@ public:
     void stringAlign(String str, byte size, PosX pos_x, PosY pos_y);
     void setHeight(const uint8_t *font);
 
-    void mover(byte &move_x, byte deep_x);
-    void moveString(const char *string, PosX pos_x, PosY pos_y, Key &key, Timer &timer);
+    void mover(byte &move_x, byte deep_x, byte id);
+    void moveString(const char *string, PosX pos_x, PosY pos_y, Timer &timer, byte id);
     void escapeBar(Timer &timer);
 
     void iGorLogo();

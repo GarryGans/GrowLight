@@ -12,6 +12,10 @@ Screen::Screen(String WavelengthSMD[], String lightColor[]) : U8G2_SSD1306_128X6
     }
 }
 
+Screen::Screen() : U8G2_SSD1306_128X64_NONAME_1_HW_I2C(U8G2_R0, /* reset=*/U8X8_PIN_NONE)
+{
+}
+
 Screen::~Screen()
 {
 }
@@ -47,7 +51,8 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot)
     if (watch.skip[key.id] && key.screen != key.manual)
     {
         setHeight(u8g2_font_crox5tb_tf);
-        moveString(solution[1], PosX::center, PosY::downSpace, key, timer);
+
+        moveString(solution[1], PosX::center, PosY::downSpace, timer, 2);
     }
 
     else if (key.screen == key.manual)
@@ -73,14 +78,15 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright)
     if (watch.skip[key.id] && key.screen != key.manual)
     {
         setHeight(u8g2_font_pressstart2p_8f);
-        textAlign("SKIP", PosX::center, PosY::downSpace);
+
+        moveString(solution[1], PosX::center, PosY::downSpace, timer, 3);
     }
 
     else if (key.screen == key.manual)
     {
-        setHeight(u8g2_font_pixelmordred_tf);
+        setHeight(u8g2_font_pressstart2p_8f);
 
-        textAlign("manual", PosX::leftHalf, PosY::downSpace);
+        textAlign(solution[0], PosX::leftHalf, PosY::downSpace);
         brightInfo(bright, key, timer);
     }
 
@@ -98,15 +104,14 @@ void Screen::lampInfo(Watch &watch, Key &key, Timer &timer)
 {
     setHeight(u8g2_font_courB08_tf);
 
-    char string[10];
-    String(WavelengthSMD[key.id]).toCharArray(string, 10);
-    moveString(string, PosX::center, PosY::upHalf, key, timer);
-    // textAlign(WavelengthSMD[key.id], PosX::leftSpace, PosY::upHalf);
+    char string[12];
+    String(WavelengthSMD[key.id]).toCharArray(string, 12);
+
+    moveString(string, PosX::center, PosY::upHalf, timer, 0);
 
     setHeight(u8g2_font_crox5tb_tf);
 
     stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
-    // textAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
 
     stringAlign(state[watch.autoSwitch[key.id] || key.buttonSwitch[key.id]], 4, PosX::rightHalf, PosY::center);
 }
@@ -145,7 +150,7 @@ void Screen::showBrightScreen(Pot &pot, Key &key, Timer &timer)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            textAlign("Max Bright", PosX::center, PosY::upSpace);
+            moveString(advise[1], PosX::center, PosY::upSpace, timer, 4);
 
             setHeight(u8g2_font_crox5tb_tf);
 
@@ -168,7 +173,7 @@ void Screen::showBrightScreen(Bright &bright, Key &key, Timer &timer)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            textAlign("Max Bright", PosX::center, PosY::upSpace);
+            moveString(advise[1], PosX::center, PosY::upSpace, timer, 4);
 
             setHeight(u8g2_font_crox5tb_tf);
 
@@ -438,7 +443,8 @@ void Screen::sunTimeScreen(Watch &watch, Key &key, Timer &timer)
         do
         {
             setHeight(u8g2_font_pressstart2p_8f);
-            moveString("Set SunTime", PosX::center, PosY::upSpace, key, timer);
+
+            moveString(advise[0], PosX::center, PosY::upSpace, timer, 1);
             blinkSunTime(key, timer, watch);
         } while (nextPage());
 

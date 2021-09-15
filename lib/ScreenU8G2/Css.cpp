@@ -1,5 +1,7 @@
 #include "Screen.h"
 
+Timer run[10];
+
 void Screen::alignSimbols(byte W, byte H, PosX pos_x, PosY pos_y)
 {
     switch (pos_x)
@@ -256,50 +258,58 @@ void Screen::blinkFrame(const char *format, byte digAmount, PosX pos_x, PosY pos
     }
 }
 
-void Screen::mover(byte &move_x, byte deep_x)
+void Screen::mover(byte &move_x, byte deep_x, byte id)
 {
-    if (move_x > (start_x - deep_x) && moveLeft)
+    if (moveLeft[id])
     {
         move_x--;
-        if (move_x == start_x - deep_x)
+        if (move_x == start_x[id] - deep_x)
         {
-            moveLeft = false;
-            moveRight = true;
+            moveLeft[id] = false;
+            moveRight[id] = true;
         }
     }
-    else if (move_x < (deep_x + start_x) && moveRight)
+    else if (moveRight[id])
     {
         move_x++;
-        if (move_x == deep_x + start_x)
+        if (move_x == deep_x + start_x[id])
         {
-            moveRight = false;
-            moveLeft = true;
+            moveRight[id] = false;
+            moveLeft[id] = true;
         }
     }
 }
 
-void Screen::moveString(const char *string, PosX pos_x, PosY pos_y, Key &key, Timer &timer)
+void Screen::moveString(const char *string, PosX pos_x, PosY pos_y, Timer &timer, byte id)
 {
-    
-
     setPosition(string, pos_x, pos_y);
 
-    if (!move || this->string != string)
+    if (!move[id])
     {
-        this->string = string;
-
-        move_x = start_x = x;
-        move = true;
-        moveLeft = true;
-        moveRight = false;
+        move[id] = true;
+        move_x[id] = start_x[id] = x;
+        moveLeft[id] = true;
+        moveRight[id] = false;
     }
 
-    setCursor(move_x, y);
+    if (start_x[id] != x)
+    {
+        start_x[id] = x;
+
+        if (move_x[id] > 2 * start_x[id])
+        {
+            move_x[id] = 2 * start_x[id];
+            moveRight[id] = false;
+            moveLeft[id] = true;
+        }
+    }
+
+    setCursor(move_x[id], y);
     print(string);
 
-    if (timer.moveReady())
+    if (run[id].moveReady())
     {
-        mover(move_x, start_x);
+        mover(move_x[id], start_x[id], id);
     }
 }
 
