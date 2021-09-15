@@ -21,7 +21,7 @@ void Screen::iGorLogo()
     firstPage();
     do
     {
-        setFont(u8g2_font_timB14_tf);
+        setHeight(u8g2_font_timB14_tf);
         textAlign("Smart Garden", PosX::center, PosY::up);
         textAlign("iGor_2019", PosX::center, PosY::center);
 
@@ -30,14 +30,14 @@ void Screen::iGorLogo()
 
 void Screen::brightInfo(Pot &pot, Key &key, Timer &timer)
 {
-    setFont(u8g2_font_courB08_tn);
+    setHeight(u8g2_font_courB08_tn);
 
     digAlign(pot.bright[key.id], PosX::rightHalf, PosY::downSpace);
 }
 
 void Screen::brightInfo(Bright &bright, Key &key, Timer &timer)
 {
-    setFont(u8g2_font_pressstart2p_8f);
+    setHeight(u8g2_font_pressstart2p_8f);
 
     digAlign(bright.bright[key.id], PosX::rightHalf, PosY::downSpace);
 }
@@ -46,13 +46,13 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot)
 {
     if (watch.skip[key.id] && key.screen != key.manual)
     {
-        setFont(u8g2_font_pixelmordred_tf);
+        setHeight(u8g2_font_pixelmordred_tf);
         textAlign("SKIP", PosX::center, PosY::downSpace);
     }
 
     else if (key.screen == key.manual)
     {
-        setFont(u8g2_font_pressstart2p_8f);
+        setHeight(u8g2_font_pressstart2p_8f);
         textAlign("MANUAL", PosX::leftHalf, PosY::downSpace);
 
         brightInfo(pot, key, timer);
@@ -60,7 +60,7 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot)
 
     else
     {
-        setFont(u8g2_font_courB08_tn);
+        setHeight(u8g2_font_courB08_tn);
         setPosition("00:00-00:00", PosX::leftSpace, PosY::downSpace);
 
         showSpectrumTime(watch, key.id);
@@ -72,13 +72,13 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright)
 {
     if (watch.skip[key.id] && key.screen != key.manual)
     {
-        setFont(u8g2_font_pressstart2p_8f);
+        setHeight(u8g2_font_pressstart2p_8f);
         textAlign("SKIP", PosX::center, PosY::downSpace);
     }
 
     else if (key.screen == key.manual)
     {
-        setFont(u8g2_font_pixelmordred_tf);
+        setHeight(u8g2_font_pixelmordred_tf);
 
         textAlign("manual", PosX::leftHalf, PosY::downSpace);
         brightInfo(bright, key, timer);
@@ -86,7 +86,7 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright)
 
     else
     {
-        setFont(u8g2_font_courB08_tn);
+        setHeight(u8g2_font_courB08_tn);
         setPosition("00:00-00:00", PosX::leftSpace, PosY::downSpace);
 
         showSpectrumTime(watch, key.id);
@@ -96,11 +96,11 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright)
 
 void Screen::lampInfo(Watch &watch, Key &key)
 {
-    setFont(u8g2_font_courB08_tf);
+    setHeight(u8g2_font_courB08_tf);
 
     stringAlign(WavelengthSMD[key.id], 21, PosX::left, PosY::upHalf);
 
-    setFont(u8g2_font_courB18_tr);
+    setHeight(u8g2_font_courB18_tr);
 
     stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
 
@@ -109,7 +109,7 @@ void Screen::lampInfo(Watch &watch, Key &key)
 
 void Screen::headerTime(Watch &watch)
 {
-    setFont(u8g2_font_courB08_tn);
+    setHeight(u8g2_font_courB08_tn);
 
     setPosition("00:00:00", PosX::rightSpace, PosY::upSpace);
 
@@ -120,7 +120,7 @@ void Screen::headerTime(Watch &watch)
 
 void Screen::headerDate(Watch &watch)
 {
-    setFont(u8g2_font_courB08_tf);
+    setHeight(u8g2_font_courB08_tf);
 
     setPosition("00/00/0000", PosX::leftHalf, PosY::upSpace);
 
@@ -139,11 +139,11 @@ void Screen::showBrightScreen(Pot &pot, Key &key, Timer &timer)
         firstPage();
         do
         {
-            setFont(u8g2_font_pressstart2p_8f);
+            setHeight(u8g2_font_pressstart2p_8f);
 
             textAlign("Max Bright", PosX::center, PosY::upSpace);
 
-            setFont(u8g2_font_courB18_tr);
+            setHeight(u8g2_font_courB18_tr);
 
             stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
 
@@ -164,11 +164,11 @@ void Screen::showBrightScreen(Bright &bright, Key &key, Timer &timer)
         firstPage();
         do
         {
-            setFont(u8g2_font_pressstart2p_8f);
+            setHeight(u8g2_font_pressstart2p_8f);
 
             textAlign("Max Bright", PosX::center, PosY::upSpace);
 
-            setFont(u8g2_font_courB18_tr);
+            setHeight(u8g2_font_courB18_tr);
 
             stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
 
@@ -187,11 +187,11 @@ void Screen::timerScreen(Watch &watch, Timer &timer, Key &key)
         firstPage();
         do
         {
-            setFont(u8g2_font_courB08_tn);
+            setHeight(u8g2_font_courB08_tn);
 
             textAlign("Set Spectrum Time", PosX::center, PosY::upSpace);
 
-            setFont(u8g2_font_courB08_tn);
+            setHeight(u8g2_font_courB08_tn);
 
             setPosition("00:00", PosX::center, PosY::upHalf);
 
@@ -322,7 +322,7 @@ void Screen::blinkFrameYear(int year, byte x, byte y, Timer &timer)
 
 void Screen::blinkHeaderTime(Key &key, Watch &watch, Timer &timer)
 {
-    setFont(u8g2_font_courB08_tn);
+    setHeight(u8g2_font_courB08_tn);
 
     setPosition("00:00:00", PosX::center, PosY::downHalf);
 
@@ -349,7 +349,7 @@ void Screen::blinkHeaderTime(Key &key, Watch &watch, Timer &timer)
 
 void Screen::blinkHeaderDate(Key &key, Watch &watch, Timer &timer)
 {
-    setFont(u8g2_font_courB08_tf);
+    setHeight(u8g2_font_courB08_tf);
 
     setPosition("00/00/0000", PosX::center, PosY::upHalf);
 
@@ -399,7 +399,7 @@ void Screen::setWatchScreen(Watch &watch, Key &key, Timer &timer)
 
 void Screen::showSunTime(Watch &watch)
 {
-    setFontGetHeight(u8g2_font_9x18_tn);
+    setHeight(u8g2_font_9x18_tn);
 
     setPosition("00:00", PosX::rightSpace, PosY::center);
     showStringTime(watch.RiseHour, watch.RiseMin);
@@ -410,8 +410,7 @@ void Screen::showSunTime(Watch &watch)
 
 void Screen::blinkSunTime(Key &key, Timer &timer, Watch &watch)
 {
-    // setFont(u8g2_font_profont22_tn);
-    setFontGetHeight(u8g2_font_profont22_tn);
+    setHeight(u8g2_font_profont22_tn);
 
     setPosition("00:00", PosX::center, PosY::center);
     showStringTime(watch.RiseHour, watch.RiseMin);
@@ -440,7 +439,7 @@ void Screen::blinkSunTime(Key &key, Timer &timer, Watch &watch)
         break;
     }
 
-    blinkFrame(x, y, H, timer);
+    blinkFrame(x, y, timer);
 }
 
 void Screen::sunTimeScreen(Watch &watch, Key &key, Timer &timer)
@@ -450,8 +449,9 @@ void Screen::sunTimeScreen(Watch &watch, Key &key, Timer &timer)
         firstPage();
         do
         {
-            setFont(u8g2_font_pressstart2p_8f);
-            setPosition("Set SunTime", PosX::center, PosY::upSpace, 8);
+            setHeight(u8g2_font_pressstart2p_8f);
+
+            setPosition("Set SunTime", PosX::center, PosY::upSpace);
             moveString(timer, x, y, "Set SunTime");
             blinkSunTime(key, timer, watch);
         } while (nextPage());

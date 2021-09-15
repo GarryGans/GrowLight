@@ -60,7 +60,7 @@ private:
 
     byte width;
     byte height;
-        byte x;
+    byte x;
     byte y;
     byte setX;
     byte setY;
@@ -92,7 +92,7 @@ public:
     void setPosition(const char *format, PosX position_x, PosY position_y);
     void textAlign(const char *string, PosX position_x, PosY position_y);
     void stringAlign(String str, byte size, PosX position_x, PosY position_y);
-    void setFontGetHeight(const uint8_t *font);
+    void setHeight(const uint8_t *font);
 
     void mover(byte &move_x, byte deep_x);
     void moveString(Timer &timer, byte end_x, byte bottom_y, const char *string);
@@ -108,7 +108,7 @@ public:
     void headerDate(Watch &watch);
 
     void blinkFrame(byte value, PosX position_x, PosY position_y, Timer &timer);
-    void blinkFrame(byte x, byte y, byte H, Timer &timer);
+    void blinkFrame(byte x, byte y, Timer &timer);
     void blinkFrameYear(int year, byte x, byte y, Timer &timer);
 
     void showStringTime(byte hh, byte mm);

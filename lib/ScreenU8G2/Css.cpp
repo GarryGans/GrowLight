@@ -107,11 +107,15 @@ byte Screen::getDigWidth(byte value)
     return getStrWidth(val);
 }
 
-void Screen::setFontGetHeight(const uint8_t *font)
+void Screen::setHeight(const uint8_t *font)
 {
     setFont(font);
 
-    if (font == u8g2_font_profont22_tn)
+    if (font == u8g2_font_pressstart2p_8f)
+    {
+        height = 8;
+    }
+    else if (font == u8g2_font_profont22_tn || font == u8g2_font_9x18_tn)
     {
         height = 14;
     }
@@ -119,7 +123,7 @@ void Screen::setFontGetHeight(const uint8_t *font)
 
 void Screen::textAlign(const char *string, PosX position_x, PosY position_y)
 {
-    alignSimbols(getStrWidth(string), getMaxCharWidth(), position_x, position_y);
+    alignSimbols(getStrWidth(string), height, position_x, position_y);
 
     setCursor(x, y);
     print(string);
@@ -136,7 +140,7 @@ void Screen::stringAlign(String str, byte size, PosX position_x, PosY position_y
 
 void Screen::digStringAlign(byte dig, const char *string, PosX position_x, PosY position_y)
 {
-    alignSimbols(getDigWidth(dig) + getStrWidth(string), getMaxCharWidth(), position_x, position_y);
+    alignSimbols(getDigWidth(dig) + getStrWidth(string), height, position_x, position_y);
 
     setCursor(x, y);
 
@@ -146,7 +150,7 @@ void Screen::digStringAlign(byte dig, const char *string, PosX position_x, PosY 
 
 void Screen::digAlign(byte dig, PosX position_x, PosY position_y)
 {
-    alignSimbols(getDigWidth(dig), getMaxCharWidth(), position_x, position_y);
+    alignSimbols(getDigWidth(dig), height, position_x, position_y);
 
     setCursor(x, y);
     print(dig);
@@ -178,7 +182,7 @@ void Screen::blinkFrame(byte value, PosX position_x, PosY position_y, Timer &tim
 {
     if (timer.blinkReady())
     {
-        frameAlign(getDigWidth(value), getMaxCharWidth(), position_x, position_y);
+        frameAlign(getDigWidth(value), height, position_x, position_y);
     }
 }
 
@@ -187,13 +191,13 @@ byte Screen::nextX(byte value, byte prewX = 0, const char *simbol = 0)
     return (getDigWidth(value) + prewX + getStrWidth(simbol));
 }
 
-void Screen::blinkFrame(byte x, byte y, byte H, Timer &timer)
+void Screen::blinkFrame(byte x, byte y,Timer &timer)
 {
     if (timer.blinkReady())
     {
         byte W = getMaxCharWidth() * 2;
 
-        byte H = 14;
+        byte H = height;
 
         borderW = 8;
         borderH = 8;
