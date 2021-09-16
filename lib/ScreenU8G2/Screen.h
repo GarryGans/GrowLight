@@ -35,10 +35,11 @@ public:
     void printDate(byte day, byte month, int year);
     void printSpecTime(Watch &watch, byte id);
 
+    void iGorLogo();
+    
     void headerTime(Watch &watch);
     void headerDate(Watch &watch);
 
-    void iGorLogo();
     void brightInfo(Pot &pot, Key &key, Timer &timer);
     void brightInfo(Bright &bright, Key &key, Timer &timer);
 
