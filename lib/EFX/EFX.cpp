@@ -1,8 +1,17 @@
-#include "Screen.h"
+#include "EFX.h"
 
 Timer run[10];
 
-void Screen::alignSimbols(byte W, byte H, PosX pos_x, PosY pos_y)
+// EFX::EFX() : U8G2_SH1106_128X64_NONAME_1_HW_I2C(U8G2_R0, /* reset=*/U8X8_PIN_NONE)
+EFX::EFX() : U8G2_SSD1306_128X64_NONAME_1_HW_I2C(U8G2_R0, /* reset=*/U8X8_PIN_NONE)
+{
+}
+
+EFX::~EFX()
+{
+}
+
+void EFX::alignSimbols(byte W, byte H, PosX pos_x, PosY pos_y)
 {
     switch (pos_x)
     {
@@ -117,7 +126,7 @@ void Screen::alignSimbols(byte W, byte H, PosX pos_x, PosY pos_y)
     }
 }
 
-byte Screen::getDigWidth(byte value)
+byte EFX::getDigWidth(byte value)
 {
     char val[4];
     String(value).toCharArray(val, 4);
@@ -125,7 +134,7 @@ byte Screen::getDigWidth(byte value)
     return getStrWidth(val);
 }
 
-void Screen::setHeight(const uint8_t *font)
+void EFX::setHeight(const uint8_t *font)
 {
     setFont(font);
 
@@ -139,12 +148,12 @@ void Screen::setHeight(const uint8_t *font)
         height = 8;
     }
 
-    else if (font == u8g2_font_pixelmordred_tf)
+    else if (font == u8g2_font_pixelmordred_tf || font == u8g2_font_HelvetiPixelOutline_tr)
     {
         height = 12;
     }
 
-    else if (font == u8g2_font_profont22_tn || font == u8g2_font_9x18_tn || font == u8g2_font_crox4h_tf || font == u8g2_font_crox4hb_tf)
+    else if (font == u8g2_font_profont22_tn || font == u8g2_font_9x18_tn || font == u8g2_font_crox4h_tf || font == u8g2_font_crox4hb_tf || font == u8g2_font_luBS14_te)
     {
         height = 14;
     }
@@ -163,7 +172,7 @@ void Screen::setHeight(const uint8_t *font)
     // }
 }
 
-void Screen::textAlign(const char *string, PosX pos_x, PosY pos_y)
+void EFX::textAlign(const char *string, PosX pos_x, PosY pos_y)
 {
     alignSimbols(getStrWidth(string), height, pos_x, pos_y);
 
@@ -171,7 +180,7 @@ void Screen::textAlign(const char *string, PosX pos_x, PosY pos_y)
     print(string);
 }
 
-void Screen::stringAlign(String str, byte size, PosX pos_x, PosY pos_y)
+void EFX::stringAlign(String str, byte size, PosX pos_x, PosY pos_y)
 {
     char light[size];
 
@@ -180,7 +189,7 @@ void Screen::stringAlign(String str, byte size, PosX pos_x, PosY pos_y)
     textAlign(light, pos_x, pos_y);
 }
 
-void Screen::digStringAlign(byte dig, const char *string, PosX pos_x, PosY pos_y)
+void EFX::digStringAlign(byte dig, const char *string, PosX pos_x, PosY pos_y)
 {
     alignSimbols(getDigWidth(dig) + getStrWidth(string), height, pos_x, pos_y);
 
@@ -190,7 +199,7 @@ void Screen::digStringAlign(byte dig, const char *string, PosX pos_x, PosY pos_y
     print(string);
 }
 
-void Screen::digAlign(byte dig, PosX pos_x, PosY pos_y)
+void EFX::digAlign(byte dig, PosX pos_x, PosY pos_y)
 {
     alignSimbols(getDigWidth(dig), height, pos_x, pos_y);
 
@@ -198,20 +207,20 @@ void Screen::digAlign(byte dig, PosX pos_x, PosY pos_y)
     print(dig);
 }
 
-void Screen::setPosition(const char *format, PosX pos_x, PosY pos_y)
+void EFX::setPosition(const char *format, PosX pos_x, PosY pos_y)
 {
     alignSimbols(getStrWidth(format), height, pos_x, pos_y);
 
     setCursor(x, y);
 }
 
-void Screen::iconAlign(int icon, byte iconWH, PosX pos_x, PosY pos_y)
+void EFX::iconAlign(int icon, byte iconWH, PosX pos_x, PosY pos_y)
 {
     alignSimbols(iconWH, iconWH, pos_x, pos_y);
     drawGlyph(x, y, icon);
 }
 
-void Screen::frameAlign(byte W, byte H, PosX pos_x, PosY pos_y)
+void EFX::frameAlign(byte W, byte H, PosX pos_x, PosY pos_y)
 {
     borderW = 6;
     borderH = 6;
@@ -223,7 +232,7 @@ void Screen::frameAlign(byte W, byte H, PosX pos_x, PosY pos_y)
     drawFrame(x, y, W, H);
 }
 
-void Screen::blinkFrame(byte value, boolean dig, PosX pos_x, PosY pos_y, Timer &timer)
+void EFX::blinkFrame(byte value, boolean dig, PosX pos_x, PosY pos_y, Timer &timer)
 {
     if (timer.blinkReady())
     {
@@ -240,7 +249,7 @@ void Screen::blinkFrame(byte value, boolean dig, PosX pos_x, PosY pos_y, Timer &
     }
 }
 
-void Screen::blinkFrame(const char *format, byte digAmount, PosX pos_x, PosY pos_y, Timer &timer)
+void EFX::blinkFrame(const char *format, byte digAmount, PosX pos_x, PosY pos_y, Timer &timer)
 {
     if (timer.blinkReady())
     {
@@ -258,7 +267,7 @@ void Screen::blinkFrame(const char *format, byte digAmount, PosX pos_x, PosY pos
     }
 }
 
-void Screen::mover(byte &move_x, byte deep_x, byte id)
+void EFX::mover(byte &move_x, byte deep_x, byte id)
 {
     if (moveLeft[id])
     {
@@ -280,7 +289,7 @@ void Screen::mover(byte &move_x, byte deep_x, byte id)
     }
 }
 
-void Screen::moveString(const char *string, PosX pos_x, PosY pos_y, Timer &timer, byte id)
+void EFX::moveString(const char *string, PosX pos_x, PosY pos_y, Timer &timer, byte id)
 {
     setPosition(string, pos_x, pos_y);
 
@@ -313,7 +322,7 @@ void Screen::moveString(const char *string, PosX pos_x, PosY pos_y, Timer &timer
     }
 }
 
-void Screen::escapeBar(Timer &timer)
+void EFX::escapeBar(Timer &timer)
 {
     if (!timer.escBar)
     {

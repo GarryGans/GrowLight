@@ -10,6 +10,7 @@ class Timer
     friend class Bright;
     friend class Screen;
     friend class Key;
+    friend class EFX;
 
 private:
     unsigned long prewCounterMillis;
