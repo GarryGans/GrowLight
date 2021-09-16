@@ -30,14 +30,13 @@ public:
     ~Screen();
 
     void printDig(byte value);
-
     void printTime(byte hh, byte mm);
     void printWatch(byte hh, byte mm, byte ss);
     void printDate(byte day, byte month, int year);
+    void printSpecTime(Watch &watch, byte id);
 
     void headerTime(Watch &watch);
     void headerDate(Watch &watch);
-    void showSpectrumTime(Watch &watch, byte id);
 
     void iGorLogo();
     void brightInfo(Pot &pot, Key &key, Timer &timer);

@@ -58,7 +58,7 @@ void Screen::printDate(byte day, byte month, int year)
     print(year);
 }
 
-void Screen::showSpectrumTime(Watch &watch, byte id)
+void Screen::printSpecTime(Watch &watch, byte id)
 {
     printTime(watch.startHour[id], watch.startMinute[id]);
 
@@ -115,7 +115,7 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot)
         setHeight(u8g2_font_courB08_tn);
         setPosition("00:00-00:00", PosX::leftSpace, PosY::downSpace);
 
-        showSpectrumTime(watch, key.id);
+        printSpecTime(watch, key.id);
         brightInfo(pot, key, timer);
     }
 }
@@ -142,7 +142,7 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright)
         setHeight(u8g2_font_courB08_tn);
         setPosition("00:00-00:00", PosX::leftSpace, PosY::downSpace);
 
-        showSpectrumTime(watch, key.id);
+        printSpecTime(watch, key.id);
         brightInfo(bright, key, timer);
     }
 }
