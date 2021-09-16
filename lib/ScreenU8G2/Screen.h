@@ -29,18 +29,17 @@ public:
     Screen(String WavelengthSMD[], String lightColor[]);
     ~Screen();
 
-    void iGorLogo();
+    void printDig(byte value);
 
-    void showDig(byte value);
+    void printTime(byte hh, byte mm);
+    void printWatch(byte hh, byte mm, byte ss);
+    void printDate(byte day, byte month, int year);
 
     void headerTime(Watch &watch);
     void headerDate(Watch &watch);
-
-    void showStringTime(byte hh, byte mm);
-    void showStringWatch(byte hh, byte mm, byte ss);
-    void showStringDate(byte day, byte month, int year);
     void showSpectrumTime(Watch &watch, byte id);
 
+    void iGorLogo();
     void brightInfo(Pot &pot, Key &key, Timer &timer);
     void brightInfo(Bright &bright, Key &key, Timer &timer);
 
@@ -49,8 +48,8 @@ public:
 
     void lampInfo(Watch &watch, Key &key, Timer &timer);
 
-    void blinkHeaderDate(Key &key, Watch &watch, Timer &timer);
-    void blinkHeaderTime(Key &key, Watch &watch, Timer &timer);
+    void blinkDate(Key &key, Watch &watch, Timer &timer);
+    void blinkTime(Key &key, Watch &watch, Timer &timer);
 
     void showSunTime(Watch &watch);
 
@@ -65,8 +64,8 @@ public:
 
     void sunTimeScreen(Watch &watch, Key &key, Timer &timer);
 
-    void showBrightScreen(Pot &pot, Key &key, Timer &timer);
-    void showBrightScreen(Bright &bright, Key &key, Timer &timer);
+    void brightScreen(Pot &pot, Key &key, Timer &timer);
+    void brightScreen(Bright &bright, Key &key, Timer &timer);
 
     void startScreen(Watch &watch, Key &key, Timer &timer);
 

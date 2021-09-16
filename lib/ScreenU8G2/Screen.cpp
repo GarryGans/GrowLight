@@ -13,6 +13,60 @@ Screen::~Screen()
 {
 }
 
+void Screen::printDig(byte value)
+{
+    if (value < 10)
+    {
+        print("0");
+    }
+
+    print(value);
+}
+
+void Screen::printTime(byte hh, byte mm)
+{
+    printDig(hh);
+
+    print(":");
+
+    printDig(mm);
+}
+
+void Screen::printWatch(byte hh, byte mm, byte ss)
+{
+    printDig(hh);
+
+    print(":");
+
+    printDig(mm);
+
+    print(":");
+
+    printDig(ss);
+}
+
+void Screen::printDate(byte day, byte month, int year)
+{
+    printDig(day);
+
+    print("/");
+
+    printDig(month);
+
+    print("/");
+
+    print(year);
+}
+
+void Screen::showSpectrumTime(Watch &watch, byte id)
+{
+    printTime(watch.startHour[id], watch.startMinute[id]);
+
+    print("-");
+
+    printTime(watch.finishHour[id], watch.finishMinute[id]);
+}
+
 void Screen::iGorLogo()
 {
     firstPage();
@@ -117,7 +171,7 @@ void Screen::headerTime(Watch &watch)
 
     Time now = watch.time();
 
-    showStringWatch(now.hour(), now.minute(), now.second());
+    printWatch(now.hour(), now.minute(), now.second());
 }
 
 void Screen::headerDate(Watch &watch)
@@ -128,13 +182,13 @@ void Screen::headerDate(Watch &watch)
 
     Date now = watch.date();
 
-    showStringDate(now.day(), now.month(), now.year());
+    printDate(now.day(), now.month(), now.year());
 
     // setY = 16;
     textAlign(daysOfTheWeek[now.dayOfTheWeek()], PosX::leftHalf, PosY::upHalf);
 }
 
-void Screen::showBrightScreen(Pot &pot, Key &key, Timer &timer)
+void Screen::brightScreen(Pot &pot, Key &key, Timer &timer)
 {
     if (key.screen == key.bright)
     {
@@ -157,7 +211,7 @@ void Screen::showBrightScreen(Pot &pot, Key &key, Timer &timer)
     }
 }
 
-void Screen::showBrightScreen(Bright &bright, Key &key, Timer &timer)
+void Screen::brightScreen(Bright &bright, Key &key, Timer &timer)
 {
     if (key.screen == key.bright)
     {
@@ -194,10 +248,10 @@ void Screen::timerScreen(Watch &watch, Timer &timer, Key &key)
             setHeight(u8g2_font_profont22_tn);
 
             setPosition("00:00", PosX::rightHalf, PosY::upHalf);
-            showStringTime(watch.startHour[key.id], watch.startMinute[key.id]);
+            printTime(watch.startHour[key.id], watch.startMinute[key.id]);
 
             setPosition("00:00", PosX::rightHalf, PosY::downHalf);
-            showStringTime(watch.finishHour[key.id], watch.finishMinute[key.id]);
+            printTime(watch.finishHour[key.id], watch.finishMinute[key.id]);
 
             switch (watch.cursorSpectrum)
             {
@@ -253,67 +307,13 @@ void Screen::lampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &k
     }
 }
 
-void Screen::showDig(byte value)
-{
-    if (value < 10)
-    {
-        print("0");
-    }
-
-    print(value);
-}
-
-void Screen::showStringTime(byte hh, byte mm)
-{
-    showDig(hh);
-
-    print(":");
-
-    showDig(mm);
-}
-
-void Screen::showStringWatch(byte hh, byte mm, byte ss)
-{
-    showDig(hh);
-
-    print(":");
-
-    showDig(mm);
-
-    print(":");
-
-    showDig(ss);
-}
-
-void Screen::showStringDate(byte day, byte month, int year)
-{
-    showDig(day);
-
-    print("/");
-
-    showDig(month);
-
-    print("/");
-
-    print(year);
-}
-
-void Screen::showSpectrumTime(Watch &watch, byte id)
-{
-    showStringTime(watch.startHour[id], watch.startMinute[id]);
-
-    print("-");
-
-    showStringTime(watch.finishHour[id], watch.finishMinute[id]);
-}
-
-void Screen::blinkHeaderTime(Key &key, Watch &watch, Timer &timer)
+void Screen::blinkTime(Key &key, Watch &watch, Timer &timer)
 {
     setHeight(u8g2_font_pressstart2p_8f);
 
     setPosition("00:00:00", PosX::center, PosY::downHalf);
 
-    showStringWatch(watch.hour, watch.min, watch.sec);
+    printWatch(watch.hour, watch.min, watch.sec);
 
     switch (watch.cursorDateTime)
     {
@@ -334,13 +334,13 @@ void Screen::blinkHeaderTime(Key &key, Watch &watch, Timer &timer)
     }
 }
 
-void Screen::blinkHeaderDate(Key &key, Watch &watch, Timer &timer)
+void Screen::blinkDate(Key &key, Watch &watch, Timer &timer)
 {
     setHeight(u8g2_font_pressstart2p_8f);
 
     setPosition("00/00/0000", PosX::center, PosY::upHalf);
 
-    showStringDate(watch.day, watch.month, watch.year);
+    printDate(watch.day, watch.month, watch.year);
 
     // textAlign(daysOfTheWeek[now.dayOfTheWeek()], PosX::center, PosY::center);
 
@@ -370,8 +370,8 @@ void Screen::setWatchScreen(Watch &watch, Key &key, Timer &timer)
         firstPage();
         do
         {
-            blinkHeaderDate(key, watch, timer);
-            blinkHeaderTime(key, watch, timer);
+            blinkDate(key, watch, timer);
+            blinkTime(key, watch, timer);
 
         } while (nextPage());
 
@@ -389,10 +389,10 @@ void Screen::showSunTime(Watch &watch)
     setHeight(u8g2_font_9x18_tn);
 
     setPosition("00:00", PosX::rightSpace, PosY::center);
-    showStringTime(watch.RiseHour, watch.RiseMin);
+    printTime(watch.RiseHour, watch.RiseMin);
 
     setPosition("00:00", PosX::rightSpace, PosY::downSpace);
-    showStringTime(watch.SetHour, watch.SetMin);
+    printTime(watch.SetHour, watch.SetMin);
 }
 
 void Screen::blinkSunTime(Key &key, Timer &timer, Watch &watch)
@@ -400,10 +400,10 @@ void Screen::blinkSunTime(Key &key, Timer &timer, Watch &watch)
     setHeight(u8g2_font_profont22_tn);
 
     setPosition("00:00", PosX::center, PosY::center);
-    showStringTime(watch.RiseHour, watch.RiseMin);
+    printTime(watch.RiseHour, watch.RiseMin);
 
     setPosition("00:00", PosX::center, PosY::downSpace);
-    showStringTime(watch.SetHour, watch.SetMin);
+    printTime(watch.SetHour, watch.SetMin);
 
     switch (watch.cursorDay)
     {
@@ -480,7 +480,7 @@ void Screen::screens(Watch &watch, Switchers &switchers, Timer &timer, Key &key,
     setWatchScreen(watch, key, timer);
     sunTimeScreen(watch, key, timer);
     timerScreen(watch, timer, key);
-    showBrightScreen(pot, key, timer);
+    brightScreen(pot, key, timer);
 }
 
 void Screen::screens(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Bright &bright)
@@ -490,5 +490,5 @@ void Screen::screens(Watch &watch, Switchers &switchers, Timer &timer, Key &key,
     setWatchScreen(watch, key, timer);
     sunTimeScreen(watch, key, timer);
     timerScreen(watch, timer, key);
-    showBrightScreen(bright, key, timer);
+    brightScreen(bright, key, timer);
 }
