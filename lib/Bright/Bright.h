@@ -17,8 +17,8 @@ private:
     byte pin[lampAmount];
     byte bright[lampAmount];
 
-    byte minSunRise[lampAmount] ; // 197(340mA) sunRise 216(120mA) sunSet   min 196(350mA) max 22(2700ma)
-    byte minSunSet[lampAmount] ;
+    byte brightRise[lampAmount]; // 197(340mA) sunRise 216(120mA) sunSet   min 196(350mA) max 22(2700ma)
+    byte brightSet[lampAmount];
 
     byte maxBright[lampAmount];
 
@@ -35,23 +35,23 @@ public:
     Bright();
     ~Bright();
 
-    void setMinRise();
+    void brightLevelCount();
+
     void setMinSet();
     void setRiseSpeed();
 
     void begin(byte startBrightPin);
 
-    void brightLevelCount();
-
-    void setMinBright(byte pin, byte &bright, byte minSunRise);
+    void setMinBright(byte pin, byte &bright, byte brightRise);
     void resetBright(byte pin, byte &bright);
 
     void autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i);
     void autoBright(Watch &watch, Key &key, Timer &timer);
     void manualChangeBright(Watch &watch, Key &key, Timer &timer);
     void resetAllBrights();
-    void changeMaxBright(Key &key, Watch &watch, Timer &timer);
-    void changeBright(byte &bright, byte pin, Key &key, Timer &timer, Watch &watch, byte min, byte max);
+    void changeBright(Key &key, Watch &watch, Timer &timer);
+    void setRiseBright(byte &brightRise, Key &key, Timer &timer, Watch &watch, byte min, byte max);
+    void changeMaxBright(byte &bright, byte pin, Key &key, Timer &timer, Watch &watch, byte min, byte max);
 };
 
 #endif

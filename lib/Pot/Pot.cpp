@@ -71,7 +71,7 @@ void Pot::autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i)
 
 void Pot::autoBright(Watch &watch, Key &key, Timer &timer)
 {
-    if (key.screen != key.manual || key.screen != key.bright)
+    if (key.screen != key.manual || key.screen != key.maxBright)
     {
         for (byte i = 0; i < lampAmount; i++)
         {
@@ -131,12 +131,12 @@ void Pot::resetAllPots()
 
 void Pot::changeMaxBright(Key &key, Watch &watch, Timer &timer)
 {
-    if (key.changeMaxBright())
+    if (key.changeBright())
     {
         key.reBright[key.id] = true;
     }
 
-    else if (key.screen == key.bright)
+    else if (key.screen == key.maxBright)
     {
         if (key.valChange(timer))
         {

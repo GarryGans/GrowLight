@@ -190,7 +190,7 @@ void Screen::headerDate(Watch &watch)
 
 void Screen::brightScreen(Pot &pot, Key &key, Timer &timer)
 {
-    if (key.screen == key.bright)
+    if (key.screen == key.maxBright)
     {
         firstPage();
         do
@@ -213,7 +213,7 @@ void Screen::brightScreen(Pot &pot, Key &key, Timer &timer)
 
 void Screen::brightScreen(Bright &bright, Key &key, Timer &timer)
 {
-    if (key.screen == key.bright)
+    if (key.screen == key.maxBright)
     {
         firstPage();
         do

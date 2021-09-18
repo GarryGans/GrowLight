@@ -22,7 +22,10 @@ private:
         lamp,
         manual,
         duration,
-        bright,
+        maxBright,
+        sunRise,
+        sunSet,
+        sunSpeed,
         dayDuration,
         watch
     } screen = start;
@@ -84,7 +87,7 @@ public:
     boolean spectrumReDuration();
     boolean valChange(Timer &timer);
 
-    boolean changeMaxBright();
+    boolean changeBright();
     boolean dayReduration();
     void reset();
     void home();

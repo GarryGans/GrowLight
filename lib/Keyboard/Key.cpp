@@ -161,7 +161,7 @@ void Key::setMode()
         correctDay = true;
     }
 
-    else if (screen == bright)
+    else if (screen == maxBright)
     {
         writeBright = true;
         correctBright = true;
@@ -247,11 +247,11 @@ boolean Key::spectrumReDuration()
     return false;
 }
 
-boolean Key::changeMaxBright()
+boolean Key::changeBright()
 {
-    if ((justPressed() && getNum == 7) || (screen == bright && ok()))
+    if ((justPressed() && getNum == 7) || (screen == maxBright && ok()))
     {
-        return checkSet(bright);
+        return checkSet(maxBright);
     }
 
     return false;
