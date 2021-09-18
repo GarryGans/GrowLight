@@ -33,7 +33,7 @@ void Pot::resetBright(DigiPot &pot, byte &bright)
 
 void Pot::autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i)
 {
-    if (watch.autoSwitch[i] && !watch.skip[i] && !key.reduration[i] && !key.reBright[i])
+    if (watch.autoSwitch[i] && !key.reduration[i] && !key.reBright[i])
     {
         if (!watch.brightDown[i])
         {
@@ -129,20 +129,10 @@ void Pot::resetAllPots()
     }
 }
 
-void Pot::correctBright(boolean brightDown, DigiPot &pot, byte &bright, byte maxBright, byte id)
-{
-    if (!brightDown && prewMaxBright[id] > maxBright)
-    {
-        pot.set(maxBright);
-        bright = pot.get();
-    }
-}
-
 void Pot::changeMaxBright(Key &key, Watch &watch, Timer &timer)
 {
     if (key.changeMaxBright())
     {
-        prewMaxBright[key.id] = maxBright[key.id];
         key.reBright[key.id] = true;
     }
 
@@ -160,16 +150,5 @@ void Pot::changeMaxBright(Key &key, Watch &watch, Timer &timer)
                 maxBright[key.id]++;
             }
         }
-    }
-
-    if (key.correctBright)
-    {
-        if (watch.autoSwitch[key.id])
-        {
-            correctBright(watch.brightDown[key.id], pot[key.id], bright[key.id], maxBright[key.id], key.id);
-        }
-
-        key.correctBright = false;
-        key.reBright[key.id] = false;
     }
 }

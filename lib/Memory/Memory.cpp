@@ -148,10 +148,10 @@ void Memory::readBright(int prew_addr, byte prewVar, byte id, Bright &bright)
 
     EEPROM.get(maxBright_addr[id], bright.maxBright[id]);
 
-    if (bright.maxBright[id] < bright.minSunRise || bright.maxBright[id] > bright.maxManualBright)
-    {
-        bright.maxBright[id] = bright.minSunRise;
-    }
+    // if (bright.maxBright[id] < bright.minSunRise || bright.maxBright[id] > bright.maxManualBright)
+    // {
+    //     bright.maxBright[id] = bright.minSunRise;
+    // }
 }
 
 void Memory::readEachBright(int prew_addr, byte prewVar, Pot &pot)

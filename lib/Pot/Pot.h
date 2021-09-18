@@ -19,7 +19,6 @@ private:
 
     byte autoMinBright = 0;
     byte maxBright[lampAmount];
-    byte prewMaxBright[lampAmount];
 
     byte minManualBright = 0;
     byte maxManualBright = 99;
@@ -39,7 +38,6 @@ public:
     void manualChangeBright(Key &key, Timer &timer);
     void resetAllPots();
     void changeMaxBright(Key &key, Watch &watch, Timer &timer);
-    void correctBright(boolean brightDown, DigiPot &pot, byte &bright, byte maxBright, byte id);
     void changeBright(byte &bright, DigiPot &pot, Key &key, Timer &timer);
 };
 
