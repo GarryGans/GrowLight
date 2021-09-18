@@ -25,11 +25,11 @@ void Bright::brightLevelCount()
 {
     for (byte i = 0; i < lampAmount; i++)
     {
-        maxLevel[i] = maxBright[i] - minSunSet;
+        maxLevel[i] = maxBright[i] - minSunSet[i];
     }
 }
 
-void Bright::setMinBright(byte pin, byte &bright)
+void Bright::setMinBright(byte pin, byte &bright, byte minSunRise)
 {
     if (bright < minSunRise)
     {
@@ -50,7 +50,7 @@ void Bright::autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i)
     {
         if (!watch.brightDown[i])
         {
-            setMinBright(pin[i], bright[i]);
+            setMinBright(pin[i], bright[i], minSunRise[i]);
 
             if (timer.wait(timer.prewBrightMillis[i], timer.riseMillis) && bright[i] < maxBright[i])
             {
@@ -158,7 +158,7 @@ void Bright::changeMaxBright(Key &key, Watch &watch, Timer &timer)
 
     else if (key.screen == key.bright)
     {
-        changeBright(maxBright[key.id], pin[key.id], key, timer, watch, minSunRise, maxManualBright);
+        changeBright(maxBright[key.id], pin[key.id], key, timer, watch, minSunRise[key.id], maxManualBright);
     }
 
     if (key.correctBright)
