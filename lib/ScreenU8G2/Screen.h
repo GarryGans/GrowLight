@@ -36,7 +36,7 @@ public:
     void printSpecTime(Watch &watch, byte id);
 
     void iGorLogo();
-    
+
     void headerTime(Watch &watch);
     void headerDate(Watch &watch);
 
@@ -65,7 +65,12 @@ public:
     void sunTimeScreen(Watch &watch, Key &key, Timer &timer);
 
     
+
     void brightScreen(Pot &pot, Key &key, Timer &timer);
+
+    void setScreen(Bright &bright, Key &key, Timer &timer);
+    void riseScreen(Bright &bright, Key &key, Timer &timer);
+    void maxBrightScreen(Bright &bright, Key &key, Timer &timer);
     void brightScreen(Bright &bright, Key &key, Timer &timer);
 
     void startScreen(Watch &watch, Key &key, Timer &timer);

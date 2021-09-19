@@ -138,7 +138,7 @@ void Watch::cursorChange(Key &key, byte &cursor)
 
 void Watch::hmsChange(Key &key, byte &hms, byte &cursor, Timer &timer)
 {
-    if (key.valChange(timer))
+    if (key.valChange())
     {
         if (key.act == key.MINUS)
         {
@@ -202,12 +202,7 @@ void Watch::spectrumReDuration(Key &key, Timer &timer)
 
 void Watch::dayReduration(Key &key, Timer &timer)
 {
-    if (key.dayReduration())
-    {
-        cursorDay = 0;
-    }
-
-    if (key.screen == key.dayDuration)
+    if (key.dayReduration() || key.screen == key.dayDuration)
     {
         if (cursorDay == 0)
         {
@@ -240,6 +235,7 @@ void Watch::dayReduration(Key &key, Timer &timer)
         }
 
         interval = 0;
+        cursorDay = 0;
 
         key.correctDay = false;
     }
@@ -272,7 +268,7 @@ void Watch::dtCursor(Key &key)
 
 void Watch::timeChange(byte &time, Key &key, Timer &timer)
 {
-    if (key.valChange(timer))
+    if (key.valChange())
     {
         if (key.act == key.MINUS)
         {
@@ -308,7 +304,7 @@ void Watch::timeChange(byte &time, Key &key, Timer &timer)
 
 void Watch::yearChange(int &year, Key &key, Timer &timer)
 {
-    if (key.valChange(timer))
+    if (key.valChange())
     {
         if (key.act == key.MINUS)
         {
@@ -329,7 +325,7 @@ void Watch::yearChange(int &year, Key &key, Timer &timer)
 
 void Watch::monthChange(byte &month, Key &key, Timer &timer)
 {
-    if (key.valChange(timer))
+    if (key.valChange())
     {
         if (key.act == key.MINUS)
         {
@@ -354,7 +350,7 @@ void Watch::monthChange(byte &month, Key &key, Timer &timer)
 }
 void Watch::dayChange(byte &day, Key &key, Timer &timer)
 {
-    if (key.valChange(timer))
+    if (key.valChange())
     {
         if (key.act == key.MINUS)
         {

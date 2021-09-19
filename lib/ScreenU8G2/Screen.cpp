@@ -188,8 +188,55 @@ void Screen::headerDate(Watch &watch)
     textAlign(daysOfTheWeek[now.dayOfTheWeek()], PosX::leftHalf, PosY::upHalf);
 }
 
+void Screen::setScreen(Bright &brigth, Key &key, Timer &timer)
+{
+    if (key.screen == key.setBright)
+    {
+        firstPage();
+        do
+        {
+            setHeight(u8g2_font_pressstart2p_8f);
+
+            moveString("Set Set", PosX::center, PosY::upSpace, timer, 4);
+
+            setHeight(u8g2_font_ncenB18_tf);
+
+            stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
+
+            digAlign(brigth.setBright[key.id], PosX::rightHalf, PosY::center);
+
+            blinkFrame(brigth.setBright[key.id], false, PosX::rightHalf, PosY::centerFrame, timer, key.valChange());
+
+        } while (nextPage());
+    }
+}
+
+void Screen::riseScreen(Bright &brigth, Key &key, Timer &timer)
+{
+    if (key.screen == key.riseBright)
+    {
+        firstPage();
+        do
+        {
+            setHeight(u8g2_font_pressstart2p_8f);
+
+            moveString("Set Rise", PosX::center, PosY::upSpace, timer, 4);
+
+            setHeight(u8g2_font_ncenB18_tf);
+
+            stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
+
+            digAlign(brigth.riseBright[key.id], PosX::rightHalf, PosY::center);
+
+            blinkFrame(brigth.riseBright[key.id], false, PosX::rightHalf, PosY::centerFrame, timer, key.valChange());
+
+        } while (nextPage());
+    }
+}
+
 void Screen::brightScreen(Pot &pot, Key &key, Timer &timer)
 {
+
     if (key.screen == key.maxBright)
     {
         firstPage();
@@ -205,13 +252,13 @@ void Screen::brightScreen(Pot &pot, Key &key, Timer &timer)
 
             digAlign(pot.maxBright[key.id], PosX::rightHalf, PosY::center);
 
-            blinkFrame(pot.maxBright[key.id], false, PosX::rightHalf, PosY::centerFrame, timer);
+            blinkFrame(pot.maxBright[key.id], false, PosX::rightHalf, PosY::centerFrame, timer, key.valChange());
 
         } while (nextPage());
     }
 }
 
-void Screen::brightScreen(Bright &bright, Key &key, Timer &timer)
+void Screen::maxBrightScreen(Bright &bright, Key &key, Timer &timer)
 {
     if (key.screen == key.maxBright)
     {
@@ -228,10 +275,19 @@ void Screen::brightScreen(Bright &bright, Key &key, Timer &timer)
 
             digAlign(bright.maxBright[key.id], PosX::rightHalf, PosY::center);
 
-            blinkFrame(bright.maxBright[key.id], false, PosX::rightHalf, PosY::centerFrame, timer);
+            blinkFrame(bright.maxBright[key.id], false, PosX::rightHalf, PosY::centerFrame, timer, key.valChange());
 
         } while (nextPage());
     }
+}
+
+void Screen::brightScreen(Bright &bright, Key &key, Timer &timer)
+{
+    maxBrightScreen(bright, key, timer);
+
+    riseScreen(bright, key, timer);
+
+    setScreen(bright, key, timer);
 }
 
 void Screen::timerScreen(Watch &watch, Timer &timer, Key &key)
@@ -256,19 +312,19 @@ void Screen::timerScreen(Watch &watch, Timer &timer, Key &key)
             switch (watch.cursorSpectrum)
             {
             case 0:
-                blinkFrame("00:00", 2, PosX::rightHalf, PosY::upFrameHalf, timer);
+                blinkFrame("00:00", 2, PosX::rightHalf, PosY::upFrameHalf, timer, key.valChange());
                 break;
 
             case 1:
-                blinkFrame("00:00", 2, PosX::rightFrameHalfSide, PosY::upFrameHalf, timer);
+                blinkFrame("00:00", 2, PosX::rightFrameHalfSide, PosY::upFrameHalf, timer, key.valChange());
                 break;
 
             case 2:
-                blinkFrame("00:00", 2, PosX::rightHalf, PosY::downFrameHalf, timer);
+                blinkFrame("00:00", 2, PosX::rightHalf, PosY::downFrameHalf, timer, key.valChange());
                 break;
 
             case 3:
-                blinkFrame("00:00", 2, PosX::rightFrameHalfSide, PosY::downFrameHalf, timer);
+                blinkFrame("00:00", 2, PosX::rightFrameHalfSide, PosY::downFrameHalf, timer, key.valChange());
                 break;
 
             default:
@@ -318,15 +374,15 @@ void Screen::blinkTime(Key &key, Watch &watch, Timer &timer)
     switch (watch.cursorDateTime)
     {
     case 3:
-        blinkFrame("00:00:00", 2, PosX::center, PosY::downFrameHalf, timer);
+        blinkFrame("00:00:00", 2, PosX::center, PosY::downFrameHalf, timer, key.valChange());
         break;
 
     case 4:
-        blinkFrame("00:00:00", 2, PosX::centerFrame, PosY::downFrameHalf, timer);
+        blinkFrame("00:00:00", 2, PosX::centerFrame, PosY::downFrameHalf, timer, key.valChange());
         break;
 
     case 5:
-        blinkFrame("00:00:00", 2, PosX::rightFrameSide, PosY::downFrameHalf, timer);
+        blinkFrame("00:00:00", 2, PosX::rightFrameSide, PosY::downFrameHalf, timer, key.valChange());
         break;
 
     default:
@@ -347,15 +403,15 @@ void Screen::blinkDate(Key &key, Watch &watch, Timer &timer)
     switch (watch.cursorDateTime)
     {
     case 0:
-        blinkFrame("00/00/0000", 2, PosX::center, PosY::upFrameHalf, timer);
+        blinkFrame("00/00/0000", 2, PosX::center, PosY::upFrameHalf, timer, key.valChange());
         break;
 
     case 1:
-        blinkFrame("00/00/0000", 2, PosX::centerFrame, PosY::upFrameHalf, timer);
+        blinkFrame("00/00/0000", 2, PosX::centerFrame, PosY::upFrameHalf, timer, key.valChange());
         break;
 
     case 2:
-        blinkFrame("00/00/0000", 4, PosX::rightFrameSide, PosY::upFrameHalf, timer);
+        blinkFrame("00/00/0000", 4, PosX::rightFrameSide, PosY::upFrameHalf, timer, key.valChange());
         break;
 
     default:
@@ -408,19 +464,19 @@ void Screen::blinkSunTime(Key &key, Timer &timer, Watch &watch)
     switch (watch.cursorDay)
     {
     case 0:
-        blinkFrame("00:00", 2, PosX::center, PosY::centerFrame, timer);
+        blinkFrame("00:00", 2, PosX::center, PosY::centerFrame, timer, key.valChange());
         break;
 
     case 1:
-        blinkFrame("00:00", 2, PosX::rightFrameSide, PosY::centerFrame, timer);
+        blinkFrame("00:00", 2, PosX::rightFrameSide, PosY::centerFrame, timer, key.valChange());
         break;
 
     case 2:
-        blinkFrame("00:00", 2, PosX::center, PosY::downFrameSpace, timer);
+        blinkFrame("00:00", 2, PosX::center, PosY::downFrameSpace, timer, key.valChange());
         break;
 
     case 3:
-        blinkFrame("00:00", 2, PosX::rightFrameSide, PosY::downFrameSpace, timer);
+        blinkFrame("00:00", 2, PosX::rightFrameSide, PosY::downFrameSpace, timer, key.valChange());
         break;
 
     default:

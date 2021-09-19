@@ -28,7 +28,7 @@ private:
         sunSpeed,
         dayDuration,
         watch
-    }screen = start;
+    } screen = start;
 
     enum Direction
     {
@@ -57,7 +57,6 @@ private:
     boolean writeSkip;
 
     boolean correctDay;
-    boolean correctBright;
 
     boolean setDateTime;
     boolean setDate;
@@ -67,15 +66,22 @@ private:
     byte idFirst = 0;
     byte idLast = lampAmount - 1;
 
+    Screen operator++(int)
+    {
+        return (Screen)((int)screen + 1);
+    }
+
 public:
     Key(byte pin[]);
+    Key();
     ~Key();
 
     //void setPresets() // Vega, Bloom(time, bright, spectr)
-    void changeScreen();
+    Screen changeScreen();
 
     void checkKeyboard();
 
+    void setScreens();
     void keyCommands(Timer &timer);
     void idChange();
     void setSpec();
@@ -86,13 +92,12 @@ public:
     boolean skipEnable(boolean &skip, byte id);
     void manualSwitchLight();
     boolean spectrumReDuration();
-    boolean valChange(Timer &timer);
+    boolean valChange();
 
     boolean changeBright();
     boolean dayReduration();
     void reset();
     void home();
-    void resetToLamp();
     void setMode();
     boolean checkSet(Screen set);
 

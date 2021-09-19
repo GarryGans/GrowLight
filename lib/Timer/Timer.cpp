@@ -50,23 +50,14 @@ boolean Timer::wait(unsigned long &prewMillis, unsigned long setMillis)
 
 boolean Timer::blinkReady()
 {
-
-    if (blinkHide)
+    if (millis() - prewBlinkMillis >= blinkMillis)
     {
         blink = false;
-    }
 
-    else
-    {
-        if (millis() - prewBlinkMillis >= blinkMillis)
+        if (millis() - prewBlinkMillis >= blinkMillis * 2)
         {
-            blink = false;
-
-            if (millis() - prewBlinkMillis >= blinkMillis * 2)
-            {
-                prewBlinkMillis = millis();
-                blink = true;
-            }
+            prewBlinkMillis = millis();
+            blink = true;
         }
     }
 

@@ -4,18 +4,37 @@ Key::Key(byte pin[]) : AmperkaKB(pin[0], pin[1], pin[2], pin[3], pin[4], pin[5],
 {
 }
 
+Key::Key()
+{
+}
+
 Key::~Key()
 {
 }
 
-void Key::changeScreen()
+Key::Screen Key::changeScreen()
 {
-    screen = (Screen)(Key::screen + 1);
+    if (direction == FORWARD)
+    {
+        screen = (Screen)(Key::screen + 1);
+    }
+
+    else if (direction == BACK)
+    {
+        screen = (Screen)(Key::screen - 1);
+    }
+
+    return screen;
 }
 
 void Key::checkKeyboard()
 {
     Serial.println(getNum);
+}
+
+void Key::setScreens()
+{
+    dayReduration();
 }
 
 void Key::keyCommands(Timer &timer)
@@ -25,6 +44,9 @@ void Key::keyCommands(Timer &timer)
     manualSwitchLight();
     autoScreenMove(timer);
     manualChangeScreen(timer);
+
+    // setScreens();
+
     home();
 }
 
@@ -69,28 +91,24 @@ boolean Key::navigation()
     return false;
 }
 
-boolean Key::valChange(Timer &timer)
+boolean Key::valChange()
 {
     if (onHold() || justPressed())
     {
         if (getNum == 6)
         {
-            timer.blinkHide = true;
             act = MINUS;
-
+            // blinkHide = true;
             return true;
         }
 
         else if (getNum == 15)
         {
-            timer.blinkHide = true;
             act = PLUS;
-
+            // blinkHide = true;
             return true;
         }
     }
-
-    timer.blinkHide = false;
 
     return false;
 }
@@ -169,7 +187,6 @@ void Key::setMode()
     else if (screen == maxBright)
     {
         writeBright = true;
-        correctBright = true;
         reBright[id] = false;
     }
 
@@ -183,12 +200,6 @@ void Key::setMode()
         reset();
         autoMove = true;
     }
-}
-
-void Key::resetToLamp()
-{
-    setMode();
-    screen = lamp;
 }
 
 boolean Key::checkSet(Screen set)
@@ -240,13 +251,9 @@ boolean Key::setWatch()
 
 boolean Key::spectrumReDuration()
 {
-    if (justPressed() && getNum == 14)
+    if ((justPressed() && getNum == 14) || (screen == duration && ok()))
     {
         return checkSet(duration);
-    }
-    else if (screen == duration && ok())
-    {
-        resetToLamp();
     }
 
     return false;
@@ -259,21 +266,23 @@ boolean Key::changeBright()
         return checkSet(maxBright);
     }
 
-    else if (screen == maxBright && navigation())
+    else if (navigation() && (screen == maxBright || screen == setBright || screen == riseBright))
     {
+        writeBright = true;
+
         if (direction == FORWARD)
         {
-            screen = (Screen)(screen + 1);
-
-            if (screen > setBright)
+            if (changeScreen() > setBright)
             {
                 screen = maxBright;
             }
         }
         if (direction == BACK)
         {
-            // screen ==
-            screen = constrain(screen, maxBright, setBright);
+            if (changeScreen() < maxBright)
+            {
+                screen = setBright;
+            }
         }
     }
 
@@ -282,14 +291,9 @@ boolean Key::changeBright()
 
 boolean Key::dayReduration()
 {
-    if (justPressed() && getNum == 2)
+    if ((justPressed() && getNum == 2) || (screen == dayDuration && ok()))
     {
         return checkSet(dayDuration);
-    }
-
-    else if (screen == dayDuration && ok())
-    {
-        resetToLamp();
     }
 
     return false;

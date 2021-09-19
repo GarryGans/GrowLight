@@ -92,8 +92,8 @@ public:
     void moveString(const char *string, PosX pos_x, PosY pos_y, Timer &timer, byte id);
     void escapeBar(Timer &timer);
 
-    void blinkFrame(byte value, boolean dig, PosX pos_x, PosY pos_y, Timer &timer);
-    void blinkFrame(const char *format, byte digAmount, PosX pos_x, PosY pos_y, Timer &timer);
+    void blinkFrame(byte value, boolean dig, PosX pos_x, PosY pos_y, Timer &timer, boolean tempBlock);
+    void blinkFrame(const char *format, byte digAmount, PosX pos_x, PosY pos_y, Timer &timer, boolean tempBlock);
 };
 
 #endif

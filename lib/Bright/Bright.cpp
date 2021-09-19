@@ -25,7 +25,7 @@ void Bright::brightLevelCount()
 {
     for (byte i = 0; i < lampAmount; i++)
     {
-        maxLevel[i] = maxBright[i] - brightSet[i];
+        maxLevel[i] = maxBright[i] - setBright[i];
     }
 }
 
@@ -50,7 +50,7 @@ void Bright::autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i)
     {
         if (!watch.brightDown[i])
         {
-            setMinBright(pin[i], bright[i], brightRise[i]);
+            setMinBright(pin[i], bright[i], riseBright[i]);
 
             if (timer.wait(timer.prewBrightMillis[i], timer.riseMillis) && bright[i] < maxBright[i])
             {
@@ -61,13 +61,13 @@ void Bright::autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i)
 
         if (watch.brightDown[i])
         {
-            if (timer.wait(timer.prewBrightMillis[i], timer.riseMillis) && bright[i] > brightSet[i])
+            if (timer.wait(timer.prewBrightMillis[i], timer.riseMillis) && bright[i] > setBright[i])
             {
                 bright[i]--;
                 analogWrite(pin[i], (maxPWM - bright[i]));
             }
 
-            if (bright[i] == brightSet[i])
+            if (bright[i] == setBright[i])
             {
                 resetBright(pin[i], bright[i]);
                 watch.autoSwitch[i] = false;
@@ -107,7 +107,7 @@ void Bright::autoBright(Watch &watch, Key &key, Timer &timer)
 
 void Bright::changeMaxBright(byte &bright, byte pin, Key &key, Timer &timer, Watch &watch, byte min, byte max)
 {
-    if (key.valChange(timer))
+    if (key.valChange())
     {
         if (key.act == key.MINUS && bright > min)
         {
@@ -152,13 +152,27 @@ void Bright::setRiseSpeed()
 {
 }
 
-void Bright::setMinSet()
+void Bright::setSetBright(byte &bright, Key &key, Timer &timer, byte min, byte max)
 {
+    if (key.valChange())
+    {
+        if (key.act == key.MINUS && bright > min)
+        {
+            bright--;
+        }
+
+        else if (key.act == key.PLUS && bright < max)
+        {
+            bright++;
+        }
+
+        bright = constrain(bright, min, max);
+    }
 }
 
 void Bright::setRiseBright(byte &brightRise, Key &key, Timer &timer, byte min, byte max)
 {
-    if (key.valChange(timer))
+    if (key.valChange())
     {
         if (key.act == key.MINUS && brightRise > min)
         {
@@ -179,13 +193,27 @@ void Bright::changeBright(Key &key, Watch &watch, Timer &timer)
         key.reBright[key.id] = true;
     }
 
-    else if (key.screen == key.maxBright)
+    if (key.reBright[key.id])
     {
-        changeMaxBright(maxBright[key.id], pin[key.id], key, timer, watch, brightRise[key.id], maxManualBright);
-    }
+        switch (key.screen)
+        {
+        case key.maxBright:
 
-    else if (key.screen == key.riseBright)
-    {
-        setRiseBright(brightRise[key.id], key, timer, minManualBright, maxBright[key.id]);
+            changeMaxBright(maxBright[key.id], pin[key.id], key, timer, watch, riseBright[key.id], maxManualBright);
+            break;
+
+        case key.riseBright:
+
+            setRiseBright(riseBright[key.id], key, timer, minManualBright, maxBright[key.id]);
+            break;
+
+        case key.setBright:
+
+            setSetBright(setBright[key.id], key, timer, minManualBright, maxBright[key.id]);
+            break;
+
+        default:
+            break;
+        }
     }
 }

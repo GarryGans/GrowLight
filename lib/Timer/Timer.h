@@ -39,7 +39,6 @@ private:
 
     boolean escBar;
     boolean blink;
-    boolean blinkHide;
     boolean move;
 
 public:

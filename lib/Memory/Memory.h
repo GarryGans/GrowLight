@@ -11,17 +11,19 @@
 class Memory
 {
 private:
-    byte startAddr = 0;
+    int startAddr = 0;
     byte start_addr_Size = 0;
 
-    byte maxBright_addr[lampAmount];
+    int maxBright_addr[lampAmount];
+    int riseBright_addr[lampAmount];
+    int setBright_addr[lampAmount];
 
-    byte startHour_addr[lampAmount];
-    byte startMinute_addr[lampAmount];
-    byte finishHour_addr[lampAmount];
-    byte finishMinute_addr[lampAmount];
+    int startHour_addr[lampAmount];
+    int startMinute_addr[lampAmount];
+    int finishHour_addr[lampAmount];
+    int finishMinute_addr[lampAmount];
 
-    byte skip_addr[lampAmount];
+    int skip_addr[lampAmount];
 
 public:
     Memory();
@@ -30,29 +32,20 @@ public:
     void begin(Watch &watch, Pot &pot);
     void begin(Watch &watch, Bright &bright);
 
-    void firstHour(byte &hour);
-    void firstMin(byte &min);
+    void read(int startAddr, int &addr, byte &var, byte minValue, byte maxValue);
 
-    void readTime(int prew_addr, byte prewVar, byte id, Watch &watch);
+    void readEachBright(int startAddr, Pot &pot);
+    void readEachBright(int startAddr, Bright &bright);
+
     void readEachTime(int prew_addr, byte prewVar, Watch &watch);
 
-    void writeTime(int prew_addr, byte prewVar, byte id, Watch &watch);
-    void writeEachTime(int prew_addr, byte prewVar, Watch &watch);
+    void readEachSkip(int prew_addr, byte prewVar, Watch &watch);
 
-    void readBright(int prew_addr, byte prewVar, byte id, Pot &pot);
-    void readBright(int prew_addr, byte prewVar, byte id, Bright &bright);
-    void readEachBright(int prew_addr, byte prewVar, Pot &pot);
-    void readEachBright(int prew_addr, byte prewVar, Bright &bright);
-
-    void writeBright(int prew_addr, byte prewVar, byte id, Pot &pot);
-    void writeBright(int prew_addr, byte prewVar, byte id, Bright &bright);
     void writeEachBright(int prew_addr, byte prewVar, Pot &pot);
     void writeEachBright(int prew_addr, byte prewVar, Bright &bright);
 
-    void readSkip(int prew_addr, byte prewVar, byte id, Watch &watch);
-    void readEachSkip(int prew_addr, byte prewVar, Watch &watch);
-
     void writeSkip(int prew_addr, byte prewVar, byte id, Watch &watch);
+    void writeEachTime(int startAdd, Watch &watch);
     void writeEachSkip(int prew_addr, byte prewVar, Watch &watch);
 
     void writeChanges(Watch &watch, Pot &pot, Key &key);

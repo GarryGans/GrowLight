@@ -232,38 +232,44 @@ void EFX::frameAlign(byte W, byte H, PosX pos_x, PosY pos_y)
     drawFrame(x, y, W, H);
 }
 
-void EFX::blinkFrame(byte value, boolean dig, PosX pos_x, PosY pos_y, Timer &timer)
+void EFX::blinkFrame(byte value, boolean dig, PosX pos_x, PosY pos_y, Timer &timer, boolean tempBlock)
 {
-    if (timer.blinkReady())
+    if (!tempBlock)
     {
-        if (dig)
+        if (timer.blinkReady())
         {
-            width = getMaxCharWidth() * 2;
-        }
-        else
-        {
-            width = getDigWidth(value);
-        }
+            if (dig)
+            {
+                width = getMaxCharWidth() * 2;
+            }
+            else
+            {
+                width = getDigWidth(value);
+            }
 
-        frameAlign(width, height, pos_x, pos_y);
+            frameAlign(width, height, pos_x, pos_y);
+        }
     }
 }
 
-void EFX::blinkFrame(const char *format, byte digAmount, PosX pos_x, PosY pos_y, Timer &timer)
+void EFX::blinkFrame(const char *format, byte digAmount, PosX pos_x, PosY pos_y, Timer &timer, boolean tempBlock)
 {
-    if (timer.blinkReady())
+    if (!tempBlock)
     {
-        width = getMaxCharWidth() * digAmount;
+        if (timer.blinkReady())
+        {
+            width = getMaxCharWidth() * digAmount;
 
-        setPosition(format, pos_x, pos_y);
+            setPosition(format, pos_x, pos_y);
 
-        borderW = 6;
-        borderH = 6;
+            borderW = 6;
+            borderH = 6;
 
-        width += borderW;
-        height += borderH;
+            width += borderW;
+            height += borderH;
 
-        drawFrame(x - borderW / 2, y - borderH / 2, width, height);
+            drawFrame(x - borderW / 2, y - borderH / 2, width, height);
+        }
     }
 }
 

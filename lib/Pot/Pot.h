@@ -15,6 +15,9 @@ class Pot
 private:
     byte Amount;
 
+    byte riseBright[lampAmount];
+    byte setBright[lampAmount];
+
     byte bright[lampAmount];
 
     byte autoMinBright = 0;

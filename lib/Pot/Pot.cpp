@@ -87,7 +87,7 @@ void Pot::autoBright(Watch &watch, Key &key, Timer &timer)
 
 void Pot::changeBright(byte &bright, DigiPot &pot, Key &key, Timer &timer)
 {
-    if (key.valChange(timer))
+    if (key.valChange())
     {
         if (key.act == key.MINUS && bright > autoMinBright)
         {
@@ -138,7 +138,7 @@ void Pot::changeMaxBright(Key &key, Watch &watch, Timer &timer)
 
     else if (key.screen == key.maxBright)
     {
-        if (key.valChange(timer))
+        if (key.valChange())
         {
             if (key.act == key.MINUS && maxBright[key.id] > autoMinBright)
             {
