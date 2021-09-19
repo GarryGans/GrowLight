@@ -44,6 +44,8 @@ public:
     void readEachBright(Pot &pot);
     void readEachBright(Bright &bright);
 
+    void write(int &addr, byte &var);
+    void write(int &addr, boolean &var);
 
     void writeTime(Watch &watch, byte id);
 

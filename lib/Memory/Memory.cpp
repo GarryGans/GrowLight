@@ -46,8 +46,6 @@ void Memory::readSteam(int &addr, boolean &var, boolean minValue, boolean maxVal
 
 void Memory::readEachSkip(Watch &watch)
 {
-    startAddr = startAddr;
-
     for (byte id = 0; id < lampAmount; id++)
     {
         readSteam(skip_addr[id], watch.skip[id], false, true);
@@ -56,8 +54,6 @@ void Memory::readEachSkip(Watch &watch)
 
 void Memory::readEachTime(Watch &watch)
 {
-    startAddr = startAddr;
-
     for (byte id = 0; id < lampAmount; id++)
     {
         readSteam(startHour_addr[id], watch.startHour[id], 0, 23);
@@ -69,8 +65,6 @@ void Memory::readEachTime(Watch &watch)
 
 void Memory::readEachBright(Pot &pot)
 {
-    startAddr = startAddr;
-
     for (byte id = 0; id < lampAmount; id++)
     {
         readSteam(setBright_addr[id], pot.setBright[id], pot.minManualBright, pot.maxManualBright);
@@ -81,8 +75,6 @@ void Memory::readEachBright(Pot &pot)
 
 void Memory::readEachBright(Bright &bright)
 {
-    startAddr = startAddr;
-
     for (byte id = 0; id < lampAmount; id++)
     {
         readSteam(setBright_addr[id], bright.setBright[id], bright.minManualBright, bright.maxManualBright);
