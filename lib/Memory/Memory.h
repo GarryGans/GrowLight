@@ -35,8 +35,8 @@ public:
     void read(int &addr, byte &var, byte minValue, byte maxValue);
     void read(int &addr, boolean &var, boolean minValue, boolean maxValue);
 
-
     void readEachSkip(Watch &watch);
+
     void readEachTime(Watch &watch);
 
     void readEachBright(Pot &pot);
@@ -45,9 +45,10 @@ public:
     void write(int &addr, byte &var);
     void write(int &addr, boolean &var);
 
+    void writeEachSkip(Watch &watch);
+
     void writeTime(Watch &watch, byte id);
 
-    void writeEachSkip(Watch &watch);
     void writeEachTime(Watch &watch);
 
     void writeBright(Pot &pot, byte id);

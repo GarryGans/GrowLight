@@ -13,22 +13,22 @@ class Timer
     friend class EFX;
 
 private:
-    unsigned long prewCounterMillis;
-    unsigned long secMillis = 1000;
+    unsigned long prewCounterMil;
+    unsigned long secMil = 1000;
 
-    unsigned long prewScreenMillis;
-    unsigned long displayMillis = 3000;
+    unsigned long prewScreenMil;
+    unsigned long displayMil = 3000;
 
-    unsigned long prewCursorMillis;
+    unsigned long prewCursorMil;
 
-    unsigned long prewBlinkMillis;
-    unsigned long blinkMillis = 500;
+    unsigned long prewBlinkMil;
+    unsigned long blinkMil = 500;
 
-    unsigned long prewBrightMillis[lampAmount];
+    unsigned long prewBrightMil[lampAmount];
 
-    unsigned long riseMillis = 100;
+    unsigned long riseMil = 100;
 
-    unsigned long prewMoveMillis;
+    unsigned long prewMoveMil;
 
     const byte maxEscapeCounter = 5;
     byte escapeCounter = maxEscapeCounter;
@@ -46,7 +46,10 @@ public:
     ~Timer();
 
     void minusCounter(byte &counter);
-    boolean wait(unsigned long &prewMillis, unsigned long setMillis);
+    boolean wait(unsigned long &prewMil, unsigned long setMil);
+
+    boolean riseReady(byte id);
+    boolean next();
     boolean blinkReady();
     boolean unfrize();
     void resetCounter();

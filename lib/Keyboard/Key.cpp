@@ -62,7 +62,7 @@ void Key::autoScreenMove(Timer &timer)
 {
     if (screen == lamp)
     {
-        if (autoMove && timer.wait(timer.prewScreenMillis, timer.displayMillis))
+        if (autoMove && timer.next())
         {
             idChange();
         }

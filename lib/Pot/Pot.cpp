@@ -39,7 +39,7 @@ void Pot::autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i)
         {
             setMinBright(pot[i], bright[i]);
 
-            if (timer.wait(timer.prewBrightMillis[i], timer.riseMillis) && bright[i] < maxBright[i])
+            if (timer.riseReady(i) && bright[i] < maxBright[i])
             {
                 pot[i].increase(1);
                 bright[i] = pot[i].get();
@@ -48,7 +48,7 @@ void Pot::autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i)
 
         if (watch.brightDown[i])
         {
-            if (timer.wait(timer.prewBrightMillis[i], timer.riseMillis) && bright[i] > autoMinBright)
+            if (timer.riseReady(i) && bright[i] > autoMinBright)
             {
                 pot[i].decrease(1);
                 bright[i] = pot[i].get();

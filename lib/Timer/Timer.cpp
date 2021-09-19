@@ -28,9 +28,9 @@ boolean Timer::unfrize()
 
 void Timer::minusCounter(byte &counter)
 {
-    if ((millis() - prewCounterMillis >= secMillis))
+    if ((millis() - prewCounterMil >= secMil))
     {
-        prewCounterMillis = millis();
+        prewCounterMil = millis();
         if (counter > 0)
         {
             counter--;
@@ -38,25 +38,35 @@ void Timer::minusCounter(byte &counter)
     }
 }
 
-boolean Timer::wait(unsigned long &prewMillis, unsigned long setMillis)
+boolean Timer::wait(unsigned long &prewMil, unsigned long setMil)
 {
-    if (millis() - prewMillis >= setMillis)
+    if (millis() - prewMil >= setMil)
     {
-        prewMillis = millis();
+        prewMil = millis();
         return true;
     }
     return false;
 }
 
+boolean Timer::riseReady(byte id)
+{
+    return wait(prewBrightMil[id], riseMil);
+}
+
+boolean Timer::next()
+{
+    return wait(prewScreenMil, displayMil);
+}
+
 boolean Timer::blinkReady()
 {
-    if (millis() - prewBlinkMillis >= blinkMillis)
+    if (millis() - prewBlinkMil >= blinkMil)
     {
         blink = false;
 
-        if (millis() - prewBlinkMillis >= blinkMillis * 2)
+        if (millis() - prewBlinkMil >= blinkMil * 2)
         {
-            prewBlinkMillis = millis();
+            prewBlinkMil = millis();
             blink = true;
         }
     }
@@ -68,9 +78,9 @@ boolean Timer::moveReady()
 {
     move = false;
 
-    if (millis() - prewMoveMillis >= secMillis / 20)
+    if (millis() - prewMoveMil >= secMil / 20)
     {
-        prewMoveMillis = millis();
+        prewMoveMil = millis();
         move = true;
     }
 
