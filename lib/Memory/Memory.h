@@ -32,11 +32,9 @@ public:
     void begin(Watch &watch, Pot &pot);
     void begin(Watch &watch, Bright &bright);
 
-    void readSteam(int &addr, byte &var, byte minValue, byte maxValue);
-    void readSteam(int &addr, boolean &var, boolean minValue, boolean maxValue);
+    void read(int &addr, byte &var, byte minValue, byte maxValue);
+    void read(int &addr, boolean &var, boolean minValue, boolean maxValue);
 
-    void read(int addr, byte &var, byte minValue, byte maxValue);
-    void read(int addr, boolean &var, boolean minValue, boolean maxValue);
 
     void readEachSkip(Watch &watch);
     void readEachTime(Watch &watch);
