@@ -50,7 +50,7 @@ public:
     void manualChangeBright(Watch &watch, Key &key, Timer &timer);
     void resetAllBrights();
     void changeBright(Key &key, Watch &watch, Timer &timer);
-    void setRiseBright(byte &brightRise, Key &key, Timer &timer, Watch &watch, byte min, byte max);
+    void setRiseBright(byte &brightRise, Key &key, Timer &timer, byte min, byte max);
     void changeMaxBright(byte &bright, byte pin, Key &key, Timer &timer, Watch &watch, byte min, byte max);
 };
 

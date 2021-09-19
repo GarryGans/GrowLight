@@ -23,12 +23,12 @@ private:
         manual,
         duration,
         maxBright,
-        sunRise,
-        sunSet,
+        riseBright,
+        setBright,
         sunSpeed,
         dayDuration,
         watch
-    } screen = start;
+    }screen = start;
 
     enum Direction
     {
@@ -72,6 +72,7 @@ public:
     ~Key();
 
     //void setPresets() // Vega, Bloom(time, bright, spectr)
+    void changeScreen();
 
     void checkKeyboard();
 

@@ -8,6 +8,11 @@ Key::~Key()
 {
 }
 
+void Key::changeScreen()
+{
+    screen = (Screen)(Key::screen + 1);
+}
+
 void Key::checkKeyboard()
 {
     Serial.println(getNum);
@@ -252,6 +257,24 @@ boolean Key::changeBright()
     if ((justPressed() && getNum == 7) || (screen == maxBright && ok()))
     {
         return checkSet(maxBright);
+    }
+
+    else if (screen == maxBright && navigation())
+    {
+        if (direction == FORWARD)
+        {
+            screen = (Screen)(screen + 1);
+
+            if (screen > setBright)
+            {
+                screen = maxBright;
+            }
+        }
+        if (direction == BACK)
+        {
+            // screen ==
+            screen = constrain(screen, maxBright, setBright);
+        }
     }
 
     return false;
