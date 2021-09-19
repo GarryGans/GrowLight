@@ -93,8 +93,6 @@ void Memory::readEachBright(Bright &bright)
 
 void Memory::writeEachBright(Pot &pot)
 {
-    startAddr = setBright_addr[0];
-
     for (byte id = 0; id < lampAmount; id++)
     {
         EEPROM.put(setBright_addr[id], pot.setBright[id]);
@@ -105,8 +103,6 @@ void Memory::writeEachBright(Pot &pot)
 
 void Memory::writeEachBright(Bright &bright)
 {
-    startAddr = setBright_addr[0];
-
     for (byte id = 0; id < lampAmount; id++)
     {
         EEPROM.put(setBright_addr[id], bright.setBright[id]);
@@ -117,8 +113,6 @@ void Memory::writeEachBright(Bright &bright)
 
 void Memory::writeEachSkip(Watch &watch)
 {
-    startAddr = skip_addr[0];
-
     for (byte id = 0; id < lampAmount; id++)
     {
         EEPROM.put(skip_addr[id], watch.skip[id]);
@@ -135,14 +129,9 @@ void Memory::writeTime(Watch &watch, byte id)
 
 void Memory::writeEachTime(Watch &watch)
 {
-    startAddr = startHour_addr[0];
-
     for (byte id = 0; id < lampAmount; id++)
     {
-        EEPROM.put(startHour_addr[id], watch.startHour[id]);
-        EEPROM.put(startMinute_addr[id], watch.startMinute[id]);
-        EEPROM.put(finishHour_addr[id], watch.finishHour[id]);
-        EEPROM.put(finishMinute_addr[id], watch.finishMinute[id]);
+        writeTime(watch, id);
     }
 }
 
