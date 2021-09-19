@@ -78,6 +78,8 @@ void Watch::autoSwitchLight(int start, int finish, boolean &autoSwitch, boolean 
 
 void Watch::autoSwitcher(Key &key)
 {
+    key.skipEnable(skip[key.id]);
+
     if (key.screen != key.dayDuration)
     {
         RiseHour = startHour[0];
@@ -90,8 +92,6 @@ void Watch::autoSwitcher(Key &key)
     {
         for (byte i = 0; i < lampAmount; i++)
         {
-            key.skipEnable(skip[i]);
-
             if (!skip[i] && !key.reduration[i])
             {
                 start[i] = timeToMinute(startHour[i], startMinute[i]);
@@ -496,4 +496,12 @@ void Watch::setWatch(Key &key, Timer &timer)
 
         key.setDateTime = false;
     }
+}
+
+void Watch::commands(Key &key, Timer &timer)
+{
+    autoSwitcher(key);
+    dayReduration(key, timer);
+    setWatch(key, timer);
+    spectrumReDuration(key, timer);
 }

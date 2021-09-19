@@ -149,6 +149,8 @@ void Memory::writeChanges(Watch &watch, Pot &pot, Key &key)
     else if (key.writeSkip)
     {
         EEPROM.put(skip_addr[key.id], watch.skip[key.id]);
+
+        key.writeSkip = false;
     }
 }
 

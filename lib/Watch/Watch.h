@@ -83,6 +83,8 @@ public:
     void dayChange(byte &day, Key &key, Timer &timer);
     void leapYearDay();
     void setWatch(Key &key, Timer &timer);
+
+    void commands(Key &key, Timer &timer);
 };
 
 #endif

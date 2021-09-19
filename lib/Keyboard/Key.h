@@ -66,11 +66,6 @@ private:
     byte idFirst = 0;
     byte idLast = lampAmount - 1;
 
-    Screen operator++(int)
-    {
-        return (Screen)((int)screen + 1);
-    }
-
 public:
     Key(byte pin[]);
     Key();

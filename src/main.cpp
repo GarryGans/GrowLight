@@ -40,18 +40,13 @@ void setup()
 
 void loop()
 {
-    watch.autoSwitcher(key);
+    watch.commands(key, timer);
     switchers.switcher(watch, key);
 
     // pot.autoBright(watch, key, timer);
     bright.autoBright(watch, key, timer);
 
-    watch.dayReduration(key, timer);
-    watch.setWatch(key, timer);
-
-    watch.spectrumReDuration(key, timer);
-
-    // pot.manualChangeBright(key, timer);
+        // pot.manualChangeBright(key, timer);
     // pot.changeMaxBright(key, watch, timer);
     bright.manualChangeBright(watch, key, timer);
     bright.changeBright(key, watch, timer);

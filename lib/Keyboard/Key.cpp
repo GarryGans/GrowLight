@@ -96,14 +96,12 @@ boolean Key::valChange()
         if (getNum == 6)
         {
             act = MINUS;
-            // blinkHide = true;
             return true;
         }
 
         else if (getNum == 15)
         {
             act = PLUS;
-            // blinkHide = true;
             return true;
         }
     }
@@ -301,7 +299,7 @@ void Key::skipEnable(boolean &skip)
 {
     if (justPressed() && getNum == 4)
     {
-        checkSet(lamp);
+        // setMode();
 
         if (!skip)
         {
@@ -313,10 +311,6 @@ void Key::skipEnable(boolean &skip)
         }
 
         writeSkip = true;
-    }
-    else
-    {
-        writeSkip = false;
     }
 }
 
