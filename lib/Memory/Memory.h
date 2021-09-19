@@ -33,20 +33,22 @@ public:
     void begin(Watch &watch, Bright &bright);
 
     void read(int startAddr, int &addr, byte &var, byte minValue, byte maxValue);
+    void read(int startAddr, int &addr, boolean &var, boolean minValue, boolean maxValue);
+
+    void readEachSkip(int startAdd, Watch &watch);
+    void readEachTime(int startAdd, Watch &watch);
 
     void readEachBright(int startAddr, Pot &pot);
     void readEachBright(int startAddr, Bright &bright);
 
-    void readEachTime(int prew_addr, byte prewVar, Watch &watch);
+    void write(int startAddr, int &addr, byte &var);
+    void write(int startAddr, int &addr, boolean &var);
 
-    void readEachSkip(int prew_addr, byte prewVar, Watch &watch);
-
-    void writeEachBright(int prew_addr, byte prewVar, Pot &pot);
-    void writeEachBright(int prew_addr, byte prewVar, Bright &bright);
-
-    void writeSkip(int prew_addr, byte prewVar, byte id, Watch &watch);
+    void writeEachSkip(int startAdd, Watch &watch);
     void writeEachTime(int startAdd, Watch &watch);
-    void writeEachSkip(int prew_addr, byte prewVar, Watch &watch);
+
+    void writeEachBright(int startAdd, Pot &pot);
+    void writeEachBright(int startAdd, Bright &bright);
 
     void writeChanges(Watch &watch, Pot &pot, Key &key);
     void writeChanges(Watch &watch, Bright &bright, Key &key);
