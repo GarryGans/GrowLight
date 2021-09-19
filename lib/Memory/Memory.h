@@ -52,6 +52,9 @@ public:
     void writeEachSkip(Watch &watch);
     void writeEachTime(Watch &watch);
 
+    void writeBright(Pot &pot, byte id);
+    void writeBright(Bright &bright, byte id);
+
     void writeEachBright(Pot &pot);
     void writeEachBright(Bright &bright);
 
