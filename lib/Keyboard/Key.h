@@ -89,7 +89,7 @@ public:
     void autoScreenMove(Timer &timer);
     void manualChangeScreen(Timer &timer);
 
-    boolean skipEnable(boolean &skip, byte id);
+    void skipEnable(boolean &skip);
     void manualSwitchLight();
     boolean spectrumReDuration();
     boolean valChange();

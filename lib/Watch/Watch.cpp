@@ -90,6 +90,8 @@ void Watch::autoSwitcher(Key &key)
     {
         for (byte i = 0; i < lampAmount; i++)
         {
+            key.skipEnable(skip[i]);
+
             if (!skip[i] && !key.reduration[i])
             {
                 start[i] = timeToMinute(startHour[i], startMinute[i]);

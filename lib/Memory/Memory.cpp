@@ -46,6 +46,8 @@ void Memory::readSteam(int &addr, boolean &var, boolean minValue, boolean maxVal
 
 void Memory::readEachSkip(Watch &watch)
 {
+    startAddr = skip_addr[0];
+
     for (byte id = 0; id < lampAmount; id++)
     {
         readSteam(skip_addr[id], watch.skip[id], false, true);
@@ -54,6 +56,8 @@ void Memory::readEachSkip(Watch &watch)
 
 void Memory::readEachTime(Watch &watch)
 {
+    startAddr = startHour_addr[0];
+
     for (byte id = 0; id < lampAmount; id++)
     {
         readSteam(startHour_addr[id], watch.startHour[id], 0, 23);
@@ -65,6 +69,8 @@ void Memory::readEachTime(Watch &watch)
 
 void Memory::readEachBright(Pot &pot)
 {
+    startAddr = setBright_addr[0];
+
     for (byte id = 0; id < lampAmount; id++)
     {
         readSteam(setBright_addr[id], pot.setBright[id], pot.minManualBright, pot.maxManualBright);
@@ -75,6 +81,8 @@ void Memory::readEachBright(Pot &pot)
 
 void Memory::readEachBright(Bright &bright)
 {
+    startAddr = startAddr;
+
     for (byte id = 0; id < lampAmount; id++)
     {
         readSteam(setBright_addr[id], bright.setBright[id], bright.minManualBright, bright.maxManualBright);
@@ -94,6 +102,8 @@ void Memory::write(int &addr, byte &var)
 
 void Memory::writeEachBright(Pot &pot)
 {
+    startAddr = setBright_addr[0];
+
     for (byte id = 0; id < lampAmount; id++)
     {
         write(setBright_addr[id], pot.setBright[id]);
@@ -104,6 +114,8 @@ void Memory::writeEachBright(Pot &pot)
 
 void Memory::writeEachBright(Bright &bright)
 {
+    startAddr = setBright_addr[0];
+
     for (byte id = 0; id < lampAmount; id++)
     {
         write(setBright_addr[id], bright.setBright[id]);
@@ -114,6 +126,8 @@ void Memory::writeEachBright(Bright &bright)
 
 void Memory::writeEachSkip(Watch &watch)
 {
+    startAddr = skip_addr[0];
+
     for (byte id = 0; id < lampAmount; id++)
     {
         write(skip_addr[id], watch.skip[id]);
@@ -130,6 +144,8 @@ void Memory::writeTime(Watch &watch, byte id)
 
 void Memory::writeEachTime(Watch &watch)
 {
+    startAddr = startHour_addr[0];
+
     for (byte id = 0; id < lampAmount; id++)
     {
         write(startHour_addr[id], watch.startHour[id]);
@@ -155,42 +171,49 @@ void Memory::writeChanges(Watch &watch, Pot &pot, Key &key)
 
     else if (key.writeBright)
     {
-        EEPROM.put(setBright_addr, pot.setBright[key.id]);
-        EEPROM.put(riseBright_addr, pot.riseBright[key.id]);
-        EEPROM.put(maxBright_addr, pot.maxBright[key.id]);
+        EEPROM.put(setBright_addr[key.id], pot.setBright[key.id]);
+        EEPROM.put(riseBright_addr[key.id], pot.riseBright[key.id]);
+        EEPROM.put(maxBright_addr[key.id], pot.maxBright[key.id]);
+
         key.writeBright = false;
     }
 
-    // else if (key.skipEnable(watch.skip[key.id], key.id))
-    // {
-    //     writeSkip(finishMinute_addr[lampAmount - 1], watch.finishMinute[key.id], key.id, watch);
-    // }
+    else if (key.writeSkip)
+    {
+        EEPROM.put(skip_addr[key.id], watch.skip[key.id]);
+    }
 }
 
 void Memory::writeChanges(Watch &watch, Bright &bright, Key &key)
 {
-    // if (key.writeTime)
-    // {
-    //     writeTime(maxBright_addr[lampAmount - 1], bright.maxBright[key.id], key.id, watch);
-    //     key.writeTime = false;
-    // }
+    if (key.writeTime)
+    {
+        writeTime(watch, key.id);
 
-    // else if (key.writeDay)
-    // {
-    //     writeEachTime(maxBright_addr[lampAmount - 1], bright.maxBright[key.id], watch);
-    //     key.writeDay = false;
-    // }
+        key.writeTime = false;
+    }
 
-    // else if (key.writeBright)
-    // {
-    //     writeBright( start_addr_Size, key.id, bright);
-    //     key.writeBright = false;
-    // }
+    else if (key.writeDay)
+    {
+        writeEachTime(watch);
 
-    // else if (key.skipEnable(watch.skip[key.id], key.id))
-    // {
-    //     writeSkip(finishMinute_addr[lampAmount - 1], watch.finishMinute[key.id], key.id, watch);
-    // }
+        key.writeDay = false;
+    }
+
+    else if (key.writeBright)
+    {
+        EEPROM.put(setBright_addr[key.id], bright.setBright[key.id]);
+        EEPROM.put(riseBright_addr[key.id], bright.riseBright[key.id]);
+        EEPROM.put(maxBright_addr[key.id], bright.maxBright[key.id]);
+
+        key.writeBright = false;
+    }
+
+    else if (key.writeSkip)
+    {
+        EEPROM.put(skip_addr[key.id], watch.skip[key.id]);
+        key.writeSkip = false;
+    }
 }
 
 void Memory::begin(Watch &watch, Pot &pot)

@@ -47,7 +47,7 @@ public:
     void write(int &addr, byte &var);
     void write(int &addr, boolean &var);
 
-    void writeTime(Watch &watch);
+    void writeTime(Watch &watch, byte id);
 
     void writeEachSkip(Watch &watch);
     void writeEachTime(Watch &watch);

@@ -45,8 +45,6 @@ void Key::keyCommands(Timer &timer)
     autoScreenMove(timer);
     manualChangeScreen(timer);
 
-    // setScreens();
-
     home();
 }
 
@@ -299,7 +297,7 @@ boolean Key::dayReduration()
     return false;
 }
 
-boolean Key::skipEnable(boolean &skip, byte id)
+void Key::skipEnable(boolean &skip)
 {
     if (justPressed() && getNum == 4)
     {
@@ -313,10 +311,13 @@ boolean Key::skipEnable(boolean &skip, byte id)
         {
             skip = false;
         }
-        return true;
-    }
 
-    return false;
+        writeSkip = true;
+    }
+    else
+    {
+        writeSkip = false;
+    }
 }
 
 void Key::manualSwitchLight()
