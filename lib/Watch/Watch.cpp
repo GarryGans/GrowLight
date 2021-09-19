@@ -501,7 +501,7 @@ void Watch::setWatch(Key &key, Timer &timer)
 void Watch::commands(Key &key, Timer &timer)
 {
     setWatch(key, timer);
-    spectrumReDuration(key, timer);
     dayReduration(key, timer);
+    spectrumReDuration(key, timer);
     autoSwitcher(key);
 }
