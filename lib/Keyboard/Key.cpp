@@ -27,6 +27,24 @@ Key::Screen Key::changeScreen()
     return screen;
 }
 
+void Key::menuScreen(byte start, byte end)
+{
+    if (direction == FORWARD)
+    {
+        if (changeScreen() > end)
+        {
+            screen = maxBright;
+        }
+    }
+    if (direction == BACK)
+    {
+        if (changeScreen() < start)
+        {
+            screen = setBright;
+        }
+    }
+}
+
 void Key::checkKeyboard()
 {
     Serial.println(getNum);
@@ -40,7 +58,7 @@ void Key::keyCommands(Timer &timer)
     autoScreenMove(timer);
     manualChangeScreen(timer);
 
-    home();
+    setSpeed();
 }
 
 void Key::idChange()
@@ -55,13 +73,13 @@ void Key::idChange()
 
 void Key::autoScreenMove(Timer &timer)
 {
-    if (screen == lamp)
+    if (screen == lamp || screen == start)
     {
         if (autoMove && timer.next())
         {
             idChange();
         }
-        
+
         if (!autoMove && timer.unfrize())
         {
             autoMove = true;
@@ -139,13 +157,31 @@ void Key::manualChangeScreen(Timer &timer)
     }
 }
 
-void Key::home()
+void Key::setSpeed()
 {
     if (justPressed() && getNum == 10)
     {
         autoMove = false;
 
-        screen = start;
+        if (screen == speed)
+        {
+            screen = lamp;
+        }
+
+        else
+        {
+            screen = speed;
+        }
+    }
+    if (screen == speed || screen == interval)
+    {
+        if (navigation())
+        {
+            if (/* condition */)
+            {
+                /* code */
+            }
+        }
     }
 }
 
@@ -153,7 +189,6 @@ boolean Key::ok()
 {
     if (justPressed() && getNum == 9)
     {
-        autoMove = false;
 
         return true;
     }

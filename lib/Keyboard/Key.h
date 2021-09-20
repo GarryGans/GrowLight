@@ -27,7 +27,9 @@ private:
         setBright,
         sunSpeed,
         dayDuration,
-        watch
+        watch,
+        speed,
+        interval
     } screen = start;
 
     enum Direction
@@ -87,6 +89,7 @@ public:
     void manualSwitchLight();
     boolean spectrumReDuration();
     boolean valChange();
+    boolean riseSpeedChange();
 
     boolean changeBright();
     boolean dayReduration();

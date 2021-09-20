@@ -124,14 +124,14 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright)
 {
     if (watch.skip[key.id] && key.screen != key.manual)
     {
-        setHeight(u8g2_font_HelvetiPixelOutline_tr);
+        setHeight(u8g2_font_crox4h_tf);
 
         moveString("SKIP", PosX::center, PosY::downSpace, timer, 3);
     }
 
     else if (key.screen == key.manual)
     {
-        setHeight(u8g2_font_HelvetiPixelOutline_tr);
+        setHeight(u8g2_font_crox4h_tf);
 
         textAlign("MANUAL", PosX::leftSpace, PosY::downSpace);
         brightInfo(bright, key, timer);
@@ -484,6 +484,48 @@ void Screen::blinkSunTime(Key &key, Timer &timer, Watch &watch)
     }
 }
 
+void Screen::intervalScreen(Watch &watch, Key &key, Timer &timer)
+{
+    if (key.screen == key.interval)
+    {
+        firstPage();
+        do
+        {
+            setHeight(u8g2_font_pressstart2p_8f);
+
+            moveString("Interval", PosX::center, PosY::upSpace, timer, 4);
+
+            setHeight(u8g2_font_ncenB18_tf);
+
+            digAlign(watch.interval, PosX::center, PosY::center);
+
+            blinkFrame(watch.interval, false, PosX::centerFrame, PosY::centerFrame, timer, key.valChange());
+
+        } while (nextPage());
+    }
+}
+
+void Screen::riseSpeedScreen(Key &key, Timer &timer)
+{
+    if (key.screen == key.speed)
+    {
+        firstPage();
+        do
+        {
+            setHeight(u8g2_font_pressstart2p_8f);
+
+            moveString("Sun Speed", PosX::center, PosY::upSpace, timer, 4);
+
+            setHeight(u8g2_font_ncenB18_tf);
+
+            digAlign(timer.riseMil, PosX::center, PosY::center);
+
+            blinkFrame(timer.riseMil, false, PosX::centerFrame, PosY::centerFrame, timer, key.valChange());
+
+        } while (nextPage());
+    }
+}
+
 void Screen::sunTimeScreen(Watch &watch, Key &key, Timer &timer)
 {
     if (key.screen == key.dayDuration)
@@ -520,6 +562,11 @@ void Screen::startScreen(Watch &watch, Key &key, Timer &timer)
             showSunTime(watch);
 
         } while (nextPage());
+
+        if (timer.unfrize())
+        {
+            key.screen = key.lamp;
+        }
     }
 }
 
@@ -531,6 +578,7 @@ void Screen::screens(Watch &watch, Switchers &switchers, Timer &timer, Key &key,
     sunTimeScreen(watch, key, timer);
     timerScreen(watch, timer, key);
     brightScreen(pot, key, timer);
+    riseSpeedScreen(key, timer);
 }
 
 void Screen::screens(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Bright &bright)
@@ -541,4 +589,5 @@ void Screen::screens(Watch &watch, Switchers &switchers, Timer &timer, Key &key,
     sunTimeScreen(watch, key, timer);
     timerScreen(watch, timer, key);
     brightScreen(bright, key, timer);
+    riseSpeedScreen(key, timer);
 }
