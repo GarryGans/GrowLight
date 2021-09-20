@@ -111,6 +111,7 @@ void Key::manualChangeScreen(Timer &timer)
         if (navigation())
         {
             autoMove = false;
+
             if (direction == BACK)
             {
                 id--;
@@ -143,6 +144,8 @@ void Key::home()
 {
     if (justPressed() && getNum == 10)
     {
+        autoMove = false;
+
         screen = start;
     }
 }
@@ -151,6 +154,8 @@ boolean Key::ok()
 {
     if (justPressed() && getNum == 9)
     {
+        autoMove = false;
+
         return true;
     }
     return false;
@@ -160,6 +165,8 @@ boolean Key::setWatch()
 {
     if ((justPressed() && getNum == 3) || (screen == watch && ok()))
     {
+        autoMove = false;
+
         if (screen == watch)
         {
             setDateTime = true;
@@ -167,6 +174,7 @@ boolean Key::setWatch()
         }
         else
         {
+            autoMove = false;
             screen = watch;
             return true;
         }
@@ -179,6 +187,8 @@ boolean Key::spectrumReDuration()
 {
     if ((justPressed() && getNum == 14) || (screen == duration && ok()))
     {
+        autoMove = false;
+
         if (screen == duration)
         {
             writeTime = true;
@@ -200,6 +210,8 @@ boolean Key::changeBright()
 {
     if ((justPressed() && getNum == 7) || (reBright[id] && ok()))
     {
+        autoMove = false;
+
         if (screen == maxBright || screen == riseBright || screen == setBright)
         {
             writeBright = true;
@@ -240,6 +252,8 @@ boolean Key::dayReduration()
 {
     if ((justPressed() && getNum == 2) || (screen == dayDuration && ok()))
     {
+        autoMove = false;
+
         if (screen == dayDuration)
         {
             writeDay = true;
@@ -260,6 +274,8 @@ void Key::skipEnable(boolean &skip)
 {
     if (justPressed() && getNum == 4)
     {
+        autoMove = false;
+
         if (!skip)
         {
             skip = true;

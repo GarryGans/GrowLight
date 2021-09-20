@@ -22,7 +22,6 @@ private:
         lamp,
         manual,
         duration,
-        bright,
         maxBright,
         riseBright,
         setBright,
