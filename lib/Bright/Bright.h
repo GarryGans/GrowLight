@@ -25,6 +25,8 @@ private:
     byte minManualBright = minManual;
     byte maxManualBright = maxManual;
 
+    boolean reBright[lampAmount];
+
     byte brightLevel;
     byte lowLevel = 0;
     byte maxLevel[lampAmount];

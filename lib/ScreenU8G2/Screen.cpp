@@ -520,12 +520,6 @@ void Screen::startScreen(Watch &watch, Key &key, Timer &timer)
             showSunTime(watch);
 
         } while (nextPage());
-
-        if (timer.unfrize())
-        {
-            key.screen = key.lamp;
-            key.autoMove = true;
-        }
     }
 }
 

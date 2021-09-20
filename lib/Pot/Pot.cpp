@@ -33,7 +33,7 @@ void Pot::resetBright(DigiPot &pot, byte &bright)
 
 void Pot::autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i)
 {
-    if (watch.autoSwitch[i] && !key.reduration[i] && !key.reBright[i])
+    if (watch.autoSwitch[i] && !key.reduration[i] && !reBright[i])
     {
         if (!watch.brightDown[i])
         {
@@ -133,7 +133,7 @@ void Pot::changeMaxBright(Key &key, Watch &watch, Timer &timer)
 {
     if (key.changeBright())
     {
-        key.reBright[key.id] = true;
+        reBright[key.id] = true;
     }
 
     else if (key.screen == key.maxBright)

@@ -46,7 +46,7 @@ void Bright::resetBright(byte pin, byte &bright)
 
 void Bright::autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i)
 {
-    if (watch.autoSwitch[i] && !key.reduration[i] && !key.reBright[i])
+    if (watch.autoSwitch[i] && !key.reduration[i] && !reBright[i])
     {
         if (!watch.brightDown[i])
         {
@@ -190,10 +190,10 @@ void Bright::changeBright(Key &key, Watch &watch, Timer &timer)
 {
     if (key.changeBright())
     {
-        key.reBright[key.id] = true;
+        reBright[key.id] = true;
     }
 
-    if (key.reBright[key.id])
+    if (reBright[key.id])
     {
         switch (key.screen)
         {

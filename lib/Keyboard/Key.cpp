@@ -61,6 +61,11 @@ void Key::autoScreenMove(Timer &timer)
         {
             idChange();
         }
+        
+        if (!autoMove && timer.unfrize())
+        {
+            autoMove = true;
+        }
     }
 }
 
@@ -108,6 +113,7 @@ void Key::manualChangeScreen(Timer &timer)
 {
     if (screen == lamp || screen == manual)
     {
+
         if (navigation())
         {
             autoMove = false;
@@ -121,6 +127,7 @@ void Key::manualChangeScreen(Timer &timer)
             else if (direction == FORWARD)
             {
                 id++;
+
                 if (id > idLast)
                 {
                     id = idFirst;
@@ -128,14 +135,6 @@ void Key::manualChangeScreen(Timer &timer)
             }
 
             timer.resetCounter();
-        }
-
-        if (screen != manual)
-        {
-            if (timer.unfrize())
-            {
-                autoMove = true;
-            }
         }
     }
 }
@@ -163,7 +162,7 @@ boolean Key::ok()
 
 boolean Key::setWatch()
 {
-    if ((justPressed() && getNum == 3) || (screen == watch && ok()))
+    if (justPressed() && getNum == 3)
     {
         autoMove = false;
 
@@ -185,7 +184,7 @@ boolean Key::setWatch()
 
 boolean Key::spectrumReDuration()
 {
-    if ((justPressed() && getNum == 14) || (screen == duration && ok()))
+    if (justPressed() && getNum == 14)
     {
         autoMove = false;
 
@@ -208,14 +207,13 @@ boolean Key::spectrumReDuration()
 
 boolean Key::changeBright()
 {
-    if ((justPressed() && getNum == 7) || (reBright[id] && ok()))
+    if (justPressed() && getNum == 7)
     {
         autoMove = false;
 
         if (screen == maxBright || screen == riseBright || screen == setBright)
         {
             writeBright = true;
-            reBright[id] = false;
             screen = lamp;
         }
         else
@@ -225,7 +223,7 @@ boolean Key::changeBright()
         }
     }
 
-    else if (navigation() && reBright[id])
+    else if (navigation() && (screen == maxBright || screen == riseBright || screen == setBright))
     {
         writeBright = true;
 
@@ -250,7 +248,7 @@ boolean Key::changeBright()
 
 boolean Key::dayReduration()
 {
-    if ((justPressed() && getNum == 2) || (screen == dayDuration && ok()))
+    if (justPressed() && getNum == 2)
     {
         autoMove = false;
 

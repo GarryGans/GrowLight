@@ -46,7 +46,6 @@ private:
 
     boolean buttonSwitch[lampAmount];
     boolean reduration[lampAmount];
-    boolean reBright[lampAmount];
 
     boolean resetManualPot;
     boolean resetManualBright;
