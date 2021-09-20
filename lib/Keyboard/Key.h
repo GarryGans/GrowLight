@@ -22,6 +22,7 @@ private:
         lamp,
         manual,
         duration,
+        bright,
         maxBright,
         riseBright,
         setBright,
@@ -91,10 +92,7 @@ public:
 
     boolean changeBright();
     boolean dayReduration();
-    void reset();
     void home();
-    void setMode();
-    boolean checkSet(Screen set);
 
     boolean setWatch();
     boolean navigation();
