@@ -25,12 +25,13 @@ private:
     byte minManualBright = minManual;
     byte maxManualBright = maxManual;
 
-
     byte brightLevel;
     byte lowLevel = 0;
     byte maxLevel[lampAmount];
 
     byte maxPWM = 255;
+
+    byte allBrigh;
 
 public:
     Bright();
@@ -54,6 +55,8 @@ public:
     void setSetBright(byte &bright, Key &key, Timer &timer, byte min, byte max);
     void setRiseBright(byte &brightRise, Key &key, Timer &timer, byte min, byte max);
     void changeMaxBright(byte &bright, byte pin, Key &key, Timer &timer, Watch &watch, byte min, byte max);
+
+    boolean setAllBrigh(Key &key, Timer &timer);
 };
 
 #endif

@@ -60,7 +60,7 @@ void EFX::alignSimbols(byte W, byte H, PosX pos_x, PosY pos_y)
         break;
 
     case PosX::customFrame:
-        x = setX - borderW/2;
+        x = setX - borderW / 2;
         break;
 
     default:
@@ -138,6 +138,13 @@ byte EFX::getDigWidth(byte value)
     return getStrWidth(val);
 }
 
+char EFX::convStr(const String &string)
+{
+    char str[2];
+    String(string).toCharArray(str, 2);
+    return *str;
+}
+
 void EFX::setHeight(const uint8_t *font)
 {
     setFont(font);
@@ -203,6 +210,19 @@ void EFX::digStringAlign(byte dig, const char *string, PosX pos_x, PosY pos_y)
 
     print(dig);
     print(string);
+}
+
+void EFX::strDigAlign(const char *string, byte dig, PosX pos_x, PosY pos_y)
+{
+    alignSimbols(getDigWidth(dig) + getStrWidth(string), height, pos_x, pos_y);
+
+    setX = x;
+
+    setCursor(x, y);
+
+    print(string);
+
+    print(dig);
 }
 
 void EFX::digAlign(byte dig, PosX pos_x, PosY pos_y)

@@ -570,6 +570,41 @@ void Screen::startScreen(Watch &watch, Key &key, Timer &timer)
     }
 }
 
+void Screen::allBrightScreen(Bright &bright, Key &key, Timer &timer)
+{
+    if (bright.setAllBrigh(key, timer))
+    {
+        firstPage();
+        do
+        {
+            setHeight(u8g2_font_pressstart2p_8f);
+
+            moveString("allBright", PosX::leftSpace, PosY::upSpace, timer, 4);
+
+            setHeight(u8g2_font_ncenB18_tf);
+
+            digAlign(bright.allBrigh, PosX::leftHalf, PosY::center);
+
+            blinkFrame(bright.allBrigh, false, PosX::leftHalf, PosY::centerFrame, timer, key.valChange());
+
+            for (byte i = 0; i < lampAmount; i++)
+            {
+                setHeight(u8g2_font_pressstart2p_8f);
+
+                // convStr(lightColor[i]);
+                strDigAlign(convStr(lightColor[i]), bright.maxBright[i], PosX::leftHalf, PosY::custom);
+            }
+
+        } while (nextPage());
+
+        if (timer.unfrize() && !key.allBrigh())
+        {
+            key.setAll = false;
+            key.screen = key.lamp;
+        }
+    }
+}
+
 void Screen::screens(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Pot &pot)
 {
     lampScreen(watch, switchers, timer, key, pot);
@@ -587,6 +622,7 @@ void Screen::screens(Watch &watch, Switchers &switchers, Timer &timer, Key &key,
 {
     lampScreen(watch, switchers, timer, key, bright);
     brightScreen(bright, key, timer);
+    allBrightScreen(bright, key, timer);
 
     startScreen(watch, key, timer);
     setWatchScreen(watch, key, timer);

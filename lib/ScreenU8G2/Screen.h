@@ -74,6 +74,8 @@ public:
     void maxBrightScreen(Bright &bright, Key &key, Timer &timer);
     void brightScreen(Bright &bright, Key &key, Timer &timer);
 
+    void allBrightScreen(Bright &bright, Key &key, Timer &timer);
+
     void startScreen(Watch &watch, Key &key, Timer &timer);
 
     void screens(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Pot &pot);

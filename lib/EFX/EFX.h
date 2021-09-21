@@ -83,11 +83,14 @@ public:
     void frameAlign(byte W, byte H, PosX pos_x, PosY pos_y);
     void iconAlign(int icon, byte iconWH, PosX pos_x, PosY pos_y);
     void digStringAlign(byte dig, const char *string, PosX pos_x, PosY pos_y);
+    void strDigAlign(const char *string, byte dig, PosX pos_x, PosY pos_y);
+
     void digAlign(byte dig, PosX pos_x, PosY pos_y);
     void setPosition(const char *format, PosX pos_x, PosY pos_y);
     void textAlign(const char *string, PosX pos_x, PosY pos_y);
     void stringAlign(String str, byte size, PosX pos_x, PosY pos_y);
     void setHeight(const uint8_t *font);
+    char convStr(const String &string);
 
     void mover(byte &move_x, byte deep_x, byte id);
     void moveString(const char *string, PosX pos_x, PosY pos_y, Timer &timer, byte id);

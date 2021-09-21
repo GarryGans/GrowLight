@@ -212,3 +212,20 @@ void Bright::changeBright(Key &key, Watch &watch, Timer &timer)
         }
     }
 }
+
+boolean Bright::setAllBrigh(Key &key, Timer &timer)
+{
+    if (key.allBrigh())
+    {
+        if (key.act == key.MINUS)
+
+            allBrigh--;
+
+        else
+            allBrigh++;
+
+        key.setAll = true;
+    }
+    
+    return key.setAll;
+}

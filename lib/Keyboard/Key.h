@@ -29,7 +29,8 @@ private:
         dayDuration,
         watch,
         speed,
-        interval
+        interval,
+        bright
     } screen = start;
 
     enum Direction
@@ -61,6 +62,7 @@ private:
     boolean writeSpeed;
 
     boolean reBright[lampAmount];
+    boolean setAll;
 
     boolean correctDay;
 
@@ -85,7 +87,7 @@ public:
     void menuScreen(Screen start, Screen end);
 
     void setScreens();
-    boolean chekSet(Screen &screen);
+    boolean chekSet(Screen screen);
     void keyCommands(Timer &timer);
     void idChange();
     void setSpec();
@@ -95,17 +97,18 @@ public:
 
     void skipEnable(boolean &skip);
     void manualSwitchLight();
-    boolean spectrumReDuration();
-    boolean valChange();
-    boolean riseSpeedChange();
 
+    boolean ok();
+    boolean valChange();
+    boolean navigation();
+
+    boolean spectrumReDuration();
+    boolean riseSpeedChange();
     boolean changeBright();
     boolean dayReduration();
-    void setSpeed(Timer &timer);
-
     boolean setWatch();
-    boolean navigation();
-    boolean ok();
+    void setSpeed(Timer &timer);
+    boolean allBrigh();
 };
 
 #endif

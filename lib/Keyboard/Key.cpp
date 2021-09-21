@@ -91,6 +91,35 @@ void Key::autoScreenMove(Timer &timer)
     }
 }
 
+void Key::manualChangeScreen(Timer &timer)
+{
+    if (screen == lamp || screen == manual)
+    {
+        if (navigation())
+        {
+            autoMove = false;
+
+            if (direction == BACK)
+            {
+                id--;
+                id = constrain(id, 0, idLast);
+            }
+
+            else if (direction == FORWARD)
+            {
+                id++;
+
+                if (id > idLast)
+                {
+                    id = idFirst;
+                }
+            }
+
+            timer.resetCounter();
+        }
+    }
+}
+
 boolean Key::navigation()
 {
     if (onHold() || justPressed())
@@ -131,34 +160,80 @@ boolean Key::valChange()
     return false;
 }
 
-void Key::manualChangeScreen(Timer &timer)
+boolean Key::ok()
 {
-    if (screen == lamp || screen == manual)
+    if (justPressed() && getNum == 9)
     {
-
-        if (navigation())
-        {
-            autoMove = false;
-
-            if (direction == BACK)
-            {
-                id--;
-                id = constrain(id, 0, idLast);
-            }
-
-            else if (direction == FORWARD)
-            {
-                id++;
-
-                if (id > idLast)
-                {
-                    id = idFirst;
-                }
-            }
-
-            timer.resetCounter();
-        }
+        return true;
     }
+    return false;
+}
+
+boolean Key::chekSet(Screen screen)
+{
+    if (this->screen != lamp)
+    {
+        switch (this->screen)
+        {
+        case watch:
+            setDateTime = true;
+            break;
+
+        case duration:
+            writeTime = true;
+            reduration[id] = false;
+            break;
+
+        case maxBright:
+            writeBright = true;
+            reBright[id] = false;
+            break;
+
+        case riseBright:
+            writeBright = true;
+            reBright[id] = false;
+            break;
+
+        case setBright:
+            writeBright = true;
+            reBright[id] = false;
+            break;
+
+        case dayDuration:
+            writeDay = true;
+            correctDay = true;
+            reDay = false;
+            break;
+
+        case manual:
+            resetManualPot = true;
+            resetManualBright = true;
+
+            for (byte i = 0; i < lampAmount; i++)
+                buttonSwitch[i] = 0;
+            break;
+
+        case interval:
+            writeSpeed = true;
+            writeInterval = true;
+            break;
+
+        case speed:
+            writeSpeed = true;
+            writeInterval = true;
+            break;
+
+        default:
+            break;
+        }
+
+        if (this->screen != screen)
+            return false;
+
+        return true;
+    }
+
+    return false;
 }
 
 void Key::setSpeed(Timer &timer)
@@ -167,11 +242,9 @@ void Key::setSpeed(Timer &timer)
     {
         autoMove = false;
 
-        if (screen == speed || screen == interval)
+        if (chekSet(speed) || chekSet(interval))
         {
             screen = lamp;
-            writeSpeed = true;
-            writeInterval = true;
         }
 
         else
@@ -198,85 +271,14 @@ void Key::setSpeed(Timer &timer)
     }
 }
 
-boolean Key::ok()
-{
-    if (justPressed() && getNum == 9)
-    {
-
-        return true;
-    }
-    return false;
-}
-
-boolean Key::chekSet(Screen &screen)
-{
-    if (screen != lamp)
-    {
-        switch (screen)
-        {
-        case watch:
-            setDateTime = true;
-            screen = lamp;
-            break;
-
-        case duration:
-            writeTime = true;
-            reduration[id] = false;
-            screen = lamp;
-            break;
-
-        case (maxBright || riseBright || setBright):
-            writeBright = true;
-            reBright[id] = false;
-            screen = lamp;
-            break;
-
-        case dayDuration:
-            writeDay = true;
-            correctDay = true;
-            screen = lamp;
-            reDay = false;
-            break;
-
-        case manual:
-            resetManualPot = true;
-            resetManualBright = true;
-
-            for (byte i = 0; i < lampAmount; i++)
-                buttonSwitch[i] = 0;
-            break;
-
-        default:
-            break;
-        }
-
-        if (this->screen != screen)
-        {
-            screen = lamp;
-        }
-        else
-        {
-            this->screen = screen;
-        }
-
-        return true;
-    }
-    else
-    {
-    }
-
-    return false;
-}
-
 boolean Key::setWatch()
 {
     if (justPressed() && getNum == 3)
     {
         autoMove = false;
 
-        if (screen == watch)
+        if (chekSet(watch))
         {
-            setDateTime = true;
             screen = lamp;
         }
         else
@@ -296,10 +298,8 @@ boolean Key::spectrumReDuration()
     {
         autoMove = false;
 
-        if (screen == duration)
+        if (chekSet(duration))
         {
-            writeTime = true;
-            reduration[id] = false;
             screen = lamp;
         }
 
@@ -319,10 +319,8 @@ boolean Key::changeBright()
     {
         autoMove = false;
 
-        if (screen == maxBright || screen == riseBright || screen == setBright)
+        if (chekSet(maxBright) || chekSet(riseBright) || chekSet(setBright))
         {
-            writeBright = true;
-            reBright[id] = false;
             screen = lamp;
         }
         else
@@ -334,8 +332,6 @@ boolean Key::changeBright()
 
     else if (navigation() && (screen == maxBright || screen == riseBright || screen == setBright))
     {
-        writeBright = true;
-
         if (direction == FORWARD)
         {
             if (changeScreen() > setBright)
@@ -363,6 +359,7 @@ boolean Key::dayReduration()
 
         if (chekSet(dayDuration))
         {
+            screen = lamp;
         }
         else
         {
@@ -399,16 +396,8 @@ void Key::manualSwitchLight()
 {
     if (justPressed() && getNum == 1)
     {
-        if (screen == manual)
+        if (chekSet(manual))
         {
-            resetManualPot = true;
-            resetManualBright = true;
-
-            for (byte i = 0; i < lampAmount; i++)
-            {
-                buttonSwitch[i] = 0;
-            }
-
             autoMove = true;
             screen = lamp;
         }
@@ -436,4 +425,18 @@ void Key::manualSwitchLight()
             buttonSwitch[id] = false;
         }
     }
+}
+
+boolean Key::allBrigh()
+{
+    if (screen == lamp || screen == bright)
+    {
+        if (valChange())
+        {
+            screen = bright;
+            return true;
+        }
+    }
+
+    return false;
 }
