@@ -64,6 +64,7 @@ public:
 
     void sunTimeScreen(Watch &watch, Key &key, Timer &timer);
 
+    void intervalScreen(Watch &watch, Key &key, Timer &timer);
     void riseSpeedScreen(Key &key, Timer &timer);
 
     void brightScreen(Pot &pot, Key &key, Timer &timer);

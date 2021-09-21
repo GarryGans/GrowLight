@@ -52,7 +52,8 @@ public:
         centerFrame,
         rightFrameSide,
         rightFrameHalfSide,
-        custom
+        custom,
+        customFrame
     } pos_x;
 
     enum class PosY

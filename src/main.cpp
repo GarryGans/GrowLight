@@ -11,7 +11,7 @@ Screen screen(WavelengthSMD, lightColor);
 
 void setup()
 {
-    // Serial.begin(9600);
+    Serial.begin(9600);
 
     screen.begin();
 
@@ -28,14 +28,15 @@ void setup()
     switchers.begin(startPinLamp);
     delay(100);
 
+    // memory.begin(watch, pot);
+    memory.begin(watch, bright, timer);
+    delay(100);
+
     // pot.setPot(potent);
     // pot.resetAllPots();
     bright.begin(startPinBright);
     delay(100);
 
-    // memory.begin(watch, pot);
-    memory.begin(watch, bright);
-    delay(100);
 }
 
 void loop()
@@ -57,5 +58,5 @@ void loop()
     screen.screens(watch, switchers, timer, key, bright);
 
     // memory.writeChanges(watch, pot, key);
-    memory.writeChanges(watch, bright, key);
+    memory.writeChanges(watch, bright, key, timer);
 }

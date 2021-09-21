@@ -45,8 +45,8 @@ private:
 
     boolean brightDown[lampAmount];
 
-    int intervalDefault = 1;
-    int interval = 0;
+    int intervalDefault = 0;
+    unsigned int interval;
 
     byte startHour[lampAmount];
     byte startMinute[lampAmount];
@@ -62,7 +62,7 @@ public:
     Watch();
     ~Watch();
 
-    //setSpecInterval();
+    void setInterval(Key &key);
 
     void timeFromMinute(int time, byte &hour, byte &minute);
     int nowTime();

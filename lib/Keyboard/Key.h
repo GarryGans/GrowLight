@@ -48,6 +48,7 @@ private:
 
     boolean buttonSwitch[lampAmount];
     boolean reduration[lampAmount];
+    boolean reDay;
 
     boolean resetManualPot;
     boolean resetManualBright;
@@ -56,6 +57,10 @@ private:
     boolean writeTime;
     boolean writeDay;
     boolean writeSkip;
+    boolean writeInterval;
+    boolean writeSpeed;
+
+    boolean reBright[lampAmount];
 
     boolean correctDay;
 
@@ -77,7 +82,10 @@ public:
 
     void checkKeyboard();
 
+    void menuScreen(Screen start, Screen end);
+
     void setScreens();
+    boolean chekSet(Screen &screen);
     void keyCommands(Timer &timer);
     void idChange();
     void setSpec();
@@ -93,7 +101,7 @@ public:
 
     boolean changeBright();
     boolean dayReduration();
-    void home();
+    void setSpeed(Timer &timer);
 
     boolean setWatch();
     boolean navigation();

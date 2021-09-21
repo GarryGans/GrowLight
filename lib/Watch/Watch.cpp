@@ -176,13 +176,6 @@ void Watch::spectrumReDuration(Key &key, Timer &timer)
 {
     if (key.spectrumReDuration())
     {
-        key.reduration[key.id] = true;
-
-        cursorSpectrum = 0;
-    }
-
-    if (key.screen == key.duration)
-    {
         if (cursorSpectrum == 0)
         {
             hmsChange(key, startHour[key.id], cursorSpectrum, timer);
@@ -204,7 +197,7 @@ void Watch::spectrumReDuration(Key &key, Timer &timer)
 
 void Watch::dayReduration(Key &key, Timer &timer)
 {
-    if (key.dayReduration() || key.screen == key.dayDuration)
+    if (key.dayReduration())
     {
         if (cursorDay == 0)
         {
@@ -231,12 +224,12 @@ void Watch::dayReduration(Key &key, Timer &timer)
 
         for (byte id = 0; id < lampAmount; id++)
         {
-            timeFromMinute(start[0] + interval, startHour[id], startMinute[id]);
-            timeFromMinute(finish[0] - interval, finishHour[id], finishMinute[id]);
-            interval += intervalDefault;
+            timeFromMinute(start[0] + intervalDefault, startHour[id], startMinute[id]);
+            timeFromMinute(finish[0] - intervalDefault, finishHour[id], finishMinute[id]);
+            intervalDefault += interval;
         }
 
-        interval = 0;
+        intervalDefault = 0;
         cursorDay = 0;
 
         key.correctDay = false;
@@ -498,10 +491,26 @@ void Watch::setWatch(Key &key, Timer &timer)
     }
 }
 
+void Watch::setInterval(Key &key)
+{
+    if (key.screen == key.interval)
+    {
+        if (key.valChange())
+        {
+            key.act == key.MINUS ? interval-- : interval++;
+            if (interval < 0)
+                interval = 90;
+            if (interval > 90)
+                interval = 0;
+        }
+    }
+}
+
 void Watch::commands(Key &key, Timer &timer)
 {
     setWatch(key, timer);
     dayReduration(key, timer);
     spectrumReDuration(key, timer);
     autoSwitcher(key);
+    setInterval(key);
 }

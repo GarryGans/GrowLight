@@ -497,9 +497,9 @@ void Screen::intervalScreen(Watch &watch, Key &key, Timer &timer)
 
             setHeight(u8g2_font_ncenB18_tf);
 
-            digAlign(watch.interval, PosX::center, PosY::center);
+            digStringAlign(watch.interval, " m", PosX::center, PosY::center);
 
-            blinkFrame(watch.interval, false, PosX::centerFrame, PosY::centerFrame, timer, key.valChange());
+            blinkFrame(watch.interval, false, PosX::customFrame, PosY::centerFrame, timer, key.valChange());
 
         } while (nextPage());
     }
@@ -518,9 +518,9 @@ void Screen::riseSpeedScreen(Key &key, Timer &timer)
 
             setHeight(u8g2_font_ncenB18_tf);
 
-            digAlign(timer.riseMil, PosX::center, PosY::center);
+            digStringAlign(timer.riseMil, " bp", PosX::center, PosY::center);
 
-            blinkFrame(timer.riseMil, false, PosX::centerFrame, PosY::centerFrame, timer, key.valChange());
+            blinkFrame(timer.riseMil, false, PosX::customFrame, PosY::centerFrame, timer, key.valChange());
 
         } while (nextPage());
     }
@@ -572,22 +572,26 @@ void Screen::startScreen(Watch &watch, Key &key, Timer &timer)
 
 void Screen::screens(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Pot &pot)
 {
-    startScreen(watch, key, timer);
     lampScreen(watch, switchers, timer, key, pot);
+    brightScreen(pot, key, timer);
+
+    startScreen(watch, key, timer);
     setWatchScreen(watch, key, timer);
     sunTimeScreen(watch, key, timer);
     timerScreen(watch, timer, key);
-    brightScreen(pot, key, timer);
     riseSpeedScreen(key, timer);
+    intervalScreen(watch, key, timer);
 }
 
 void Screen::screens(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Bright &bright)
 {
-    startScreen(watch, key, timer);
     lampScreen(watch, switchers, timer, key, bright);
+    brightScreen(bright, key, timer);
+
+    startScreen(watch, key, timer);
     setWatchScreen(watch, key, timer);
     sunTimeScreen(watch, key, timer);
     timerScreen(watch, timer, key);
-    brightScreen(bright, key, timer);
     riseSpeedScreen(key, timer);
+    intervalScreen(watch, key, timer);
 }

@@ -50,7 +50,7 @@ boolean Timer::wait(unsigned long &prewMil, unsigned long setMil)
 
 boolean Timer::riseReady(byte id)
 {
-    return wait(prewBrightMil[id], riseMil);
+    return wait(prewBrightMil[id], riseMil * 10);
 }
 
 boolean Timer::next()

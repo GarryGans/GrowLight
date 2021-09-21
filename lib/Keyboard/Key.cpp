@@ -27,20 +27,24 @@ Key::Screen Key::changeScreen()
     return screen;
 }
 
-void Key::menuScreen(byte start, byte end)
+void Key::menuScreen(Screen start, Screen end)
 {
-    if (direction == FORWARD)
+    if (navigation())
     {
-        if (changeScreen() > end)
+        if (direction == FORWARD)
         {
-            screen = maxBright;
+            if (changeScreen() > end)
+            {
+                screen = start;
+            }
         }
-    }
-    if (direction == BACK)
-    {
-        if (changeScreen() < start)
+
+        if (direction == BACK)
         {
-            screen = setBright;
+            if (changeScreen() < start)
+            {
+                screen = end;
+            }
         }
     }
 }
@@ -58,7 +62,7 @@ void Key::keyCommands(Timer &timer)
     autoScreenMove(timer);
     manualChangeScreen(timer);
 
-    setSpeed();
+    setSpeed(timer);
 }
 
 void Key::idChange()
@@ -157,15 +161,17 @@ void Key::manualChangeScreen(Timer &timer)
     }
 }
 
-void Key::setSpeed()
+void Key::setSpeed(Timer &timer)
 {
     if (justPressed() && getNum == 10)
     {
         autoMove = false;
 
-        if (screen == speed)
+        if (screen == speed || screen == interval)
         {
             screen = lamp;
+            writeSpeed = true;
+            writeInterval = true;
         }
 
         else
@@ -173,14 +179,21 @@ void Key::setSpeed()
             screen = speed;
         }
     }
+
     if (screen == speed || screen == interval)
     {
-        if (navigation())
+        menuScreen(speed, interval);
+    }
+
+    if (screen == speed)
+    {
+        if (valChange())
         {
-            if (/* condition */)
-            {
-                /* code */
-            }
+            act == MINUS ? timer.riseMil-- : timer.riseMil++;
+            if (timer.riseMil < 0)
+                timer.riseMil = 255;
+            if (timer.riseMil > 255)
+                timer.riseMil = 0;
         }
     }
 }
@@ -192,6 +205,66 @@ boolean Key::ok()
 
         return true;
     }
+    return false;
+}
+
+boolean Key::chekSet(Screen &screen)
+{
+    if (screen != lamp)
+    {
+        switch (screen)
+        {
+        case watch:
+            setDateTime = true;
+            screen = lamp;
+            break;
+
+        case duration:
+            writeTime = true;
+            reduration[id] = false;
+            screen = lamp;
+            break;
+
+        case (maxBright || riseBright || setBright):
+            writeBright = true;
+            reBright[id] = false;
+            screen = lamp;
+            break;
+
+        case dayDuration:
+            writeDay = true;
+            correctDay = true;
+            screen = lamp;
+            reDay = false;
+            break;
+
+        case manual:
+            resetManualPot = true;
+            resetManualBright = true;
+
+            for (byte i = 0; i < lampAmount; i++)
+                buttonSwitch[i] = 0;
+            break;
+
+        default:
+            break;
+        }
+
+        if (this->screen != screen)
+        {
+            screen = lamp;
+        }
+        else
+        {
+            this->screen = screen;
+        }
+
+        return true;
+    }
+    else
+    {
+    }
+
     return false;
 }
 
@@ -233,11 +306,11 @@ boolean Key::spectrumReDuration()
         else
         {
             screen = duration;
-            return true;
+            reduration[id] = true;
         }
     }
 
-    return false;
+    return reduration[id];
 }
 
 boolean Key::changeBright()
@@ -249,12 +322,13 @@ boolean Key::changeBright()
         if (screen == maxBright || screen == riseBright || screen == setBright)
         {
             writeBright = true;
+            reBright[id] = false;
             screen = lamp;
         }
         else
         {
             screen = maxBright;
-            return true;
+            reBright[id] = true;
         }
     }
 
@@ -278,7 +352,7 @@ boolean Key::changeBright()
         }
     }
 
-    return false;
+    return reBright[id];
 }
 
 boolean Key::dayReduration()
@@ -287,20 +361,17 @@ boolean Key::dayReduration()
     {
         autoMove = false;
 
-        if (screen == dayDuration)
+        if (chekSet(dayDuration))
         {
-            writeDay = true;
-            correctDay = true;
-            screen = lamp;
         }
         else
         {
             screen = dayDuration;
-            return true;
+            reDay = true;
         }
     }
 
-    return false;
+    return reDay;
 }
 
 void Key::skipEnable(boolean &skip)
@@ -338,9 +409,8 @@ void Key::manualSwitchLight()
                 buttonSwitch[i] = 0;
             }
 
-            screen = lamp;
-
             autoMove = true;
+            screen = lamp;
         }
 
         else

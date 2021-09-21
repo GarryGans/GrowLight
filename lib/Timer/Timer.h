@@ -11,6 +11,7 @@ class Timer
     friend class Screen;
     friend class Key;
     friend class EFX;
+    friend class Memory;
 
 private:
     unsigned long prewCounterMil;
@@ -26,7 +27,7 @@ private:
 
     unsigned long prewBrightMil[lampAmount];
 
-    unsigned long riseMil = 100;
+    unsigned int riseMil;
 
     unsigned long prewMoveMil;
 

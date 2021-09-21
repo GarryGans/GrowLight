@@ -8,6 +8,17 @@ Memory::~Memory()
 {
 }
 
+void Memory::read(int &addr, unsigned int &var, unsigned int minValue, unsigned int maxValue)
+{
+    addr = startAddr;
+
+    EEPROM.get(addr, var);
+
+    var = constrain(var, minValue, maxValue);
+
+    startAddr = addr + sizeof(var);
+}
+
 void Memory::read(int &addr, byte &var, byte minValue, byte maxValue)
 {
     addr = startAddr;
@@ -123,7 +134,7 @@ void Memory::writeEachBright(Bright &bright)
     }
 }
 
-void Memory::writeChanges(Watch &watch, Pot &pot, Key &key)
+void Memory::writeChanges(Watch &watch, Pot &pot, Key &key, Timer &timer)
 {
     if (key.writeTime)
     {
@@ -154,7 +165,7 @@ void Memory::writeChanges(Watch &watch, Pot &pot, Key &key)
     }
 }
 
-void Memory::writeChanges(Watch &watch, Bright &bright, Key &key)
+void Memory::writeChanges(Watch &watch, Bright &bright, Key &key, Timer &timer)
 {
     if (key.writeTime)
     {
@@ -183,18 +194,34 @@ void Memory::writeChanges(Watch &watch, Bright &bright, Key &key)
 
         key.writeSkip = false;
     }
+
+    else if (key.writeInterval && key.writeSpeed)
+    {
+        EEPROM.put(interval_addr, watch.interval);
+
+        key.writeInterval = false;
+
+        EEPROM.put(speed_addr, timer.riseMil);
+        Serial.println(timer.riseMil);
+        key.writeSpeed = false;
+    }
 }
 
-void Memory::begin(Watch &watch, Pot &pot)
+void Memory::begin(Watch &watch, Pot &pot, Timer &timer)
 {
     readEachBright(pot);
     readEachTime(watch);
     readEachSkip(watch);
+    read(interval_addr, watch.interval, 0, 255);
+    read(speed_addr, timer.riseMil, 0, 255);
 }
 
-void Memory::begin(Watch &watch, Bright &bright)
+void Memory::begin(Watch &watch, Bright &bright, Timer &timer)
 {
     readEachBright(bright);
     readEachTime(watch);
     readEachSkip(watch);
+    read(speed_addr, timer.riseMil, 0, 255);
+    read(interval_addr, watch.interval, 0, 255);
+    Serial.println(timer.riseMil);
 }
