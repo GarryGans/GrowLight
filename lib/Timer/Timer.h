@@ -54,13 +54,10 @@ public:
     boolean minusCounter(byte &counter);
     boolean wait(unsigned long &prew, unsigned long set);
 
-    boolean autoWrite();
 
     boolean riseReady(byte id);
-    boolean next();
     boolean blinkReady();
-    boolean unfrize(byte counter = 5);
-    void resetCounter(byte &, byte);
+    boolean ready(byte counter = 5);
     boolean moveReady();
 };
 

@@ -563,7 +563,7 @@ void Screen::startScreen(Watch &watch, Key &key, Timer &timer)
 
         } while (nextPage());
 
-        if (this->timer.unfrize())
+        if (timer.ready())
         {
             key.screen = key.lamp;
         }

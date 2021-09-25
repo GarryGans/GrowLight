@@ -8,11 +8,6 @@ Timer::~Timer()
 {
 }
 
-void Timer::resetCounter(byte &count, byte counter)
-{
-    count = maxCounter;
-}
-
 boolean Timer::minusCounter(byte &counter)
 {
     if (wait(prewCounter, sec))
@@ -29,7 +24,7 @@ boolean Timer::minusCounter(byte &counter)
     return false;
 }
 
-boolean Timer::unfrize(byte counter)
+boolean Timer::ready(byte counter)
 {
     static byte count = counter;
 
@@ -52,19 +47,9 @@ boolean Timer::wait(unsigned long &prew, unsigned long set)
     return false;
 }
 
-boolean Timer::autoWrite()
-{
-    return wait(prewEsc, autoEsc);
-}
-
 boolean Timer::riseReady(byte id)
 {
     return wait(prewBright[id], rise * 10);
-}
-
-boolean Timer::next()
-{
-    return wait(prewScreen, display);
 }
 
 boolean Timer::blinkReady()

@@ -12,6 +12,19 @@ Key::~Key()
 {
 }
 
+boolean Key::autoOk(Screen screen, Timer &timer)
+{
+    if (this->screen == screen)
+    {
+        if (timer.ready())
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 Key::Screen Key::changeScreen()
 {
     if (direction == FORWARD)
@@ -79,17 +92,12 @@ void Key::autoScreenMove(Timer &timer)
 {
     if (screen == lamp || screen == start)
     {
-        // if (autoMove && timer.next())
-        // {
-        //     idChange();
-        // }
-
-        if (autoMove && timer.unfrize(5))
+        if (autoMove && timer.ready())
         {
             idChange();
         }
 
-        if (!autoMove && timer.unfrize(5))
+        if (!autoMove && timer.ready())
         {
             autoMove = true;
         }
@@ -119,8 +127,6 @@ void Key::manualChangeScreen(Timer &timer)
                     id = idFirst;
                 }
             }
-
-            // timer.resetCounter();
         }
     }
 }
@@ -243,7 +249,7 @@ boolean Key::chekSet(Screen screen)
 
 void Key::setSpeed(Timer &timer)
 {
-    if (justPressed() && getNum == 10)
+    if ((justPressed() && getNum == 10) || autoOk(speed, timer) || autoOk(interval, timer))
     {
         autoMove = false;
 
@@ -432,7 +438,7 @@ void Key::manualSwitchLight()
     }
 }
 
-boolean Key::allBrigh()
+boolean Key::allBrigh(Timer &timer)
 {
     if (screen == lamp || screen == bright)
     {
@@ -444,7 +450,7 @@ boolean Key::allBrigh()
 
         if (screen == bright)
         {
-            if (timer.autoWrite())
+            if (timer.ready())
             {
                 writeAllBright = true;
                 screen = lamp;
