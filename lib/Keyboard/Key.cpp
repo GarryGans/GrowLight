@@ -16,12 +16,7 @@ boolean Key::autoOk(Screen screen, Timer &timer)
 {
     if (this->screen == screen)
     {
-        if (valChange())
-        {
-            timer.reset();
-        }
-
-        else if (timer.ready())
+        if (timer.ready(5, valChange()))
         {
             return true;
         }
@@ -97,12 +92,12 @@ void Key::autoScreenMove(Timer &timer)
 {
     if (screen == lamp || screen == start)
     {
-        if (autoMove && timer.ready())
+        if (autoMove && timer.ready(5, navigation()))
         {
             idChange();
         }
 
-        if (!autoMove && timer.ready())
+        if (!autoMove && timer.ready(5, navigation()))
         {
             autoMove = true;
         }
@@ -455,7 +450,7 @@ boolean Key::allBrigh(Timer &timer)
 
         if (screen == bright)
         {
-            if (timer.ready())
+            if (timer.ready(5, valChange()))
             {
                 writeAllBright = true;
                 screen = lamp;

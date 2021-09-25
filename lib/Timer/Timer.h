@@ -58,7 +58,7 @@ public:
     boolean riseReady(byte id);
     boolean blinkReady();
 
-    boolean ready(byte counter = 5);
+    // boolean ready(byte counter = 5);
     boolean ready(byte counter = 5, boolean reset = false);
 
     boolean moveReady();
