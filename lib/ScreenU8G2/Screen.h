@@ -18,6 +18,7 @@ class Screen : public EFX
 
 {
 private:
+    Timer timer;
     String WavelengthSMD[lampAmount];
     String lightColor[lampAmount];
     const char *state[2] = {"OFF", "ON"};

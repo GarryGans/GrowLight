@@ -16,6 +16,8 @@ class Key : public AmperkaKB
     friend class Bright;
 
 private:
+    Timer timer;
+
     enum Screen
     {
         start,
@@ -60,9 +62,9 @@ private:
     boolean writeSkip;
     boolean writeInterval;
     boolean writeSpeed;
+    boolean writeAllBright;
 
     boolean reBright[lampAmount];
-    boolean setAll;
 
     boolean correctDay;
 

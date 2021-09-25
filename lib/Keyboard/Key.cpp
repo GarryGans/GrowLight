@@ -79,12 +79,17 @@ void Key::autoScreenMove(Timer &timer)
 {
     if (screen == lamp || screen == start)
     {
-        if (autoMove && timer.next())
+        // if (autoMove && timer.next())
+        // {
+        //     idChange();
+        // }
+
+        if (autoMove && timer.unfrize(5))
         {
             idChange();
         }
 
-        if (!autoMove && timer.unfrize())
+        if (!autoMove && timer.unfrize(5))
         {
             autoMove = true;
         }
@@ -115,7 +120,7 @@ void Key::manualChangeScreen(Timer &timer)
                 }
             }
 
-            timer.resetCounter();
+            // timer.resetCounter();
         }
     }
 }
@@ -262,11 +267,11 @@ void Key::setSpeed(Timer &timer)
     {
         if (valChange())
         {
-            act == MINUS ? timer.riseMil-- : timer.riseMil++;
-            if (timer.riseMil < 0)
-                timer.riseMil = 255;
-            if (timer.riseMil > 255)
-                timer.riseMil = 0;
+            act == MINUS ? timer.rise-- : timer.rise++;
+            if (timer.rise < 0)
+                timer.rise = 255;
+            if (timer.rise > 255)
+                timer.rise = 0;
         }
     }
 }
@@ -435,6 +440,15 @@ boolean Key::allBrigh()
         {
             screen = bright;
             return true;
+        }
+
+        if (screen == bright)
+        {
+            if (timer.autoWrite())
+            {
+                writeAllBright = true;
+                screen = lamp;
+            }
         }
     }
 

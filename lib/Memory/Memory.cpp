@@ -201,9 +201,14 @@ void Memory::writeChanges(Watch &watch, Bright &bright, Key &key, Timer &timer)
 
         key.writeInterval = false;
 
-        EEPROM.put(speed_addr, timer.riseMil);
-        Serial.println(timer.riseMil);
+        EEPROM.put(speed_addr, timer.rise);
         key.writeSpeed = false;
+    }
+
+    else if (key.writeAllBright)
+    {
+        EEPROM.put(allBright_addr, bright.allBrigh);
+        key.writeAllBright = false;
     }
 }
 
@@ -213,7 +218,7 @@ void Memory::begin(Watch &watch, Pot &pot, Timer &timer)
     readEachTime(watch);
     readEachSkip(watch);
     read(interval_addr, watch.interval, 0, 255);
-    read(speed_addr, timer.riseMil, 0, 255);
+    read(speed_addr, timer.rise, 0, 255);
 }
 
 void Memory::begin(Watch &watch, Bright &bright, Timer &timer)
@@ -221,7 +226,7 @@ void Memory::begin(Watch &watch, Bright &bright, Timer &timer)
     readEachBright(bright);
     readEachTime(watch);
     readEachSkip(watch);
-    read(speed_addr, timer.riseMil, 0, 255);
+    read(speed_addr, timer.rise, 0, 255);
     read(interval_addr, watch.interval, 0, 255);
-    Serial.println(timer.riseMil);
+    read(allBright_addr, bright.allBrigh, 0, bright.maxAllBright);
 }

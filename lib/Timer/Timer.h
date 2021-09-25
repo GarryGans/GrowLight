@@ -14,22 +14,27 @@ class Timer
     friend class Memory;
 
 private:
-    unsigned long prewCounterMil;
-    unsigned long secMil = 1000;
+    unsigned long prewCounter;
+    unsigned long sec = 1000;
 
-    unsigned long prewScreenMil;
-    unsigned long displayMil = 3000;
+    unsigned long prewScreen;
+    unsigned long display = 3000;
 
-    unsigned long prewCursorMil;
+    unsigned long prewCursor;
 
-    unsigned long prewBlinkMil;
+    unsigned long prewBlink;
     unsigned long blinkMil = 500;
 
-    unsigned long prewBrightMil[lampAmount];
+    unsigned long prewBright[lampAmount];
 
-    unsigned int riseMil;
+    unsigned int rise;
 
-    unsigned long prewMoveMil;
+    unsigned long prewMove;
+
+    unsigned long prewUnfrize;
+
+    unsigned long prewEsc;
+    unsigned int autoEsc = 5000;
 
     const byte maxEscapeCounter = 5;
     byte escapeCounter = maxEscapeCounter;
@@ -46,14 +51,16 @@ public:
     Timer();
     ~Timer();
 
-    void minusCounter(byte &counter);
-    boolean wait(unsigned long &prewMil, unsigned long setMil);
+    boolean minusCounter(byte &counter);
+    boolean wait(unsigned long &prew, unsigned long set);
+
+    boolean autoWrite();
 
     boolean riseReady(byte id);
     boolean next();
     boolean blinkReady();
-    boolean unfrize();
-    void resetCounter();
+    boolean unfrize(byte counter = 5);
+    void resetCounter(byte &, byte);
     boolean moveReady();
 };
 

@@ -11,25 +11,24 @@ Screen screen(WavelengthSMD, lightColor);
 
 void setup()
 {
-    Serial.begin(9600);
+    // Serial.begin(9600);
+
+    key.begin(KB4x4, holdDelay, holdSpeed);
+    delay(100);
 
     screen.begin();
 
     screen.iGorLogo();
     delay(100);
 
-    watch.begin();
-    // watch.adjust(DateTime(F(__DATE__), F(__TIME__)));
-    delay(100);
-
-    key.begin(KB4x4, holdDelay, holdSpeed);
-    delay(100);
-
     switchers.begin(startPinLamp);
     delay(100);
 
     // memory.begin(watch, pot);
-    memory.begin(watch, bright, timer);
+    delay(100);
+
+    watch.begin();
+    // watch.adjust(DateTime(F(__DATE__), F(__TIME__)));
     delay(100);
 
     // pot.setPot(potent);
@@ -37,6 +36,8 @@ void setup()
     bright.begin(startPinBright);
     delay(100);
 
+    memory.begin(watch, bright, timer);
+    delay(100);
 }
 
 void loop()
@@ -47,7 +48,7 @@ void loop()
     // pot.autoBright(watch, key, timer);
     bright.autoBright(watch, key, timer);
 
-        // pot.manualChangeBright(key, timer);
+    // pot.manualChangeBright(key, timer);
     // pot.changeMaxBright(key, watch, timer);
     bright.manualChangeBright(watch, key, timer);
     bright.changeBright(key, watch, timer);

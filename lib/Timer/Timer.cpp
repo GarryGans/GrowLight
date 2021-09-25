@@ -8,67 +8,70 @@ Timer::~Timer()
 {
 }
 
-void Timer::resetCounter()
+void Timer::resetCounter(byte &count, byte counter)
 {
-    unfrizeCounter = maxCounter;
+    count = maxCounter;
 }
 
-boolean Timer::unfrize()
+boolean Timer::minusCounter(byte &counter)
 {
-    minusCounter(unfrizeCounter);
-
-    if (unfrizeCounter == 0)
+    if (wait(prewCounter, sec))
     {
-        resetCounter();
-        return true;
-    }
-
-    return false;
-}
-
-void Timer::minusCounter(byte &counter)
-{
-    if ((millis() - prewCounterMil >= secMil))
-    {
-        prewCounterMil = millis();
         if (counter > 0)
         {
             counter--;
         }
     }
-}
-
-boolean Timer::wait(unsigned long &prewMil, unsigned long setMil)
-{
-    if (millis() - prewMil >= setMil)
+    if (counter == 0)
     {
-        prewMil = millis();
         return true;
     }
     return false;
 }
 
+boolean Timer::unfrize(byte counter)
+{
+    static byte count = counter;
+
+    if (minusCounter(count))
+    {
+        count = counter;
+        return true;
+    }
+
+    return false;
+}
+
+boolean Timer::wait(unsigned long &prew, unsigned long set)
+{
+    if (millis() - prew >= set)
+    {
+        prew = millis();
+        return true;
+    }
+    return false;
+}
+
+boolean Timer::autoWrite()
+{
+    return wait(prewEsc, autoEsc);
+}
+
 boolean Timer::riseReady(byte id)
 {
-    return wait(prewBrightMil[id], riseMil * 10);
+    return wait(prewBright[id], rise * 10);
 }
 
 boolean Timer::next()
 {
-    return wait(prewScreenMil, displayMil);
+    return wait(prewScreen, display);
 }
 
 boolean Timer::blinkReady()
 {
-    if (millis() - prewBlinkMil >= blinkMil)
+    if (millis() - prewBlink >= blinkMil)
     {
-        blink = false;
-
-        if (millis() - prewBlinkMil >= blinkMil * 2)
-        {
-            prewBlinkMil = millis();
-            blink = true;
-        }
+        blink = wait(prewBlink, blinkMil * 2);
     }
 
     return blink;
@@ -76,13 +79,5 @@ boolean Timer::blinkReady()
 
 boolean Timer::moveReady()
 {
-    move = false;
-
-    if (millis() - prewMoveMil >= secMil / 20)
-    {
-        prewMoveMil = millis();
-        move = true;
-    }
-
-    return move;
+    return move = wait(prewMove, sec / 20);
 }

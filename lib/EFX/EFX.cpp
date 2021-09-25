@@ -130,6 +130,15 @@ void EFX::alignSimbols(byte W, byte H, PosX pos_x, PosY pos_y)
     }
 }
 
+byte EFX::nextY(byte num, byte id)
+{
+    byte Y;
+
+    Y = (screenHeight / num) - ((screenHeight / num) - height) / 2 + (screenHeight / num) * id;
+
+    return Y;
+}
+
 byte EFX::getDigWidth(byte value)
 {
     char val[4];
@@ -138,11 +147,20 @@ byte EFX::getDigWidth(byte value)
     return getStrWidth(val);
 }
 
-char EFX::convStr(const String &string)
+char EFX::convStr(const String string)
 {
-    char str[2];
-    String(string).toCharArray(str, 2);
+    // char str[sizeof(string)];
+    char str[4];
+    // String(string).toCharArray(str, sizeof(string));
+    String(string).toCharArray(str, 4);
+
     return *str;
+}
+
+void EFX::convertStr(const String string)
+{
+    // char str[sizeof(string)];
+    String(string).toCharArray(str, sizeof(string));
 }
 
 void EFX::setHeight(const uint8_t *font)
@@ -214,14 +232,25 @@ void EFX::digStringAlign(byte dig, const char *string, PosX pos_x, PosY pos_y)
 
 void EFX::strDigAlign(const char *string, byte dig, PosX pos_x, PosY pos_y)
 {
-    alignSimbols(getDigWidth(dig) + getStrWidth(string), height, pos_x, pos_y);
+    byte strW;
+
+    if (getStrWidth(string) > getStrWidth("WW"))
+    {
+        strW = getStrWidth(string) + getStrWidth("W");
+    }
+    else
+    {
+        strW = getStrWidth(string);
+    }
+
+    alignSimbols(getStrWidth(string) + strW + getDigWidth(dig), height, pos_x, pos_y);
 
     setX = x;
 
     setCursor(x, y);
 
     print(string);
-
+    print(" ");
     print(dig);
 }
 

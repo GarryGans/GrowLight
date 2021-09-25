@@ -23,8 +23,7 @@ private:
 
     byte x;
     byte y;
-    byte setX;
-    byte setY;
+
     byte blockWidth;
 
     byte move_x[10];
@@ -40,6 +39,9 @@ private:
     byte WH = 48;
 
 public:
+    char str[sizeof(String)];
+    byte setX;
+    byte setY;
     enum class PosX
     {
         center,
@@ -77,6 +79,8 @@ public:
     EFX();
     ~EFX();
 
+    byte nextY(byte num, byte id);
+
     byte getDigWidth(byte value);
 
     void alignSimbols(byte WH, byte H, PosX pos_x, PosY pos_y);
@@ -90,7 +94,8 @@ public:
     void textAlign(const char *string, PosX pos_x, PosY pos_y);
     void stringAlign(String str, byte size, PosX pos_x, PosY pos_y);
     void setHeight(const uint8_t *font);
-    char convStr(const String &string);
+    char convStr(const String string);
+    void convertStr(const String string);
 
     void mover(byte &move_x, byte deep_x, byte id);
     void moveString(const char *string, PosX pos_x, PosY pos_y, Timer &timer, byte id);

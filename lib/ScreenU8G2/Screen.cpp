@@ -518,9 +518,9 @@ void Screen::riseSpeedScreen(Key &key, Timer &timer)
 
             setHeight(u8g2_font_ncenB18_tf);
 
-            digStringAlign(timer.riseMil, " bp", PosX::center, PosY::center);
+            digStringAlign(timer.rise, " bp", PosX::center, PosY::center);
 
-            blinkFrame(timer.riseMil, false, PosX::customFrame, PosY::centerFrame, timer, key.valChange());
+            blinkFrame(timer.rise, false, PosX::customFrame, PosY::centerFrame, timer, key.valChange());
 
         } while (nextPage());
     }
@@ -563,7 +563,7 @@ void Screen::startScreen(Watch &watch, Key &key, Timer &timer)
 
         } while (nextPage());
 
-        if (timer.unfrize())
+        if (this->timer.unfrize())
         {
             key.screen = key.lamp;
         }
@@ -579,7 +579,7 @@ void Screen::allBrightScreen(Bright &bright, Key &key, Timer &timer)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("allBright", PosX::leftSpace, PosY::upSpace, timer, 4);
+            moveString("BRIGHT", PosX::leftSpace, PosY::upSpace, timer, 4);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -589,19 +589,15 @@ void Screen::allBrightScreen(Bright &bright, Key &key, Timer &timer)
 
             for (byte i = 0; i < lampAmount; i++)
             {
-                setHeight(u8g2_font_pressstart2p_8f);
+                setHeight(u8g2_font_courB08_tf);
 
-                // convStr(lightColor[i]);
-                strDigAlign(convStr(lightColor[i]), bright.maxBright[i], PosX::leftHalf, PosY::custom);
+                convertStr(lightColor[i]);
+
+                setY = nextY(lampAmount, i);
+                strDigAlign(str, bright.maxBright[i], PosX::rightHalf, PosY::custom);
             }
 
         } while (nextPage());
-
-        if (timer.unfrize() && !key.allBrigh())
-        {
-            key.setAll = false;
-            key.screen = key.lamp;
-        }
     }
 }
 

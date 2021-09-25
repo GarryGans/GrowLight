@@ -217,15 +217,17 @@ boolean Bright::setAllBrigh(Key &key, Timer &timer)
 {
     if (key.allBrigh())
     {
-        if (key.act == key.MINUS)
-
+        if (key.act == key.MINUS && allBrigh > 0)
             allBrigh--;
 
-        else
+        else if (key.act == key.PLUS && allBrigh < maxAllBright)
             allBrigh++;
-
-        key.setAll = true;
     }
-    
-    return key.setAll;
+
+    if (key.screen == key.bright)
+    {
+        return true;
+    }
+
+    return false;
 }

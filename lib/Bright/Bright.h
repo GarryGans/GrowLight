@@ -32,6 +32,7 @@ private:
     byte maxPWM = 255;
 
     byte allBrigh;
+    byte maxAllBright = 99;
 
 public:
     Bright();
