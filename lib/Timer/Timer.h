@@ -47,6 +47,7 @@ private:
     boolean blink;
     boolean move;
 
+
 public:
     Timer();
     ~Timer();
@@ -54,10 +55,12 @@ public:
     boolean minusCounter(byte &counter);
     boolean wait(unsigned long &prew, unsigned long set);
 
-
     boolean riseReady(byte id);
     boolean blinkReady();
+
     boolean ready(byte counter = 5);
+    boolean ready(byte counter = 5, boolean reset = false);
+
     boolean moveReady();
 };
 

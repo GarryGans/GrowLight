@@ -16,7 +16,12 @@ boolean Key::autoOk(Screen screen, Timer &timer)
 {
     if (this->screen == screen)
     {
-        if (timer.ready())
+        if (valChange())
+        {
+            timer.reset();
+        }
+
+        else if (timer.ready())
         {
             return true;
         }

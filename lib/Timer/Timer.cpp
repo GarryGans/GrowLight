@@ -24,9 +24,28 @@ boolean Timer::minusCounter(byte &counter)
     return false;
 }
 
+
 boolean Timer::ready(byte counter)
 {
     static byte count = counter;
+
+    if (minusCounter(count))
+    {
+        count = counter;
+        return true;
+    }
+
+    return false;
+}
+
+boolean Timer::ready(byte counter, boolean reset)
+{
+    static byte count = counter;
+
+    if (reset)
+    {
+        count = counter;
+    }
 
     if (minusCounter(count))
     {
