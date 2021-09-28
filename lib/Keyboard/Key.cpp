@@ -370,6 +370,7 @@ boolean Key::dayReduration(Timer &timer)
 {
     if ((justPressed() && getNum == 2) || autoOk(dayDuration, timer))
     {
+        reset = true;
         autoMove = false;
 
         if (chekSet(dayDuration))
@@ -391,6 +392,7 @@ void Key::skipEnable(boolean &skip)
 {
     if (justPressed() && getNum == 4)
     {
+        reset = true;
         autoMove = false;
 
         if (!skip)
