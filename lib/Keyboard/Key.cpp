@@ -288,7 +288,7 @@ void Key::setSpeed(Timer &timer)
 
 boolean Key::setWatch(Timer &timer)
 {
-    if (justPressed() && getNum == 3)
+    if ((justPressed() && getNum == 3) || autoOk(watch, timer))
     {
         autoMove = false;
 
@@ -309,7 +309,7 @@ boolean Key::setWatch(Timer &timer)
 
 boolean Key::spectrumReDuration(Timer &timer)
 {
-    if (justPressed() && getNum == 14)
+    if ((justPressed() && getNum == 14) || autoOk(duration, timer))
     {
         autoMove = false;
 
@@ -378,6 +378,7 @@ boolean Key::dayReduration(Timer &timer)
         }
         else
         {
+            reset = true;
             screen = dayDuration;
             reDay = true;
         }
