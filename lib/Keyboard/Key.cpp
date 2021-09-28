@@ -8,6 +8,7 @@ Key::Key()
 {
 }
 
+
 Key::~Key()
 {
 }
@@ -362,9 +363,9 @@ boolean Key::changeBright()
     return reBright[id];
 }
 
-boolean Key::dayReduration()
+boolean Key::dayReduration(Timer &timer)
 {
-    if (justPressed() && getNum == 2)
+    if ((justPressed() && getNum == 2) || autoOk(dayDuration, timer))
     {
         autoMove = false;
 
@@ -448,7 +449,7 @@ boolean Key::allBrigh(Timer &timer)
             return true;
         }
 
-        if (screen == bright)
+        else if (screen == bright)
         {
             if (timer.ready(5, valChange()))
             {

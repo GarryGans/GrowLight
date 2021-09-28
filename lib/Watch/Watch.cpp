@@ -197,7 +197,7 @@ void Watch::spectrumReDuration(Key &key, Timer &timer)
 
 void Watch::dayReduration(Key &key, Timer &timer)
 {
-    if (key.dayReduration())
+    if (key.dayReduration(timer))
     {
         if (cursorDay == 0)
         {

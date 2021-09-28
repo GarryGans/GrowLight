@@ -16,7 +16,7 @@ class Key : public AmperkaKB
     friend class Bright;
 
 private:
-    // Timer timer;
+    // Timer tim;
 
     enum Screen
     {
@@ -108,7 +108,7 @@ public:
     boolean spectrumReDuration();
     boolean riseSpeedChange();
     boolean changeBright();
-    boolean dayReduration();
+    boolean dayReduration(Timer &timer);
     boolean setWatch();
     void setSpeed(Timer &timer);
     boolean allBrigh(Timer &timer);
