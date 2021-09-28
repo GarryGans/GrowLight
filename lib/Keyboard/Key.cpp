@@ -172,7 +172,6 @@ boolean Key::valChange()
         }
     }
 
-    reset = false;
     return false;
 }
 
@@ -287,7 +286,7 @@ void Key::setSpeed(Timer &timer)
     }
 }
 
-boolean Key::setWatch()
+boolean Key::setWatch(Timer &timer)
 {
     if (justPressed() && getNum == 3)
     {
@@ -308,7 +307,7 @@ boolean Key::setWatch()
     return false;
 }
 
-boolean Key::spectrumReDuration()
+boolean Key::spectrumReDuration(Timer &timer)
 {
     if (justPressed() && getNum == 14)
     {
@@ -329,9 +328,9 @@ boolean Key::spectrumReDuration()
     return reduration[id];
 }
 
-boolean Key::changeBright()
+boolean Key::changeBright(Timer &timer)
 {
-    if (justPressed() && getNum == 7)
+    if ((justPressed() && getNum == 7) || (autoOk(maxBright, timer)) || (autoOk(riseBright, timer)) || (autoOk(setBright, timer)))
     {
         autoMove = false;
 
@@ -455,10 +454,14 @@ boolean Key::allBrigh(Timer &timer)
         return true;
     }
 
-    else if (autoOk(bright, timer))
+    else if (autoOk(bright, timer) && !reset)
     {
         writeAllBright = true;
         screen = lamp;
+    }
+    else
+    {
+        reset = false;
     }
 
     return false;

@@ -106,11 +106,10 @@ public:
     boolean valChange();
     boolean navigation();
 
-    boolean spectrumReDuration();
-    boolean riseSpeedChange();
-    boolean changeBright();
+    boolean spectrumReDuration(Timer &timer);
+    boolean changeBright(Timer &timer);
     boolean dayReduration(Timer &timer);
-    boolean setWatch();
+    boolean setWatch(Timer &timer);
     void setSpeed(Timer &timer);
     boolean allBrigh(Timer &timer);
 };

@@ -131,7 +131,7 @@ void Pot::resetAllPots()
 
 void Pot::changeMaxBright(Key &key, Watch &watch, Timer &timer)
 {
-    if (key.changeBright())
+    if (key.changeBright(timer))
     {
         reBright[key.id] = true;
     }

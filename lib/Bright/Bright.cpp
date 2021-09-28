@@ -188,7 +188,7 @@ void Bright::setRiseBright(byte &brightRise, Key &key, Timer &timer, byte min, b
 
 void Bright::changeBright(Key &key, Watch &watch, Timer &timer)
 {
-    if (key.changeBright())
+    if (key.changeBright(timer))
     {
         switch (key.screen)
         {

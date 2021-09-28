@@ -174,7 +174,7 @@ void Watch::hmsChange(Key &key, byte &hms, byte &cursor, Timer &timer)
 
 void Watch::spectrumReDuration(Key &key, Timer &timer)
 {
-    if (key.spectrumReDuration())
+    if (key.spectrumReDuration(timer))
     {
         if (cursorSpectrum == 0)
         {
@@ -426,7 +426,7 @@ void Watch::leapYearDay()
 
 void Watch::setWatch(Key &key, Timer &timer)
 {
-    if (key.setWatch())
+    if (key.setWatch(timer))
     {
         cursorDateTime = 0;
 
