@@ -8,7 +8,6 @@ Key::Key()
 {
 }
 
-
 Key::~Key()
 {
 }
@@ -441,22 +440,20 @@ void Key::manualSwitchLight()
 
 boolean Key::allBrigh(Timer &timer)
 {
-    if (screen == lamp || screen == bright)
+    if (valChange())
     {
-        if (valChange())
+        if (screen == lamp)
         {
             screen = bright;
-            return true;
         }
 
-        else if (screen == bright)
-        {
-            if (timer.ready(5, valChange()))
-            {
-                writeAllBright = true;
-                screen = lamp;
-            }
-        }
+        return true;
+    }
+
+    else if (autoOk(bright, timer))
+    {
+        writeAllBright = true;
+        screen = lamp;
     }
 
     return false;

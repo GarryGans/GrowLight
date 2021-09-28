@@ -24,7 +24,6 @@ boolean Timer::minusCounter(byte &counter)
     return false;
 }
 
-
 // boolean Timer::ready(byte counter)
 // {
 //     static byte count = counter;
@@ -40,11 +39,13 @@ boolean Timer::minusCounter(byte &counter)
 
 boolean Timer::ready(byte counter, boolean reset)
 {
-    static byte count = counter;
+    static byte count;
+    static boolean flag;
 
-    if (reset)
+    if (reset || !flag)
     {
         count = counter;
+        flag = true;
     }
 
     if (minusCounter(count))
