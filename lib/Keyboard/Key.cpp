@@ -16,7 +16,7 @@ boolean Key::autoOk(Screen screen, Timer &timer)
 {
     if (this->screen == screen)
     {
-        if (timer.ready(5, valChange()))
+        if (timer.ready(5, reset))
         {
             return true;
         }
@@ -158,16 +158,21 @@ boolean Key::valChange()
         if (getNum == 6)
         {
             act = MINUS;
+            reset = true;
+
             return true;
         }
 
         else if (getNum == 15)
         {
             act = PLUS;
+            reset = true;
+
             return true;
         }
     }
 
+    reset = false;
     return false;
 }
 

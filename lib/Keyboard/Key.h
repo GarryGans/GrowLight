@@ -47,7 +47,7 @@ private:
         MINUS
     } act;
 
-    boolean redset;
+    boolean reset;
     boolean autoMove;
 
     boolean buttonSwitch[lampAmount];
