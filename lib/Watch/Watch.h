@@ -17,6 +17,7 @@ class Watch : public RTC_ext_3231
     friend class Bright;
 
 private:
+    
     byte cursorDateTime;
     byte cursorSpectrum;
     byte cursorDay;
@@ -71,20 +72,20 @@ public:
     void autoSwitcher(Key &key);
 
     void cursorChange(Key &key, byte &cursor);
-    void hmsChange(Key &key, byte &hms, byte &cursor, Timer &timer);
+    void hmsChange(Key &key, byte &hms, byte &cursor);
 
-    void spectrumReDuration(Key &key, Timer &timer);
-    void dayReduration(Key &key, Timer &timer);
+    void spectrumReDuration(Key &key);
+    void dayReduration(Key &key);
 
     void dtCursor(Key &key);
-    void timeChange(byte &time, Key &key, Timer &timer);
-    void yearChange(int &year, Key &key, Timer &timer);
-    void monthChange(byte &month, Key &key, Timer &timer);
-    void dayChange(byte &day, Key &key, Timer &timer);
+    void timeChange(byte &time, Key &key);
+    void yearChange(int &year, Key &key);
+    void monthChange(byte &month, Key &key);
+    void dayChange(byte &day, Key &key);
     void leapYearDay();
-    void setWatch(Key &key, Timer &timer);
+    void setWatch(Key &key);
 
-    void commands(Key &key, Timer &timer);
+    void commands(Key &key);
 };
 
 #endif

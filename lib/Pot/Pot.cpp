@@ -31,7 +31,7 @@ void Pot::resetBright(DigiPot &pot, byte &bright)
     bright = pot.get();
 }
 
-void Pot::autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i)
+void Pot::autoChangeBright(Watch &watch, Key &key, byte i)
 {
     if (watch.autoSwitch[i] && !key.reduration[i] && !reBright[i])
     {
@@ -69,13 +69,13 @@ void Pot::autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i)
     }
 }
 
-void Pot::autoBright(Watch &watch, Key &key, Timer &timer)
+void Pot::autoBright(Watch &watch, Key &key)
 {
     if (key.screen != key.manual || key.screen != key.maxBright)
     {
         for (byte i = 0; i < lampAmount; i++)
         {
-            autoChangeBright(watch, key, timer, i);
+            autoChangeBright(watch, key, i);
         }
     }
     if (key.resetManualPot)
@@ -85,7 +85,7 @@ void Pot::autoBright(Watch &watch, Key &key, Timer &timer)
     }
 }
 
-void Pot::changeBright(byte &bright, DigiPot &pot, Key &key, Timer &timer)
+void Pot::changeBright(byte &bright, DigiPot &pot, Key &key)
 {
     if (key.valChange())
     {
@@ -102,14 +102,14 @@ void Pot::changeBright(byte &bright, DigiPot &pot, Key &key, Timer &timer)
     }
 }
 
-void Pot::manualChangeBright(Key &key, Timer &timer)
+void Pot::manualChangeBright(Key &key)
 {
     if (key.screen == key.manual)
     {
         if (key.buttonSwitch[key.id])
         {
             setMinBright(pot[key.id], bright[key.id]);
-            changeBright(bright[key.id], pot[key.id], key, timer);
+            changeBright(bright[key.id], pot[key.id], key);
         }
 
         else
@@ -129,9 +129,9 @@ void Pot::resetAllPots()
     }
 }
 
-void Pot::changeMaxBright(Key &key, Watch &watch, Timer &timer)
+void Pot::changeMaxBright(Key &key, Watch &watch)
 {
-    if (key.changeBright(timer))
+    if (key.changeBright())
     {
         reBright[key.id] = true;
     }

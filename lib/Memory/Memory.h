@@ -11,6 +11,8 @@
 class Memory
 {
 private:
+    Timer timer;
+
     int startAddr = 0;
     byte start_addr_Size = 0;
 
@@ -34,8 +36,8 @@ public:
     Memory();
     ~Memory();
 
-    void begin(Watch &watch, Pot &pot, Timer &timer);
-    void begin(Watch &watch, Bright &bright, Timer &timer);
+    void begin(Watch &watch, Pot &pot);
+    void begin(Watch &watch, Bright &bright);
 
     void read(int &addr, unsigned int &var, unsigned int minValue, unsigned int maxValue);
     void read(int &addr, byte &var, byte minValue, byte maxValue);
@@ -65,8 +67,8 @@ public:
     void writeEachBright(Pot &pot);
     void writeEachBright(Bright &bright);
 
-    void writeChanges(Watch &watch, Pot &pot, Key &key, Timer &timer);
-    void writeChanges(Watch &watch, Bright &bright, Key &key, Timer &timer);
+    void writeChanges(Watch &watch, Pot &pot, Key &key);
+    void writeChanges(Watch &watch, Bright &bright, Key &key);
 };
 
 #endif

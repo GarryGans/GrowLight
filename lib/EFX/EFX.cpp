@@ -287,7 +287,7 @@ void EFX::frameAlign(byte W, byte H, PosX pos_x, PosY pos_y)
     drawFrame(x, y, W, H);
 }
 
-void EFX::blinkFrame(byte value, boolean dig, PosX pos_x, PosY pos_y, Timer &timer, boolean tempBlock)
+void EFX::blinkFrame(byte value, boolean dig, PosX pos_x, PosY pos_y, boolean tempBlock)
 {
     if (!tempBlock)
     {
@@ -307,7 +307,7 @@ void EFX::blinkFrame(byte value, boolean dig, PosX pos_x, PosY pos_y, Timer &tim
     }
 }
 
-void EFX::blinkFrame(const char *format, byte digAmount, PosX pos_x, PosY pos_y, Timer &timer, boolean tempBlock)
+void EFX::blinkFrame(const char *format, byte digAmount, PosX pos_x, PosY pos_y, boolean tempBlock)
 {
     if (!tempBlock)
     {
@@ -350,7 +350,7 @@ void EFX::mover(byte &move_x, byte deep_x, byte id)
     }
 }
 
-void EFX::moveString(const char *string, PosX pos_x, PosY pos_y, Timer &timer, byte id)
+void EFX::moveString(const char *string, PosX pos_x, PosY pos_y, byte id)
 {
     setPosition(string, pos_x, pos_y);
 

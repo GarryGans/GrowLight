@@ -138,7 +138,7 @@ void Watch::cursorChange(Key &key, byte &cursor)
     }
 }
 
-void Watch::hmsChange(Key &key, byte &hms, byte &cursor, Timer &timer)
+void Watch::hmsChange(Key &key, byte &hms, byte &cursor)
 {
     if (key.valChange())
     {
@@ -172,48 +172,48 @@ void Watch::hmsChange(Key &key, byte &hms, byte &cursor, Timer &timer)
     cursorChange(key, cursor);
 }
 
-void Watch::spectrumReDuration(Key &key, Timer &timer)
+void Watch::spectrumReDuration(Key &key)
 {
-    if (key.spectrumReDuration(timer))
+    if (key.spectrumReDuration())
     {
         if (cursorSpectrum == 0)
         {
-            hmsChange(key, startHour[key.id], cursorSpectrum, timer);
+            hmsChange(key, startHour[key.id], cursorSpectrum);
         }
         else if (cursorSpectrum == 1)
         {
-            hmsChange(key, startMinute[key.id], cursorSpectrum, timer);
+            hmsChange(key, startMinute[key.id], cursorSpectrum);
         }
         else if (cursorSpectrum == 2)
         {
-            hmsChange(key, finishHour[key.id], cursorSpectrum, timer);
+            hmsChange(key, finishHour[key.id], cursorSpectrum);
         }
         else if (cursorSpectrum == 3)
         {
-            hmsChange(key, finishMinute[key.id], cursorSpectrum, timer);
+            hmsChange(key, finishMinute[key.id], cursorSpectrum);
         }
     }
 }
 
-void Watch::dayReduration(Key &key, Timer &timer)
+void Watch::dayReduration(Key &key)
 {
-    if (key.dayReduration(timer))
+    if (key.dayReduration())
     {
         if (cursorDay == 0)
         {
-            hmsChange(key, RiseHour, cursorDay, timer);
+            hmsChange(key, RiseHour, cursorDay);
         }
         else if (cursorDay == 1)
         {
-            hmsChange(key, RiseMin, cursorDay, timer);
+            hmsChange(key, RiseMin, cursorDay);
         }
         else if (cursorDay == 2)
         {
-            hmsChange(key, SetHour, cursorDay, timer);
+            hmsChange(key, SetHour, cursorDay);
         }
         else if (cursorDay == 3)
         {
-            hmsChange(key, SetMin, cursorDay, timer);
+            hmsChange(key, SetMin, cursorDay);
         }
     }
 
@@ -261,7 +261,7 @@ void Watch::dtCursor(Key &key)
     }
 }
 
-void Watch::timeChange(byte &time, Key &key, Timer &timer)
+void Watch::timeChange(byte &time, Key &key)
 {
     if (key.valChange())
     {
@@ -297,7 +297,7 @@ void Watch::timeChange(byte &time, Key &key, Timer &timer)
     }
 }
 
-void Watch::yearChange(int &year, Key &key, Timer &timer)
+void Watch::yearChange(int &year, Key &key)
 {
     if (key.valChange())
     {
@@ -318,7 +318,7 @@ void Watch::yearChange(int &year, Key &key, Timer &timer)
     }
 }
 
-void Watch::monthChange(byte &month, Key &key, Timer &timer)
+void Watch::monthChange(byte &month, Key &key)
 {
     if (key.valChange())
     {
@@ -343,7 +343,7 @@ void Watch::monthChange(byte &month, Key &key, Timer &timer)
         }
     }
 }
-void Watch::dayChange(byte &day, Key &key, Timer &timer)
+void Watch::dayChange(byte &day, Key &key)
 {
     if (key.valChange())
     {
@@ -424,9 +424,9 @@ void Watch::leapYearDay()
     }
 }
 
-void Watch::setWatch(Key &key, Timer &timer)
+void Watch::setWatch(Key &key)
 {
-    if (key.setWatch(timer))
+    if (key.setWatch())
     {
         cursorDateTime = 0;
 
@@ -456,29 +456,29 @@ void Watch::setWatch(Key &key, Timer &timer)
 
         if (cursorDateTime == 0)
         {
-            dayChange(day, key, timer);
+            dayChange(day, key);
         }
         else if (cursorDateTime == 1)
         {
-            monthChange(month, key, timer);
+            monthChange(month, key);
             leapYearDay();
         }
         else if (cursorDateTime == 2)
         {
-            yearChange(year, key, timer);
+            yearChange(year, key);
             leapYearDay();
         }
         else if (cursorDateTime == 3)
         {
-            timeChange(hour, key, timer);
+            timeChange(hour, key);
         }
         else if (cursorDateTime == 4)
         {
-            timeChange(min, key, timer);
+            timeChange(min, key);
         }
         else if (cursorDateTime == 5)
         {
-            timeChange(sec, key, timer);
+            timeChange(sec, key);
         }
     }
 
@@ -506,11 +506,11 @@ void Watch::setInterval(Key &key)
     }
 }
 
-void Watch::commands(Key &key, Timer &timer)
+void Watch::commands(Key &key)
 {
-    setWatch(key, timer);
-    dayReduration(key, timer);
-    spectrumReDuration(key, timer);
+    setWatch(key);
+    dayReduration(key);
+    spectrumReDuration(key);
     autoSwitcher(key);
     setInterval(key);
 }

@@ -10,14 +10,13 @@ Key::Key()
 
 Key::~Key()
 {
-    // delete tim;
 }
 
-boolean Key::autoOk(Screen screen, Timer &timer)
+boolean Key::autoOk(Screen screen)
 {
     if (this->screen == screen)
     {
-        if (tim.ready(5, reset))
+        if (timer.ready(5, reset))
         {
             return true;
         }
@@ -68,15 +67,15 @@ void Key::checkKeyboard()
     Serial.println(getNum);
 }
 
-void Key::keyCommands(Timer &timer)
+void Key::keyCommands()
 {
     read();
 
     manualSwitchLight();
-    autoScreenMove(timer);
-    manualChangeScreen(timer);
+    autoScreenMove();
+    manualChangeScreen();
 
-    setSpeed(timer);
+    setSpeed();
 }
 
 void Key::idChange()
@@ -89,23 +88,23 @@ void Key::idChange()
     }
 }
 
-void Key::autoScreenMove(Timer &timer)
+void Key::autoScreenMove()
 {
     if (screen == lamp || screen == start)
     {
-        if (autoMove && tim.ready(5, navigation()))
+        if (autoMove && timer.ready(5, navigation()))
         {
             idChange();
         }
 
-        if (!autoMove && tim.ready(5, navigation()))
+        if (!autoMove && timer.ready(5, navigation()))
         {
             autoMove = true;
         }
     }
 }
 
-void Key::manualChangeScreen(Timer &timer)
+void Key::manualChangeScreen()
 {
     if (screen == lamp || screen == manual)
     {
@@ -252,9 +251,9 @@ boolean Key::chekSet(Screen screen)
     return false;
 }
 
-void Key::setSpeed(Timer &timer)
+void Key::setSpeed()
 {
-    if ((justPressed() && getNum == 10) || autoOk(speed, timer) || autoOk(interval, timer))
+    if ((justPressed() && getNum == 10) || autoOk(speed) || autoOk(interval))
     {
         autoMove = false;
 
@@ -278,18 +277,18 @@ void Key::setSpeed(Timer &timer)
     {
         if (valChange())
         {
-            act == MINUS ? tim.rise-- : tim.rise++;
-            if (tim.rise < 0)
-                tim.rise = 255;
-            if (tim.rise > 255)
-                tim.rise = 0;
+            act == MINUS ? timer.rise-- : timer.rise++;
+            if (timer.rise < 0)
+                timer.rise = 255;
+            if (timer.rise > 255)
+                timer.rise = 0;
         }
     }
 }
 
-boolean Key::setWatch(Timer &timer)
+boolean Key::setWatch()
 {
-    if ((justPressed() && getNum == 3) || autoOk(watch, timer))
+    if ((justPressed() && getNum == 3) || autoOk(watch))
     {
         autoMove = false;
 
@@ -308,9 +307,9 @@ boolean Key::setWatch(Timer &timer)
     return false;
 }
 
-boolean Key::spectrumReDuration(Timer &timer)
+boolean Key::spectrumReDuration()
 {
-    if ((justPressed() && getNum == 14) || autoOk(duration, timer))
+    if ((justPressed() && getNum == 14) || autoOk(duration))
     {
         autoMove = false;
 
@@ -329,9 +328,9 @@ boolean Key::spectrumReDuration(Timer &timer)
     return reduration[id];
 }
 
-boolean Key::changeBright(Timer &timer)
+boolean Key::changeBright()
 {
-    if ((justPressed() && getNum == 7) || (autoOk(maxBright, timer)) || (autoOk(riseBright, timer)) || (autoOk(setBright, timer)))
+    if ((justPressed() && getNum == 7) || (autoOk(maxBright)) || (autoOk(riseBright)) || (autoOk(setBright)))
     {
         autoMove = false;
 
@@ -367,9 +366,9 @@ boolean Key::changeBright(Timer &timer)
     return reBright[id];
 }
 
-boolean Key::dayReduration(Timer &timer)
+boolean Key::dayReduration()
 {
-    if ((justPressed() && getNum == 2) || autoOk(dayDuration, timer))
+    if ((justPressed() && getNum == 2) || autoOk(dayDuration))
     {
         autoMove = false;
 
@@ -443,7 +442,7 @@ void Key::manualSwitchLight()
     }
 }
 
-boolean Key::allBrigh(Timer &timer)
+boolean Key::allBrigh()
 {
     if (valChange())
     {
@@ -455,7 +454,7 @@ boolean Key::allBrigh(Timer &timer)
         return true;
     }
 
-    else if (autoOk(bright, timer) && !reset)
+    else if (autoOk(bright) && !reset)
     {
         writeAllBright = true;
         screen = lamp;

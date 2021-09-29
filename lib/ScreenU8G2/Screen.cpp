@@ -79,27 +79,27 @@ void Screen::iGorLogo()
     } while (nextPage());
 }
 
-void Screen::brightInfo(Pot &pot, Key &key, Timer &timer)
+void Screen::brightInfo(Pot &pot, Key &key)
 {
     setHeight(u8g2_font_courB08_tn);
 
     digAlign(pot.bright[key.id], PosX::rightHalf, PosY::downSpace);
 }
 
-void Screen::brightInfo(Bright &bright, Key &key, Timer &timer)
+void Screen::brightInfo(Bright &bright, Key &key)
 {
     setHeight(u8g2_font_pressstart2p_8f);
 
     digAlign(bright.bright[key.id], PosX::rightHalf, PosY::downSpace);
 }
 
-void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot)
+void Screen::bottomLine(Watch &watch, Key &key, Pot &pot)
 {
     if (watch.skip[key.id] && key.screen != key.manual)
     {
         setHeight(u8g2_font_crox4h_tf);
 
-        moveString("SKIP", PosX::center, PosY::downSpace, timer, 2);
+        moveString("SKIP", PosX::center, PosY::downSpace, 2);
     }
 
     else if (key.screen == key.manual)
@@ -107,7 +107,7 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot)
         setHeight(u8g2_font_HelvetiPixelOutline_tr);
         textAlign("MANUAL", PosX::leftHalf, PosY::downSpace);
 
-        brightInfo(pot, key, timer);
+        brightInfo(pot, key);
     }
 
     else
@@ -116,17 +116,17 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot)
         setPosition("00:00-00:00", PosX::leftSpace, PosY::downSpace);
 
         printSpecTime(watch, key.id);
-        brightInfo(pot, key, timer);
+        brightInfo(pot, key);
     }
 }
 
-void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright)
+void Screen::bottomLine(Watch &watch, Key &key, Bright &bright)
 {
     if (watch.skip[key.id] && key.screen != key.manual)
     {
         setHeight(u8g2_font_crox4h_tf);
 
-        moveString("SKIP", PosX::center, PosY::downSpace, timer, 3);
+        moveString("SKIP", PosX::center, PosY::downSpace, 3);
     }
 
     else if (key.screen == key.manual)
@@ -134,7 +134,7 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright)
         setHeight(u8g2_font_crox4h_tf);
 
         textAlign("MANUAL", PosX::leftSpace, PosY::downSpace);
-        brightInfo(bright, key, timer);
+        brightInfo(bright, key);
     }
 
     else
@@ -143,18 +143,18 @@ void Screen::bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright)
         setPosition("00:00-00:00", PosX::leftSpace, PosY::downSpace);
 
         printSpecTime(watch, key.id);
-        brightInfo(bright, key, timer);
+        brightInfo(bright, key);
     }
 }
 
-void Screen::lampInfo(Watch &watch, Key &key, Timer &timer)
+void Screen::lampInfo(Watch &watch, Key &key)
 {
     setHeight(u8g2_font_courB08_tf);
 
     char string[12];
     String(WavelengthSMD[key.id]).toCharArray(string, 12);
 
-    moveString(string, PosX::center, PosY::upHalf, timer, 0);
+    moveString(string, PosX::center, PosY::upHalf, 0);
 
     setHeight(u8g2_font_crox5tb_tf);
 
@@ -188,7 +188,7 @@ void Screen::headerDate(Watch &watch)
     textAlign(daysOfTheWeek[now.dayOfTheWeek()], PosX::leftHalf, PosY::upHalf);
 }
 
-void Screen::setScreen(Bright &brigth, Key &key, Timer &timer)
+void Screen::setScreen(Bright &brigth, Key &key)
 {
     if (key.screen == key.setBright)
     {
@@ -197,7 +197,7 @@ void Screen::setScreen(Bright &brigth, Key &key, Timer &timer)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Set Set", PosX::center, PosY::upSpace, timer, 4);
+            moveString("Set Set", PosX::center, PosY::upSpace, 4);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -205,13 +205,13 @@ void Screen::setScreen(Bright &brigth, Key &key, Timer &timer)
 
             digAlign(brigth.setBright[key.id], PosX::rightHalf, PosY::center);
 
-            blinkFrame(brigth.setBright[key.id], false, PosX::rightHalf, PosY::centerFrame, timer, key.valChange());
+            blinkFrame(brigth.setBright[key.id], false, PosX::rightHalf, PosY::centerFrame, key.valChange());
 
         } while (nextPage());
     }
 }
 
-void Screen::riseScreen(Bright &brigth, Key &key, Timer &timer)
+void Screen::riseScreen(Bright &brigth, Key &key)
 {
     if (key.screen == key.riseBright)
     {
@@ -220,7 +220,7 @@ void Screen::riseScreen(Bright &brigth, Key &key, Timer &timer)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Set Rise", PosX::center, PosY::upSpace, timer, 4);
+            moveString("Set Rise", PosX::center, PosY::upSpace, 4);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -228,13 +228,13 @@ void Screen::riseScreen(Bright &brigth, Key &key, Timer &timer)
 
             digAlign(brigth.riseBright[key.id], PosX::rightHalf, PosY::center);
 
-            blinkFrame(brigth.riseBright[key.id], false, PosX::rightHalf, PosY::centerFrame, timer, key.valChange());
+            blinkFrame(brigth.riseBright[key.id], false, PosX::rightHalf, PosY::centerFrame, key.valChange());
 
         } while (nextPage());
     }
 }
 
-void Screen::brightScreen(Pot &pot, Key &key, Timer &timer)
+void Screen::brightScreen(Pot &pot, Key &key)
 {
 
     if (key.screen == key.maxBright)
@@ -244,7 +244,7 @@ void Screen::brightScreen(Pot &pot, Key &key, Timer &timer)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Set MaxBright", PosX::center, PosY::upSpace, timer, 4);
+            moveString("Set MaxBright", PosX::center, PosY::upSpace, 4);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -252,13 +252,13 @@ void Screen::brightScreen(Pot &pot, Key &key, Timer &timer)
 
             digAlign(pot.maxBright[key.id], PosX::rightHalf, PosY::center);
 
-            blinkFrame(pot.maxBright[key.id], false, PosX::rightHalf, PosY::centerFrame, timer, key.valChange());
+            blinkFrame(pot.maxBright[key.id], false, PosX::rightHalf, PosY::centerFrame, key.valChange());
 
         } while (nextPage());
     }
 }
 
-void Screen::maxBrightScreen(Bright &bright, Key &key, Timer &timer)
+void Screen::maxBrightScreen(Bright &bright, Key &key)
 {
     if (key.screen == key.maxBright)
     {
@@ -267,7 +267,7 @@ void Screen::maxBrightScreen(Bright &bright, Key &key, Timer &timer)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Set MaxBright", PosX::center, PosY::upSpace, timer, 4);
+            moveString("Set MaxBright", PosX::center, PosY::upSpace, 4);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -275,22 +275,22 @@ void Screen::maxBrightScreen(Bright &bright, Key &key, Timer &timer)
 
             digAlign(bright.maxBright[key.id], PosX::rightHalf, PosY::center);
 
-            blinkFrame(bright.maxBright[key.id], false, PosX::rightHalf, PosY::centerFrame, timer, key.valChange());
+            blinkFrame(bright.maxBright[key.id], false, PosX::rightHalf, PosY::centerFrame, key.valChange());
 
         } while (nextPage());
     }
 }
 
-void Screen::brightScreen(Bright &bright, Key &key, Timer &timer)
+void Screen::brightScreen(Bright &bright, Key &key)
 {
-    maxBrightScreen(bright, key, timer);
+    maxBrightScreen(bright, key);
 
-    riseScreen(bright, key, timer);
+    riseScreen(bright, key);
 
-    setScreen(bright, key, timer);
+    setScreen(bright, key);
 }
 
-void Screen::timerScreen(Watch &watch, Timer &timer, Key &key)
+void Screen::timerScreen(Watch &watch, Key &key)
 {
     if (key.screen == key.duration)
     {
@@ -312,19 +312,19 @@ void Screen::timerScreen(Watch &watch, Timer &timer, Key &key)
             switch (watch.cursorSpectrum)
             {
             case 0:
-                blinkFrame("00:00", 2, PosX::rightHalf, PosY::upFrameHalf, timer, key.valChange());
+                blinkFrame("00:00", 2, PosX::rightHalf, PosY::upFrameHalf, key.valChange());
                 break;
 
             case 1:
-                blinkFrame("00:00", 2, PosX::rightFrameHalfSide, PosY::upFrameHalf, timer, key.valChange());
+                blinkFrame("00:00", 2, PosX::rightFrameHalfSide, PosY::upFrameHalf, key.valChange());
                 break;
 
             case 2:
-                blinkFrame("00:00", 2, PosX::rightHalf, PosY::downFrameHalf, timer, key.valChange());
+                blinkFrame("00:00", 2, PosX::rightHalf, PosY::downFrameHalf, key.valChange());
                 break;
 
             case 3:
-                blinkFrame("00:00", 2, PosX::rightFrameHalfSide, PosY::downFrameHalf, timer, key.valChange());
+                blinkFrame("00:00", 2, PosX::rightFrameHalfSide, PosY::downFrameHalf, key.valChange());
                 break;
 
             default:
@@ -335,7 +335,7 @@ void Screen::timerScreen(Watch &watch, Timer &timer, Key &key)
     }
 }
 
-void Screen::lampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Pot &pot)
+void Screen::lampScreen(Watch &watch, Switchers &switchers, Key &key, Pot &pot)
 {
     if (key.screen == key.lamp || key.screen == key.manual)
     {
@@ -343,13 +343,13 @@ void Screen::lampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &k
         do
         {
             headerTime(watch);
-            lampInfo(watch, key, timer);
-            bottomLine(watch, timer, key, pot);
+            lampInfo(watch, key);
+            bottomLine(watch, key, pot);
         } while (nextPage());
     }
 }
 
-void Screen::lampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Bright &bright)
+void Screen::lampScreen(Watch &watch, Switchers &switchers, Key &key, Bright &bright)
 {
     if (key.screen == key.lamp || key.screen == key.manual)
     {
@@ -357,13 +357,13 @@ void Screen::lampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &k
         do
         {
             headerTime(watch);
-            lampInfo(watch, key, timer);
-            bottomLine(watch, timer, key, bright);
+            lampInfo(watch, key);
+            bottomLine(watch, key, bright);
         } while (nextPage());
     }
 }
 
-void Screen::blinkTime(Key &key, Watch &watch, Timer &timer)
+void Screen::blinkTime(Key &key, Watch &watch)
 {
     setHeight(u8g2_font_pressstart2p_8f);
 
@@ -374,15 +374,15 @@ void Screen::blinkTime(Key &key, Watch &watch, Timer &timer)
     switch (watch.cursorDateTime)
     {
     case 3:
-        blinkFrame("00:00:00", 2, PosX::center, PosY::downFrameHalf, timer, key.valChange());
+        blinkFrame("00:00:00", 2, PosX::center, PosY::downFrameHalf, key.valChange());
         break;
 
     case 4:
-        blinkFrame("00:00:00", 2, PosX::centerFrame, PosY::downFrameHalf, timer, key.valChange());
+        blinkFrame("00:00:00", 2, PosX::centerFrame, PosY::downFrameHalf, key.valChange());
         break;
 
     case 5:
-        blinkFrame("00:00:00", 2, PosX::rightFrameSide, PosY::downFrameHalf, timer, key.valChange());
+        blinkFrame("00:00:00", 2, PosX::rightFrameSide, PosY::downFrameHalf, key.valChange());
         break;
 
     default:
@@ -390,7 +390,7 @@ void Screen::blinkTime(Key &key, Watch &watch, Timer &timer)
     }
 }
 
-void Screen::blinkDate(Key &key, Watch &watch, Timer &timer)
+void Screen::blinkDate(Key &key, Watch &watch)
 {
     setHeight(u8g2_font_pressstart2p_8f);
 
@@ -403,15 +403,15 @@ void Screen::blinkDate(Key &key, Watch &watch, Timer &timer)
     switch (watch.cursorDateTime)
     {
     case 0:
-        blinkFrame("00/00/0000", 2, PosX::center, PosY::upFrameHalf, timer, key.valChange());
+        blinkFrame("00/00/0000", 2, PosX::center, PosY::upFrameHalf, key.valChange());
         break;
 
     case 1:
-        blinkFrame("00/00/0000", 2, PosX::centerFrame, PosY::upFrameHalf, timer, key.valChange());
+        blinkFrame("00/00/0000", 2, PosX::centerFrame, PosY::upFrameHalf, key.valChange());
         break;
 
     case 2:
-        blinkFrame("00/00/0000", 4, PosX::rightFrameSide, PosY::upFrameHalf, timer, key.valChange());
+        blinkFrame("00/00/0000", 4, PosX::rightFrameSide, PosY::upFrameHalf, key.valChange());
         break;
 
     default:
@@ -419,15 +419,15 @@ void Screen::blinkDate(Key &key, Watch &watch, Timer &timer)
     }
 }
 
-void Screen::setWatchScreen(Watch &watch, Key &key, Timer &timer)
+void Screen::setWatchScreen(Watch &watch, Key &key)
 {
     if (key.screen == key.watch)
     {
         firstPage();
         do
         {
-            blinkDate(key, watch, timer);
-            blinkTime(key, watch, timer);
+            blinkDate(key, watch);
+            blinkTime(key, watch);
 
         } while (nextPage());
 
@@ -451,7 +451,7 @@ void Screen::showSunTime(Watch &watch)
     printTime(watch.SetHour, watch.SetMin);
 }
 
-void Screen::blinkSunTime(Key &key, Timer &timer, Watch &watch)
+void Screen::blinkSunTime(Key &key, Watch &watch)
 {
     setHeight(u8g2_font_profont22_tn);
 
@@ -464,19 +464,19 @@ void Screen::blinkSunTime(Key &key, Timer &timer, Watch &watch)
     switch (watch.cursorDay)
     {
     case 0:
-        blinkFrame("00:00", 2, PosX::center, PosY::centerFrame, timer, key.valChange());
+        blinkFrame("00:00", 2, PosX::center, PosY::centerFrame, key.valChange());
         break;
 
     case 1:
-        blinkFrame("00:00", 2, PosX::rightFrameSide, PosY::centerFrame, timer, key.valChange());
+        blinkFrame("00:00", 2, PosX::rightFrameSide, PosY::centerFrame, key.valChange());
         break;
 
     case 2:
-        blinkFrame("00:00", 2, PosX::center, PosY::downFrameSpace, timer, key.valChange());
+        blinkFrame("00:00", 2, PosX::center, PosY::downFrameSpace, key.valChange());
         break;
 
     case 3:
-        blinkFrame("00:00", 2, PosX::rightFrameSide, PosY::downFrameSpace, timer, key.valChange());
+        blinkFrame("00:00", 2, PosX::rightFrameSide, PosY::downFrameSpace, key.valChange());
         break;
 
     default:
@@ -484,7 +484,7 @@ void Screen::blinkSunTime(Key &key, Timer &timer, Watch &watch)
     }
 }
 
-void Screen::intervalScreen(Watch &watch, Key &key, Timer &timer)
+void Screen::intervalScreen(Watch &watch, Key &key)
 {
     if (key.screen == key.interval)
     {
@@ -493,19 +493,19 @@ void Screen::intervalScreen(Watch &watch, Key &key, Timer &timer)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Interval", PosX::center, PosY::upSpace, timer, 4);
+            moveString("Interval", PosX::center, PosY::upSpace, 4);
 
             setHeight(u8g2_font_ncenB18_tf);
 
             digStringAlign(watch.interval, " m", PosX::center, PosY::center);
 
-            blinkFrame(watch.interval, false, PosX::customFrame, PosY::centerFrame, timer, key.valChange());
+            blinkFrame(watch.interval, false, PosX::customFrame, PosY::centerFrame, key.valChange());
 
         } while (nextPage());
     }
 }
 
-void Screen::riseSpeedScreen(Key &key, Timer &timer)
+void Screen::riseSpeedScreen(Key &key)
 {
     if (key.screen == key.speed)
     {
@@ -514,19 +514,19 @@ void Screen::riseSpeedScreen(Key &key, Timer &timer)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Sun Speed", PosX::center, PosY::upSpace, timer, 4);
+            moveString("Sun Speed", PosX::center, PosY::upSpace, 4);
 
             setHeight(u8g2_font_ncenB18_tf);
 
             digStringAlign(timer.rise, " bp", PosX::center, PosY::center);
 
-            blinkFrame(timer.rise, false, PosX::customFrame, PosY::centerFrame, timer, key.valChange());
+            blinkFrame(timer.rise, false, PosX::customFrame, PosY::centerFrame, key.valChange());
 
         } while (nextPage());
     }
 }
 
-void Screen::sunTimeScreen(Watch &watch, Key &key, Timer &timer)
+void Screen::sunTimeScreen(Watch &watch, Key &key)
 {
     if (key.screen == key.dayDuration)
     {
@@ -535,8 +535,8 @@ void Screen::sunTimeScreen(Watch &watch, Key &key, Timer &timer)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Set SunTime", PosX::center, PosY::upSpace, timer, 1);
-            blinkSunTime(key, timer, watch);
+            moveString("Set SunTime", PosX::center, PosY::upSpace, 1);
+            blinkSunTime(key, watch);
         } while (nextPage());
 
         // if (timer.unfrize())
@@ -549,7 +549,7 @@ void Screen::sunTimeScreen(Watch &watch, Key &key, Timer &timer)
     }
 }
 
-void Screen::startScreen(Watch &watch, Key &key, Timer &timer)
+void Screen::startScreen(Watch &watch, Key &key)
 {
     if (key.screen == key.start)
     {
@@ -570,22 +570,22 @@ void Screen::startScreen(Watch &watch, Key &key, Timer &timer)
     }
 }
 
-void Screen::allBrightScreen(Bright &bright, Key &key, Timer &timer)
+void Screen::allBrightScreen(Bright &bright, Key &key)
 {
-    if (bright.setAllBrigh(key, timer))
+    if (bright.setAllBrigh(key))
     {
         firstPage();
         do
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("BRIGHT", PosX::leftSpace, PosY::upSpace, timer, 4);
+            moveString("BRIGHT", PosX::leftSpace, PosY::upSpace, 4);
 
             setHeight(u8g2_font_ncenB18_tf);
 
             digAlign(bright.allBrigh, PosX::leftHalf, PosY::center);
 
-            blinkFrame(bright.allBrigh, false, PosX::leftHalf, PosY::centerFrame, timer, key.valChange());
+            blinkFrame(bright.allBrigh, false, PosX::leftHalf, PosY::centerFrame, key.valChange());
 
             for (byte i = 0; i < lampAmount; i++)
             {
@@ -601,29 +601,29 @@ void Screen::allBrightScreen(Bright &bright, Key &key, Timer &timer)
     }
 }
 
-void Screen::screens(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Pot &pot)
+void Screen::screens(Watch &watch, Switchers &switchers, Key &key, Pot &pot)
 {
-    lampScreen(watch, switchers, timer, key, pot);
-    brightScreen(pot, key, timer);
+    lampScreen(watch, switchers, key, pot);
+    brightScreen(pot, key);
 
-    startScreen(watch, key, timer);
-    setWatchScreen(watch, key, timer);
-    sunTimeScreen(watch, key, timer);
-    timerScreen(watch, timer, key);
-    riseSpeedScreen(key, timer);
-    intervalScreen(watch, key, timer);
+    startScreen(watch, key);
+    setWatchScreen(watch, key);
+    sunTimeScreen(watch, key);
+    timerScreen(watch, key);
+    riseSpeedScreen(key);
+    intervalScreen(watch, key);
 }
 
-void Screen::screens(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Bright &bright)
+void Screen::screens(Watch &watch, Switchers &switchers, Key &key, Bright &bright)
 {
-    lampScreen(watch, switchers, timer, key, bright);
-    brightScreen(bright, key, timer);
-    allBrightScreen(bright, key, timer);
+    lampScreen(watch, switchers, key, bright);
+    brightScreen(bright, key);
+    allBrightScreen(bright, key);
 
-    startScreen(watch, key, timer);
-    setWatchScreen(watch, key, timer);
-    sunTimeScreen(watch, key, timer);
-    timerScreen(watch, timer, key);
-    riseSpeedScreen(key, timer);
-    intervalScreen(watch, key, timer);
+    startScreen(watch, key);
+    setWatchScreen(watch, key);
+    sunTimeScreen(watch, key);
+    timerScreen(watch, key);
+    riseSpeedScreen(key);
+    intervalScreen(watch, key);
 }

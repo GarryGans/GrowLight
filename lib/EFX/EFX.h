@@ -12,6 +12,8 @@ class EFX : public U8G2_SH1106_128X64_NONAME_1_HW_I2C
 
 {
 private:
+    Timer timer;
+
     const byte screenWidth = 128;
     const byte screenHeight = 64;
 
@@ -98,11 +100,11 @@ public:
     void convertStr(const String string);
 
     void mover(byte &move_x, byte deep_x, byte id);
-    void moveString(const char *string, PosX pos_x, PosY pos_y, Timer &timer, byte id);
+    void moveString(const char *string, PosX pos_x, PosY pos_y, byte id);
     void escapeBar(Timer &timer);
 
-    void blinkFrame(byte value, boolean dig, PosX pos_x, PosY pos_y, Timer &timer, boolean tempBlock);
-    void blinkFrame(const char *format, byte digAmount, PosX pos_x, PosY pos_y, Timer &timer, boolean tempBlock);
+    void blinkFrame(byte value, boolean dig, PosX pos_x, PosY pos_y, boolean tempBlock);
+    void blinkFrame(const char *format, byte digAmount, PosX pos_x, PosY pos_y, boolean tempBlock);
 };
 
 #endif

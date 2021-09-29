@@ -134,7 +134,7 @@ void Memory::writeEachBright(Bright &bright)
     }
 }
 
-void Memory::writeChanges(Watch &watch, Pot &pot, Key &key, Timer &timer)
+void Memory::writeChanges(Watch &watch, Pot &pot, Key &key)
 {
     if (key.writeTime)
     {
@@ -165,7 +165,7 @@ void Memory::writeChanges(Watch &watch, Pot &pot, Key &key, Timer &timer)
     }
 }
 
-void Memory::writeChanges(Watch &watch, Bright &bright, Key &key, Timer &timer)
+void Memory::writeChanges(Watch &watch, Bright &bright, Key &key)
 {
     if (key.writeTime)
     {
@@ -212,7 +212,7 @@ void Memory::writeChanges(Watch &watch, Bright &bright, Key &key, Timer &timer)
     }
 }
 
-void Memory::begin(Watch &watch, Pot &pot, Timer &timer)
+void Memory::begin(Watch &watch, Pot &pot)
 {
     readEachBright(pot);
     readEachTime(watch);
@@ -221,7 +221,7 @@ void Memory::begin(Watch &watch, Pot &pot, Timer &timer)
     read(speed_addr, timer.rise, 0, 255);
 }
 
-void Memory::begin(Watch &watch, Bright &bright, Timer &timer)
+void Memory::begin(Watch &watch, Bright &bright)
 {
     readEachBright(bright);
     readEachTime(watch);

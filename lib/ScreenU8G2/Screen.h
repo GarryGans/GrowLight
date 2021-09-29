@@ -41,46 +41,46 @@ public:
     void headerTime(Watch &watch);
     void headerDate(Watch &watch);
 
-    void brightInfo(Pot &pot, Key &key, Timer &timer);
-    void brightInfo(Bright &bright, Key &key, Timer &timer);
+    void brightInfo(Pot &pot, Key &key);
+    void brightInfo(Bright &bright, Key &key);
 
-    void bottomLine(Watch &watch, Timer &timer, Key &key, Pot &pot);
-    void bottomLine(Watch &watch, Timer &timer, Key &key, Bright &bright);
+    void bottomLine(Watch &watch, Key &key, Pot &pot);
+    void bottomLine(Watch &watch, Key &key, Bright &bright);
 
-    void lampInfo(Watch &watch, Key &key, Timer &timer);
+    void lampInfo(Watch &watch, Key &key);
 
-    void blinkDate(Key &key, Watch &watch, Timer &timer);
-    void blinkTime(Key &key, Watch &watch, Timer &timer);
+    void blinkDate(Key &key, Watch &watch);
+    void blinkTime(Key &key, Watch &watch);
 
     void showSunTime(Watch &watch);
 
-    void blinkSunTime(Key &key, Timer &timer, Watch &watch);
+    void blinkSunTime(Key &key, Watch &watch);
 
-    void timerScreen(Watch &watch, Timer &timer, Key &key);
+    void timerScreen(Watch &watch, Key &key);
 
-    void lampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Pot &pot);
-    void lampScreen(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Bright &bright);
+    void lampScreen(Watch &watch, Switchers &switchers, Key &key, Pot &pot);
+    void lampScreen(Watch &watch, Switchers &switchers, Key &key, Bright &bright);
 
-    void setWatchScreen(Watch &watch, Key &key, Timer &timer);
+    void setWatchScreen(Watch &watch, Key &key);
 
-    void sunTimeScreen(Watch &watch, Key &key, Timer &timer);
+    void sunTimeScreen(Watch &watch, Key &key);
 
-    void intervalScreen(Watch &watch, Key &key, Timer &timer);
-    void riseSpeedScreen(Key &key, Timer &timer);
+    void intervalScreen(Watch &watch, Key &key);
+    void riseSpeedScreen(Key &key);
 
-    void brightScreen(Pot &pot, Key &key, Timer &timer);
+    void brightScreen(Pot &pot, Key &key);
 
-    void setScreen(Bright &bright, Key &key, Timer &timer);
-    void riseScreen(Bright &bright, Key &key, Timer &timer);
-    void maxBrightScreen(Bright &bright, Key &key, Timer &timer);
-    void brightScreen(Bright &bright, Key &key, Timer &timer);
+    void setScreen(Bright &bright, Key &key);
+    void riseScreen(Bright &bright, Key &key);
+    void maxBrightScreen(Bright &bright, Key &key);
+    void brightScreen(Bright &bright, Key &key);
 
-    void allBrightScreen(Bright &bright, Key &key, Timer &timer);
+    void allBrightScreen(Bright &bright, Key &key);
 
-    void startScreen(Watch &watch, Key &key, Timer &timer);
+    void startScreen(Watch &watch, Key &key);
 
-    void screens(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Pot &pot);
-    void screens(Watch &watch, Switchers &switchers, Timer &timer, Key &key, Bright &bright);
+    void screens(Watch &watch, Switchers &switchers, Key &key, Pot &pot);
+    void screens(Watch &watch, Switchers &switchers, Key &key, Bright &bright);
 };
 
 #endif

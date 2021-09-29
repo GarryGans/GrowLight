@@ -36,28 +36,28 @@ void setup()
     bright.begin(startPinBright);
     delay(100);
 
-    memory.begin(watch, bright, timer);
+    memory.begin(watch, bright);
     delay(100);
 }
 
 void loop()
 {
-    watch.commands(key, timer);
+    watch.commands(key);
     switchers.switcher(watch, key);
 
-    // pot.autoBright(watch, key, timer);
-    bright.autoBright(watch, key, timer);
+    // pot.autoBright(watch, key);
+    bright.autoBright(watch, key);
 
-    // pot.manualChangeBright(key, timer);
-    // pot.changeMaxBright(key, watch, timer);
-    bright.manualChangeBright(watch, key, timer);
-    bright.changeBright(key, watch, timer);
+    // pot.manualChangeBright(key);
+    // pot.changeMaxBright(key, watch);
+    bright.manualChangeBright(watch, key);
+    bright.changeBright(key, watch);
 
-    key.keyCommands(timer);
+    key.keyCommands();
 
     // screen.screens(watch,switchers,timer,key,pot);
-    screen.screens(watch, switchers, timer, key, bright);
+    screen.screens(watch, switchers, key, bright);
 
     // memory.writeChanges(watch, pot, key);
-    memory.writeChanges(watch, bright, key, timer);
+    memory.writeChanges(watch, bright, key);
 }

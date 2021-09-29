@@ -12,6 +12,8 @@ class Bright
     friend class Screen;
 
 private:
+    Timer timer;
+    
     byte startPinBright;
 
     byte pin[lampAmount];
@@ -47,17 +49,17 @@ public:
     void setMinBright(byte pin, byte &bright, byte brightRise);
     void resetBright(byte pin, byte &bright);
 
-    void autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i);
-    void autoBright(Watch &watch, Key &key, Timer &timer);
-    void manualChangeBright(Watch &watch, Key &key, Timer &timer);
+    void autoChangeBright(Watch &watch, Key &key, byte i);
+    void autoBright(Watch &watch, Key &key);
+    void manualChangeBright(Watch &watch, Key &key);
     void resetAllBrights();
-    void changeBright(Key &key, Watch &watch, Timer &timer);
+    void changeBright(Key &key, Watch &watch);
 
-    void setSetBright(byte &bright, Key &key, Timer &timer, byte min, byte max);
-    void setRiseBright(byte &brightRise, Key &key, Timer &timer, byte min, byte max);
-    void changeMaxBright(byte &bright, byte pin, Key &key, Timer &timer, Watch &watch, byte min, byte max);
+    void setSetBright(byte &bright, Key &key, byte min, byte max);
+    void setRiseBright(byte &brightRise, Key &key, byte min, byte max);
+    void changeMaxBright(byte &bright, byte pin, Key &key, Watch &watch, byte min, byte max);
 
-    boolean setAllBrigh(Key &key, Timer &timer);
+    boolean setAllBrigh(Key &key);
 };
 
 #endif

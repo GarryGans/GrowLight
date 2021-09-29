@@ -13,6 +13,8 @@ class Pot
     friend class Screen;
 
 private:
+    Timer timer;
+
     byte Amount;
 
     boolean reBright[lampAmount];
@@ -38,12 +40,12 @@ public:
     void setMinBright(DigiPot &pot, byte &bright);
     void resetBright(DigiPot &pot, byte &bright);
 
-    void autoChangeBright(Watch &watch, Key &key, Timer &timer, byte i);
-    void autoBright(Watch &watch, Key &key, Timer &timer);
-    void manualChangeBright(Key &key, Timer &timer);
+    void autoChangeBright(Watch &watch, Key &key, byte i);
+    void autoBright(Watch &watch, Key &key);
+    void manualChangeBright(Key &key);
     void resetAllPots();
-    void changeMaxBright(Key &key, Watch &watch, Timer &timer);
-    void changeBright(byte &bright, DigiPot &pot, Key &key, Timer &timer);
+    void changeMaxBright(Key &key, Watch &watch);
+    void changeBright(byte &bright, DigiPot &pot, Key &key);
 };
 
 #endif

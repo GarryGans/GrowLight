@@ -16,7 +16,7 @@ class Key : public AmperkaKB
     friend class Bright;
 
 private:
-    Timer tim;
+    Timer timer;
 
     enum Screen
     {
@@ -89,15 +89,15 @@ public:
 
     void menuScreen(Screen start, Screen end);
 
-    boolean autoOk(Screen screen, Timer &timer);
+    boolean autoOk(Screen screen );
     void setScreens();
     boolean chekSet(Screen screen);
-    void keyCommands(Timer &timer);
+    void keyCommands();
     void idChange();
     void setSpec();
 
-    void autoScreenMove(Timer &timer);
-    void manualChangeScreen(Timer &timer);
+    void autoScreenMove();
+    void manualChangeScreen();
 
     void skipEnable(boolean &skip);
     void manualSwitchLight();
@@ -106,12 +106,12 @@ public:
     boolean valChange();
     boolean navigation();
 
-    boolean spectrumReDuration(Timer &timer);
-    boolean changeBright(Timer &timer);
-    boolean dayReduration(Timer &timer);
-    boolean setWatch(Timer &timer);
-    void setSpeed(Timer &timer);
-    boolean allBrigh(Timer &timer);
+    boolean spectrumReDuration();
+    boolean changeBright();
+    boolean dayReduration();
+    boolean setWatch();
+    void setSpeed();
+    boolean allBrigh();
 };
 
 #endif
