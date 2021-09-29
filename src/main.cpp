@@ -36,7 +36,7 @@ void setup()
     bright.begin(startPinBright);
     delay(100);
 
-    memory.begin(watch, bright);
+    memory.begin(watch, bright, timer);
     delay(100);
 }
 
@@ -53,11 +53,11 @@ void loop()
     bright.manualChangeBright(watch, key);
     bright.changeBright(key, watch);
 
-    key.keyCommands();
+    key.keyCommands(timer);
 
-    // screen.screens(watch,switchers,timer,key,pot);
+    // screen.screens(watch,switchers,key,pot);
     screen.screens(watch, switchers, key, bright);
 
     // memory.writeChanges(watch, pot, key);
-    memory.writeChanges(watch, bright, key);
+    memory.writeChanges(watch, bright, key, timer);
 }

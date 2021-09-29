@@ -67,7 +67,7 @@ void Key::checkKeyboard()
     Serial.println(getNum);
 }
 
-void Key::keyCommands()
+void Key::keyCommands(Timer &timer)
 {
     read();
 
@@ -75,7 +75,7 @@ void Key::keyCommands()
     autoScreenMove();
     manualChangeScreen();
 
-    setSpeed();
+    setSpeed(timer);
 }
 
 void Key::idChange()
@@ -251,7 +251,7 @@ boolean Key::chekSet(Screen screen)
     return false;
 }
 
-void Key::setSpeed()
+void Key::setSpeed(Timer &tim)
 {
     if ((justPressed() && getNum == 10) || autoOk(speed) || autoOk(interval))
     {
@@ -277,11 +277,11 @@ void Key::setSpeed()
     {
         if (valChange())
         {
-            act == MINUS ? timer.rise-- : timer.rise++;
-            if (timer.rise < 0)
-                timer.rise = 255;
-            if (timer.rise > 255)
-                timer.rise = 0;
+            act == MINUS ? tim.rise-- : tim.rise++;
+            if (tim.rise < 0)
+                tim.rise = 255;
+            if (tim.rise > 255)
+                tim.rise = 0;
         }
     }
 }

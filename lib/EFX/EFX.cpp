@@ -1,6 +1,5 @@
 #include "EFX.h"
 
-Timer run[10];
 
 // EFX::EFX() : U8G2_SSD1306_128X64_NONAME_1_HW_I2C(U8G2_R0, /* reset=*/U8X8_PIN_NONE)
 EFX::EFX() : U8G2_SH1106_128X64_NONAME_1_HW_I2C(U8G2_R0, /* reset=*/U8X8_PIN_NONE)
@@ -383,7 +382,7 @@ void EFX::moveString(const char *string, PosX pos_x, PosY pos_y, byte id)
     }
 }
 
-void EFX::escapeBar(Timer &timer)
+void EFX::escapeBar()
 {
     if (!timer.escBar)
     {
