@@ -10,13 +10,14 @@ Key::Key()
 
 Key::~Key()
 {
+    // delete tim;
 }
 
 boolean Key::autoOk(Screen screen, Timer &timer)
 {
     if (this->screen == screen)
     {
-        if (timer.ready(5, reset))
+        if (tim.ready(5, reset))
         {
             return true;
         }
@@ -92,12 +93,12 @@ void Key::autoScreenMove(Timer &timer)
 {
     if (screen == lamp || screen == start)
     {
-        if (autoMove && timer.ready(5, navigation()))
+        if (autoMove && tim.ready(5, navigation()))
         {
             idChange();
         }
 
-        if (!autoMove && timer.ready(5, navigation()))
+        if (!autoMove && tim.ready(5, navigation()))
         {
             autoMove = true;
         }
@@ -277,11 +278,11 @@ void Key::setSpeed(Timer &timer)
     {
         if (valChange())
         {
-            act == MINUS ? timer.rise-- : timer.rise++;
-            if (timer.rise < 0)
-                timer.rise = 255;
-            if (timer.rise > 255)
-                timer.rise = 0;
+            act == MINUS ? tim.rise-- : tim.rise++;
+            if (tim.rise < 0)
+                tim.rise = 255;
+            if (tim.rise > 255)
+                tim.rise = 0;
         }
     }
 }
@@ -370,7 +371,6 @@ boolean Key::dayReduration(Timer &timer)
 {
     if ((justPressed() && getNum == 2) || autoOk(dayDuration, timer))
     {
-        reset = true;
         autoMove = false;
 
         if (chekSet(dayDuration))
@@ -379,7 +379,6 @@ boolean Key::dayReduration(Timer &timer)
         }
         else
         {
-            reset = true;
             screen = dayDuration;
             reDay = true;
         }
@@ -392,7 +391,6 @@ void Key::skipEnable(boolean &skip)
 {
     if (justPressed() && getNum == 4)
     {
-        reset = true;
         autoMove = false;
 
         if (!skip)

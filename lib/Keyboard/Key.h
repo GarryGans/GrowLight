@@ -16,7 +16,7 @@ class Key : public AmperkaKB
     friend class Bright;
 
 private:
-    // Timer tim;
+    Timer tim;
 
     enum Screen
     {
