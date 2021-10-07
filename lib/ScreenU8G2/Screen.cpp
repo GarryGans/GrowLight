@@ -505,7 +505,7 @@ void Screen::intervalScreen(Watch &watch, Key &key)
     }
 }
 
-void Screen::riseSpeedScreen(Key &key)
+void Screen::riseSpeedScreen(Bright &bright,Key &key)
 {
     if (key.screen == key.speed)
     {
@@ -518,9 +518,9 @@ void Screen::riseSpeedScreen(Key &key)
 
             setHeight(u8g2_font_ncenB18_tf);
 
-            digStringAlign(timer.rise, " bp", PosX::center, PosY::center);
+            digStringAlign(bright.speed, " bp", PosX::center, PosY::center);
 
-            blinkFrame(timer.rise, false, PosX::customFrame, PosY::centerFrame, key.valChange());
+            blinkFrame(bright.speed, false, PosX::customFrame, PosY::centerFrame, key.valChange());
 
         } while (nextPage());
     }
@@ -610,7 +610,7 @@ void Screen::screens(Watch &watch, Switchers &switchers, Key &key, Pot &pot)
     setWatchScreen(watch, key);
     sunTimeScreen(watch, key);
     timerScreen(watch, key);
-    riseSpeedScreen(key);
+    // riseSpeedScreen(key);
     intervalScreen(watch, key);
 }
 
@@ -624,6 +624,6 @@ void Screen::screens(Watch &watch, Switchers &switchers, Key &key, Bright &brigh
     setWatchScreen(watch, key);
     sunTimeScreen(watch, key);
     timerScreen(watch, key);
-    riseSpeedScreen(key);
+    riseSpeedScreen(bright,key);
     intervalScreen(watch, key);
 }

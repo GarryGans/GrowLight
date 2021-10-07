@@ -69,9 +69,9 @@ boolean Timer::wait(unsigned long &prew, unsigned long set)
     return false;
 }
 
-boolean Timer::riseReady(byte id)
+boolean Timer::riseReady(byte speed, byte id)
 {
-    return wait(prewBright[id], rise * 10);
+    return wait(prewBright[id], speed * 10);
 }
 
 boolean Timer::blinkReady()

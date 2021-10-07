@@ -27,8 +27,6 @@ private:
 
     unsigned long prewBright[lampAmount];
 
-    unsigned int rise;
-
     unsigned long prewMove;
 
     unsigned long prewUnfrize;
@@ -47,7 +45,6 @@ private:
     boolean blink;
     boolean move;
 
-
 public:
     Timer();
     ~Timer();
@@ -55,7 +52,7 @@ public:
     boolean minusCounter(byte &counter);
     boolean wait(unsigned long &prew, unsigned long set);
 
-    boolean riseReady(byte id);
+    boolean riseReady(byte speed, byte id);
     boolean blinkReady();
 
     // boolean ready(byte counter = 5);

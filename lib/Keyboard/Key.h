@@ -92,7 +92,7 @@ public:
     boolean autoOk(Screen screen );
     void setScreens();
     boolean chekSet(Screen screen);
-    void keyCommands(Timer &timer);
+    void keyCommands();
     void idChange();
     void setSpec();
 
@@ -110,7 +110,7 @@ public:
     boolean changeBright();
     boolean dayReduration();
     boolean setWatch();
-    void setSpeed(Timer &timer);
+    void setSpeed();
     boolean allBrigh();
 };
 

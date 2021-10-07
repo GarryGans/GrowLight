@@ -134,7 +134,7 @@ void Memory::writeEachBright(Bright &bright)
     }
 }
 
-void Memory::writeChanges(Watch &watch, Pot &pot, Key &key, Timer &timer)
+void Memory::writeChanges(Watch &watch, Pot &pot, Key &key)
 {
     if (key.writeTime)
     {
@@ -165,7 +165,7 @@ void Memory::writeChanges(Watch &watch, Pot &pot, Key &key, Timer &timer)
     }
 }
 
-void Memory::writeChanges(Watch &watch, Bright &bright, Key &key, Timer &timer)
+void Memory::writeChanges(Watch &watch, Bright &bright, Key &key)
 {
     if (key.writeTime)
     {
@@ -201,7 +201,7 @@ void Memory::writeChanges(Watch &watch, Bright &bright, Key &key, Timer &timer)
 
         key.writeInterval = false;
 
-        EEPROM.put(speed_addr, timer.rise);
+        EEPROM.put(speed_addr, bright.speed);
         key.writeSpeed = false;
     }
 
@@ -212,21 +212,21 @@ void Memory::writeChanges(Watch &watch, Bright &bright, Key &key, Timer &timer)
     }
 }
 
-void Memory::begin(Watch &watch, Pot &pot, Timer &timer)
+void Memory::begin(Watch &watch, Pot &pot)
 {
     readEachBright(pot);
     readEachTime(watch);
     readEachSkip(watch);
     read(interval_addr, watch.interval, 0, 255);
-    read(speed_addr, timer.rise, 0, 255);
+    // read(speed_addr, pot.rise, 0, 255);
 }
 
-void Memory::begin(Watch &watch, Bright &bright, Timer &timer)
+void Memory::begin(Watch &watch, Bright &bright)
 {
     readEachBright(bright);
     readEachTime(watch);
     readEachSkip(watch);
-    read(speed_addr, timer.rise, 0, 255);
+    read(speed_addr, bright.speed, 0, 255);
     read(interval_addr, watch.interval, 0, 255);
     read(allBright_addr, bright.allBrigh, 0, bright.maxAllBright);
 }

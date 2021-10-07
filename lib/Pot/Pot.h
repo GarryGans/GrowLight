@@ -15,6 +15,8 @@ class Pot
 private:
     Timer timer;
 
+    byte speed;
+
     byte Amount;
 
     boolean reBright[lampAmount];

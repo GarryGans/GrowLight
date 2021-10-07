@@ -52,7 +52,7 @@ void Bright::autoChangeBright(Watch &watch, Key &key, byte i)
         {
             setMinBright(pin[i], bright[i], riseBright[i]);
 
-            if (timer.riseReady(i) && bright[i] < maxBright[i])
+            if (timer.riseReady(speed, i) && bright[i] < maxBright[i])
             {
                 bright[i]++;
                 analogWrite(pin[i], (maxPWM - bright[i]));
@@ -61,7 +61,7 @@ void Bright::autoChangeBright(Watch &watch, Key &key, byte i)
 
         if (watch.brightDown[i])
         {
-            if (timer.riseReady(i) && bright[i] > setBright[i])
+            if (timer.riseReady(speed, i) && bright[i] > setBright[i])
             {
                 bright[i]--;
                 analogWrite(pin[i], (maxPWM - bright[i]));
@@ -148,8 +148,21 @@ void Bright::manualChangeBright(Watch &watch, Key &key)
     }
 }
 
-void Bright::setRiseSpeed()
+void Bright::setRiseSpeed(Key &key)
 {
+    if (key.screen == key.speed)
+    {
+        if (key.valChange())
+        {
+            key.act == key.MINUS ? speed-- : speed++;
+
+            if (speed < 0)
+                speed = 255;
+
+            if (speed > 255)
+                speed = 0;
+        }
+    }
 }
 
 void Bright::setSetBright(byte &bright, Key &key, byte min, byte max)
@@ -230,4 +243,12 @@ boolean Bright::setAllBrigh(Key &key)
     }
 
     return false;
+}
+
+void Bright::commands(Watch &watch, Key &key)
+{
+    autoBright(watch, key);
+    manualChangeBright(watch, key);
+    changeBright(key, watch);
+    setRiseSpeed(key);
 }
