@@ -17,29 +17,35 @@ private:
 
     byte speed;
 
-    byte Amount;
-
-    boolean reBright[lampAmount];
+    DigiPot pot[lampAmount];
+    byte bright[lampAmount];
 
     byte riseBright[lampAmount];
     byte setBright[lampAmount];
 
-    byte bright[lampAmount];
-
-    byte autoMinBright = 0;
     byte maxBright[lampAmount];
 
     byte minManualBright = 0;
     byte maxManualBright = 99;
 
-    DigiPot pot[lampAmount];
+    byte brightLevel;
+    byte lowLevel = 0;
+    byte maxLevel[lampAmount];
+
+    byte allBrigh;
+    byte maxAllBright = 99;
 
 public:
     Pot();
     ~Pot();
 
-    void setPot(DigiPot pot[]);
-    void setMinBright(DigiPot &pot, byte &bright);
+    void brightLevelCount();
+
+    void setRiseSpeed(Key &key);
+
+    void begin(DigiPot pot[]);
+
+    void setMinBright(DigiPot &pot, byte &bright, byte brightRise);
     void resetBright(DigiPot &pot, byte &bright);
 
     void autoChangeBright(Watch &watch, Key &key, byte i);

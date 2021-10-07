@@ -10,8 +10,6 @@ Bright::~Bright()
 
 void Bright::begin(byte startBrightPin)
 {
-    this->startPinBright = startBrightPin;
-
     for (byte i = 0; i < lampAmount; i++)
     {
         this->pin[i] = startBrightPin + i;

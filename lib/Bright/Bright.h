@@ -16,8 +16,6 @@ private:
 
     byte speed;
 
-    byte startPinBright;
-
     byte pin[lampAmount];
     byte bright[lampAmount];
 
@@ -33,10 +31,10 @@ private:
     byte lowLevel = 0;
     byte maxLevel[lampAmount];
 
-    byte maxPWM = 255;
-
     byte allBrigh;
     byte maxAllBright = 99;
+
+    byte maxPWM = 255;
 
 public:
     Bright();

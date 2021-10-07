@@ -1,6 +1,5 @@
 #include <main.h>
 
-Timer timer;
 Key key(keyPin);
 Watch watch;
 Switchers switchers;
@@ -31,8 +30,7 @@ void setup()
     // watch.adjust(DateTime(F(__DATE__), F(__TIME__)));
     delay(100);
 
-    // pot.setPot(potent);
-    // pot.resetAllPots();
+    // pot.begin(potent);
     bright.begin(startPinBright);
     delay(100);
 
@@ -42,7 +40,10 @@ void setup()
 
 void loop()
 {
+    key.keyCommands();
+
     watch.commands(key);
+
     switchers.switcher(watch, key);
 
     // pot.autoBright(watch, key);
@@ -52,11 +53,9 @@ void loop()
 
     bright.commands(watch, key);
 
-    key.keyCommands();
+    // memory.writeChanges(watch, pot, key);
+    memory.writeChanges(watch, bright, key);
 
     // screen.screens(watch,switchers,key,pot);
     screen.screens(watch, switchers, key, bright);
-
-    // memory.writeChanges(watch, pot, key);
-    memory.writeChanges(watch, bright, key);
 }
