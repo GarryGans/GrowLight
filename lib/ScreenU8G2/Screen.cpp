@@ -188,6 +188,29 @@ void Screen::headerDate(Watch &watch)
     textAlign(daysOfTheWeek[now.dayOfTheWeek()], PosX::leftHalf, PosY::upHalf);
 }
 
+void Screen::setScreen(Pot &pot, Key &key)
+{
+    if (key.screen == key.setBright)
+    {
+        firstPage();
+        do
+        {
+            setHeight(u8g2_font_pressstart2p_8f);
+
+            moveString("Set Set", PosX::center, PosY::upSpace, 4);
+
+            setHeight(u8g2_font_ncenB18_tf);
+
+            stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
+
+            digAlign(pot.setBright[key.id], PosX::rightHalf, PosY::center);
+
+            blinkFrame(pot.setBright[key.id], false, PosX::rightHalf, PosY::centerFrame, key.valChange());
+
+        } while (nextPage());
+    }
+}
+
 void Screen::setScreen(Bright &brigth, Key &key)
 {
     if (key.screen == key.setBright)
@@ -206,6 +229,29 @@ void Screen::setScreen(Bright &brigth, Key &key)
             digAlign(brigth.setBright[key.id], PosX::rightHalf, PosY::center);
 
             blinkFrame(brigth.setBright[key.id], false, PosX::rightHalf, PosY::centerFrame, key.valChange());
+
+        } while (nextPage());
+    }
+}
+
+void Screen::riseScreen(Pot &pot, Key &key)
+{
+    if (key.screen == key.riseBright)
+    {
+        firstPage();
+        do
+        {
+            setHeight(u8g2_font_pressstart2p_8f);
+
+            moveString("Set Rise", PosX::center, PosY::upSpace, 4);
+
+            setHeight(u8g2_font_ncenB18_tf);
+
+            stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
+
+            digAlign(pot.riseBright[key.id], PosX::rightHalf, PosY::center);
+
+            blinkFrame(pot.riseBright[key.id], false, PosX::rightHalf, PosY::centerFrame, key.valChange());
 
         } while (nextPage());
     }
@@ -234,9 +280,8 @@ void Screen::riseScreen(Bright &brigth, Key &key)
     }
 }
 
-void Screen::brightScreen(Pot &pot, Key &key)
+void Screen::maxBrightScreen(Pot &pot, Key &key)
 {
-
     if (key.screen == key.maxBright)
     {
         firstPage();
@@ -279,6 +324,15 @@ void Screen::maxBrightScreen(Bright &bright, Key &key)
 
         } while (nextPage());
     }
+}
+
+void Screen::brightScreen(Pot &pot, Key &key)
+{
+    maxBrightScreen(pot, key);
+
+    riseScreen(pot, key);
+
+    setScreen(pot, key);
 }
 
 void Screen::brightScreen(Bright &bright, Key &key)
@@ -505,7 +559,28 @@ void Screen::intervalScreen(Watch &watch, Key &key)
     }
 }
 
-void Screen::riseSpeedScreen(Bright &bright,Key &key)
+void Screen::riseSpeedScreen(Pot &pot, Key &key)
+{
+    if (key.screen == key.speed)
+    {
+        firstPage();
+        do
+        {
+            setHeight(u8g2_font_pressstart2p_8f);
+
+            moveString("Sun Speed", PosX::center, PosY::upSpace, 4);
+
+            setHeight(u8g2_font_ncenB18_tf);
+
+            digStringAlign(pot.speed, " bp", PosX::center, PosY::center);
+
+            blinkFrame(pot.speed, false, PosX::customFrame, PosY::centerFrame, key.valChange());
+
+        } while (nextPage());
+    }
+}
+
+void Screen::riseSpeedScreen(Bright &bright, Key &key)
 {
     if (key.screen == key.speed)
     {
@@ -570,6 +645,37 @@ void Screen::startScreen(Watch &watch, Key &key)
     }
 }
 
+void Screen::allBrightScreen(Pot &pot, Key &key)
+{
+    if (pot.setAllBrigh(key))
+    {
+        firstPage();
+        do
+        {
+            setHeight(u8g2_font_pressstart2p_8f);
+
+            moveString("BRIGHT", PosX::leftSpace, PosY::upSpace, 4);
+
+            setHeight(u8g2_font_ncenB18_tf);
+
+            digAlign(pot.allBrigh, PosX::leftHalf, PosY::center);
+
+            blinkFrame(pot.allBrigh, false, PosX::leftHalf, PosY::centerFrame, key.valChange());
+
+            for (byte i = 0; i < lampAmount; i++)
+            {
+                setHeight(u8g2_font_courB08_tf);
+
+                convertStr(lightColor[i]);
+
+                setY = nextY(lampAmount, i);
+                strDigAlign(str, pot.maxBright[i], PosX::rightHalf, PosY::custom);
+            }
+
+        } while (nextPage());
+    }
+}
+
 void Screen::allBrightScreen(Bright &bright, Key &key)
 {
     if (bright.setAllBrigh(key))
@@ -605,12 +711,13 @@ void Screen::screens(Watch &watch, Switchers &switchers, Key &key, Pot &pot)
 {
     lampScreen(watch, switchers, key, pot);
     brightScreen(pot, key);
+    allBrightScreen(pot, key);
 
     startScreen(watch, key);
     setWatchScreen(watch, key);
     sunTimeScreen(watch, key);
     timerScreen(watch, key);
-    // riseSpeedScreen(key);
+    riseSpeedScreen(pot, key);
     intervalScreen(watch, key);
 }
 
@@ -624,6 +731,6 @@ void Screen::screens(Watch &watch, Switchers &switchers, Key &key, Bright &brigh
     setWatchScreen(watch, key);
     sunTimeScreen(watch, key);
     timerScreen(watch, key);
-    riseSpeedScreen(bright,key);
+    riseSpeedScreen(bright, key);
     intervalScreen(watch, key);
 }

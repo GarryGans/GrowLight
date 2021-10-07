@@ -3,8 +3,8 @@
 Key key(keyPin);
 Watch watch;
 Switchers switchers;
-Bright bright;
-// Pot pot;
+// Bright bright;
+Pot pot;
 Memory memory;
 Screen screen(WavelengthSMD, lightColor);
 
@@ -23,18 +23,16 @@ void setup()
     switchers.begin(startPinLamp);
     delay(100);
 
-    // memory.begin(watch, pot);
-    delay(100);
-
     watch.begin();
     // watch.adjust(DateTime(F(__DATE__), F(__TIME__)));
     delay(100);
 
-    // pot.begin(potent);
-    bright.begin(startPinBright);
+    pot.begin(potent);
+    // bright.begin(startPinBright);
     delay(100);
 
-    memory.begin(watch, bright);
+    memory.begin(watch, pot);
+    // memory.begin(watch, bright);
     delay(100);
 }
 
@@ -46,16 +44,12 @@ void loop()
 
     switchers.switcher(watch, key);
 
-    // pot.autoBright(watch, key);
+    pot.commands(watch, key);
+    // bright.commands(watch, key);
 
-    // pot.manualChangeBright(key);
-    // pot.changeMaxBright(key, watch);
+    memory.writeChanges(watch, pot, key);
+    // memory.writeChanges(watch, bright, key);
 
-    bright.commands(watch, key);
-
-    // memory.writeChanges(watch, pot, key);
-    memory.writeChanges(watch, bright, key);
-
-    // screen.screens(watch,switchers,key,pot);
-    screen.screens(watch, switchers, key, bright);
+    screen.screens(watch, switchers, key, pot);
+    // screen.screens(watch, switchers, key, bright);
 }

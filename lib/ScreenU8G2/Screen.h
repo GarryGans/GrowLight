@@ -66,15 +66,21 @@ public:
     void sunTimeScreen(Watch &watch, Key &key);
 
     void intervalScreen(Watch &watch, Key &key);
-    void riseSpeedScreen(Bright &bright, Key &key);
 
-    void brightScreen(Pot &pot, Key &key);
+    void riseSpeedScreen(Pot &pot, Key &key);
+    void riseSpeedScreen(Bright &bright, Key &key);
 
     void setScreen(Bright &bright, Key &key);
     void riseScreen(Bright &bright, Key &key);
     void maxBrightScreen(Bright &bright, Key &key);
     void brightScreen(Bright &bright, Key &key);
 
+    void setScreen(Pot &pot, Key &key);
+    void riseScreen(Pot &pot, Key &key);
+    void maxBrightScreen(Pot &pot, Key &key);
+    void brightScreen(Pot &pot, Key &key);
+
+    void allBrightScreen(Pot &pot, Key &key);
     void allBrightScreen(Bright &bright, Key &key);
 
     void startScreen(Watch &watch, Key &key);

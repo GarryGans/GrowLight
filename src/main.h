@@ -94,6 +94,13 @@ String WavelengthSMD[lampAmount] = {
 
 String lightColor[lampAmount] = {"CXB", "FR", "RED", "BL", "UV"};
 
+DigiPot potent[] = {
+    DigiPot(2, 3, 4),
+    DigiPot(5, 6, 7),
+    DigiPot(8, 9, 10),
+    DigiPot(11, 12, 13),
+    DigiPot(14, 15, 16)};
+
 // SpectrTEST ver. //
 // String specWavelengthSMD[] = {"365nm+385nm", "440nm", "660nm", "730nm", "3000K"};
 // String speclightColor[] = {"UV", "BL", "RED", "FR", "CXB"};

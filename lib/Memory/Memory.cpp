@@ -163,6 +163,22 @@ void Memory::writeChanges(Watch &watch, Pot &pot, Key &key)
 
         key.writeSkip = false;
     }
+
+    else if (key.writeInterval && key.writeSpeed)
+    {
+        EEPROM.put(interval_addr, watch.interval);
+
+        key.writeInterval = false;
+
+        EEPROM.put(speed_addr, pot.speed);
+        key.writeSpeed = false;
+    }
+
+    else if (key.writeAllBright)
+    {
+        EEPROM.put(allBright_addr, pot.allBrigh);
+        key.writeAllBright = false;
+    }
 }
 
 void Memory::writeChanges(Watch &watch, Bright &bright, Key &key)
@@ -217,8 +233,9 @@ void Memory::begin(Watch &watch, Pot &pot)
     readEachBright(pot);
     readEachTime(watch);
     readEachSkip(watch);
-    read(interval_addr, watch.interval, 0, 255);
-    // read(speed_addr, pot.rise, 0, 255);
+    read(speed_addr, pot.speed, 0, 99);
+    read(interval_addr, watch.interval, 0, 99);
+    read(allBright_addr, pot.allBrigh, 0, pot.maxAllBright);
 }
 
 void Memory::begin(Watch &watch, Bright &bright)
