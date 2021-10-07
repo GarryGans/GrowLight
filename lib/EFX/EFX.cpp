@@ -1,6 +1,5 @@
 #include "EFX.h"
 
-
 // EFX::EFX() : U8G2_SSD1306_128X64_NONAME_1_HW_I2C(U8G2_R0, /* reset=*/U8X8_PIN_NONE)
 EFX::EFX() : U8G2_SH1106_128X64_NONAME_1_HW_I2C(U8G2_R0, /* reset=*/U8X8_PIN_NONE)
 {
@@ -146,22 +145,6 @@ byte EFX::getDigWidth(byte value)
     return getStrWidth(val);
 }
 
-char EFX::convStr(const String string)
-{
-    // char str[sizeof(string)];
-    char str[4];
-    // String(string).toCharArray(str, sizeof(string));
-    String(string).toCharArray(str, 4);
-
-    return *str;
-}
-
-void EFX::convertStr(const String string)
-{
-    // char str[sizeof(string)];
-    String(string).toCharArray(str, sizeof(string));
-}
-
 void EFX::setHeight(const uint8_t *font)
 {
     setFont(font);
@@ -250,6 +233,37 @@ void EFX::strDigAlign(const char *string, byte dig, PosX pos_x, PosY pos_y)
 
     print(string);
     print(" ");
+    print(dig);
+}
+
+void EFX::strDigAlign(const String string, byte dig, PosX pos_x, PosY pos_y)
+{
+    char str[string.length() + 1];
+    String(string).toCharArray(str, string.length() + 1);
+
+    String space;
+
+    byte strW;
+
+    if (getStrWidth(str) > getStrWidth("WW"))
+    {
+        space = " ";
+        strW = getStrWidth(" ");
+    }
+    else
+    {
+        space = "  ";
+        strW = getStrWidth("  ");
+    }
+
+    alignSimbols(getStrWidth(str) + strW + getDigWidth(dig), height, pos_x, pos_y);
+
+    setX = x;
+
+    setCursor(x, y);
+
+    print(str);
+    print(space);
     print(dig);
 }
 

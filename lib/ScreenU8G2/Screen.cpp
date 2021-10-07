@@ -97,15 +97,15 @@ void Screen::bottomLine(Watch &watch, Key &key, Pot &pot)
 {
     if (watch.skip[key.id] && key.screen != key.manual)
     {
-        setHeight(u8g2_font_crox4h_tf);
+        setHeight(u8g2_font_HelvetiPixelOutline_tr);
 
         moveString("SKIP", PosX::center, PosY::downSpace, 2);
     }
 
     else if (key.screen == key.manual)
     {
-        setHeight(u8g2_font_HelvetiPixelOutline_tr);
-        textAlign("MANUAL", PosX::leftHalf, PosY::downSpace);
+        setHeight(u8g2_font_pixelmordred_tf);
+        textAlign("MANUAL", PosX::leftSpace, PosY::downSpace);
 
         brightInfo(pot, key);
     }
@@ -666,10 +666,8 @@ void Screen::allBrightScreen(Pot &pot, Key &key)
             {
                 setHeight(u8g2_font_courB08_tf);
 
-                convertStr(lightColor[i]);
-
                 setY = nextY(lampAmount, i);
-                strDigAlign(str, pot.maxBright[i], PosX::rightHalf, PosY::custom);
+                strDigAlign(lightColor[i], pot.maxBright[i], PosX::rightHalf, PosY::custom);
             }
 
         } while (nextPage());
@@ -697,10 +695,8 @@ void Screen::allBrightScreen(Bright &bright, Key &key)
             {
                 setHeight(u8g2_font_courB08_tf);
 
-                convertStr(lightColor[i]);
-
                 setY = nextY(lampAmount, i);
-                strDigAlign(str, bright.maxBright[i], PosX::rightHalf, PosY::custom);
+                strDigAlign(lightColor[i] , bright.maxBright[i], PosX::rightHalf, PosY::custom);
             }
 
         } while (nextPage());
