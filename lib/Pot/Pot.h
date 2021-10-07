@@ -50,10 +50,17 @@ public:
 
     void autoChangeBright(Watch &watch, Key &key, byte i);
     void autoBright(Watch &watch, Key &key);
-    void manualChangeBright(Key &key);
+    void manualChangeBright(Watch &watch, Key &key);
     void resetAllPots();
+    void changeMaxBright(byte &bright, DigiPot &pot, Key &key, Watch &watch, byte min, byte max);
+
+    void setSetBright(byte &bright, Key &key, byte min, byte max);
+    void setRiseBright(byte &brightRise, Key &key, byte min, byte max);
     void changeMaxBright(Key &key, Watch &watch);
-    void changeBright(byte &bright, DigiPot &pot, Key &key);
+
+    boolean setAllBrigh(Key &key);
+
+    void commands(Watch &watch, Key &key);
 };
 
 #endif

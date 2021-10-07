@@ -13,26 +13,31 @@ void Pot::begin(DigiPot pot[])
     for (byte i = 0; i < lampAmount; i++)
     {
         this->pot[i] = pot[i];
+        pot[i].reset();
+        bright[i] = pot[i].get();
     }
-    resetAllPots();
 }
 
-void Pot::setPot(DigiPot pot[])
+void Pot::brightLevelCount()
 {
+    for (byte i = 0; i < lampAmount; i++)
+    {
+        maxLevel[i] = maxBright[i] - setBright[i];
+    }
 }
 
 void Pot::setMinBright(DigiPot &pot, byte &bright, byte brightRise)
 {
-    if (bright < brightr)
+    if (bright < brightRise)
     {
-        pot.set(autoMinBright);
+        pot.set(brightRise);
         bright = pot.get();
     }
 }
 
 void Pot::resetBright(DigiPot &pot, byte &bright)
 {
-    pot.set(minManualBright);
+    pot.reset();
     bright = pot.get();
 }
 
@@ -53,13 +58,13 @@ void Pot::autoChangeBright(Watch &watch, Key &key, byte i)
 
         if (watch.brightDown[i])
         {
-            if (timer.riseReady(speed, i) && bright[i] > autoMinBright)
+            if (timer.riseReady(speed, i) && bright[i] > setBright[i])
             {
                 pot[i].decrease(1);
                 bright[i] = pot[i].get();
             }
 
-            if (bright[i] == autoMinBright)
+            if (bright[i] == setBright[i])
             {
                 watch.autoSwitch[i] = false;
                 watch.brightDown[i] = false;
@@ -69,8 +74,15 @@ void Pot::autoChangeBright(Watch &watch, Key &key, byte i)
     }
     else if (watch.skip[i] && key.screen != key.manual)
     {
-        pot[i].set(minManualBright);
-        bright[i] = pot[i].get();
+        resetBright(pot[i], bright[i]);
+    }
+}
+
+void Pot::resetAllPots()
+{
+    for (byte i = 0; i < lampAmount; i++)
+    {
+        resetBright(pot[i], bright[i]);
     }
 }
 
@@ -90,70 +102,154 @@ void Pot::autoBright(Watch &watch, Key &key)
     }
 }
 
-void Pot::changeBright(byte &bright, DigiPot &pot, Key &key)
+void Pot::changeMaxBright(byte &bright, DigiPot &pot, Key &key, Watch &watch, byte min, byte max)
 {
     if (key.valChange())
     {
-        if (key.act == key.MINUS && bright > autoMinBright)
+        if (key.act == key.MINUS && bright > min)
         {
             bright--;
-            pot.decrease(1);
+
+            if (!watch.brightDown[key.id] && watch.autoSwitch[key.id])
+            {
+                pot.decrease(1);
+            }
         }
-        else if (key.act == key.PLUS && bright < maxManualBright)
+        else if (key.act == key.PLUS && bright < max)
         {
             bright++;
-            pot.increase(1);
+
+            if (!watch.brightDown[key.id] && watch.autoSwitch[key.id])
+            {
+                pot.increase(1);
+            }
+        }
+
+        if (key.buttonSwitch[key.id])
+        {
+            pot.set(bright);
         }
     }
 }
 
-void Pot::manualChangeBright(Key &key)
+void Pot::manualChangeBright(Watch &watch, Key &key)
 {
     if (key.screen == key.manual)
     {
         if (key.buttonSwitch[key.id])
         {
             setMinBright(pot[key.id], bright[key.id]);
-            changeBright(bright[key.id], pot[key.id], key);
+            changeMaxBright(bright[key.id], pot[key.id], key, watch, minManualBright, maxManualBright);
         }
 
         else
         {
-            pot[key.id].set(minManualBright);
-            bright[key.id] = pot[key.id].get();
+            resetBright(pot[key.id], bright[key.id]);
         }
     }
 }
 
-void Pot::resetAllPots()
+void Pot::setRiseSpeed(Key &key)
 {
-    for (byte i = 0; i < lampAmount; i++)
-    {
-        pot[i].reset();
-        bright[i] = pot[i].get();
-    }
-}
-
-void Pot::changeMaxBright(Key &key, Watch &watch)
-{
-    if (key.changeBright())
-    {
-        key.reBright[key.id] = true;
-    }
-
-    else if (key.screen == key.maxBright)
+    if (key.screen == key.speed)
     {
         if (key.valChange())
         {
-            if (key.act == key.MINUS && maxBright[key.id] > autoMinBright)
-            {
-                maxBright[key.id]--;
-            }
+            key.act == key.MINUS ? speed-- : speed++;
 
-            if (key.act == key.PLUS && maxBright[key.id] < maxManualBright)
-            {
-                maxBright[key.id]++;
-            }
+            if (speed < 0)
+                speed = 255;
+
+            if (speed > 255)
+                speed = 0;
         }
     }
+}
+
+void Pot::setSetBright(byte &bright, Key &key, byte min, byte max)
+{
+    if (key.valChange())
+    {
+        if (key.act == key.MINUS && bright > min)
+        {
+            bright--;
+        }
+
+        else if (key.act == key.PLUS && bright < max)
+        {
+            bright++;
+        }
+
+        bright = constrain(bright, min, max);
+    }
+}
+
+void Pot::setRiseBright(byte &brightRise, Key &key, byte min, byte max)
+{
+    if (key.valChange())
+    {
+        if (key.act == key.MINUS && brightRise > min)
+        {
+            brightRise--;
+        }
+
+        else if (key.act == key.PLUS && brightRise < max)
+        {
+            brightRise++;
+        }
+    }
+}
+
+void Pot::changeBright(Key &key, Watch &watch)
+{
+    if (key.changeBright())
+    {
+        switch (key.screen)
+        {
+        case key.maxBright:
+
+            changeMaxBright(maxBright[key.id], pin[key.id], key, watch, riseBright[key.id], maxManualBright);
+            break;
+
+        case key.riseBright:
+
+            setRiseBright(riseBright[key.id], key, minManualBright, maxBright[key.id]);
+            break;
+
+        case key.setBright:
+
+            setSetBright(setBright[key.id], key, minManualBright, maxBright[key.id]);
+            break;
+
+        default:
+            break;
+        }
+    }
+}
+
+boolean Pot::setAllBrigh(Key &key)
+{
+    if (key.allBrigh())
+    {
+        if (key.act == key.MINUS && allBrigh > 0)
+            allBrigh--;
+
+        else if (key.act == key.PLUS && allBrigh < maxAllBright)
+            allBrigh++;
+    }
+
+    if (key.screen == key.bright)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+void Pot::commands(Watch &watch, Key &key)
+{
+    autoBright(watch, key);
+    manualChangeBright(watch, key);
+    changeBright(key, watch);
+    setRiseSpeed(key);
 }
