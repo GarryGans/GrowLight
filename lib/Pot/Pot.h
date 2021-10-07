@@ -56,7 +56,7 @@ public:
 
     void setSetBright(byte &bright, Key &key, byte min, byte max);
     void setRiseBright(byte &brightRise, Key &key, byte min, byte max);
-    void changeMaxBright(Key &key, Watch &watch);
+    void changeBright(Key &key, Watch &watch);
 
     boolean setAllBrigh(Key &key);
 

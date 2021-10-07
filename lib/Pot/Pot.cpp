@@ -47,7 +47,7 @@ void Pot::autoChangeBright(Watch &watch, Key &key, byte i)
     {
         if (!watch.brightDown[i])
         {
-            setMinBright(pot[i], bright[i]);
+            setMinBright(pot[i], bright[i], riseBright[i]);
 
             if (timer.riseReady(speed, i) && bright[i] < maxBright[i])
             {
@@ -138,7 +138,7 @@ void Pot::manualChangeBright(Watch &watch, Key &key)
     {
         if (key.buttonSwitch[key.id])
         {
-            setMinBright(pot[key.id], bright[key.id]);
+            setMinBright(pot[key.id], bright[key.id], riseBright[key.id]);
             changeMaxBright(bright[key.id], pot[key.id], key, watch, minManualBright, maxManualBright);
         }
 
@@ -208,7 +208,7 @@ void Pot::changeBright(Key &key, Watch &watch)
         {
         case key.maxBright:
 
-            changeMaxBright(maxBright[key.id], pin[key.id], key, watch, riseBright[key.id], maxManualBright);
+            changeMaxBright(maxBright[key.id], pot[key.id], key, watch, riseBright[key.id], maxManualBright);
             break;
 
         case key.riseBright:
