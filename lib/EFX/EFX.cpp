@@ -256,6 +256,8 @@ void EFX::strDigAlign(const String string, byte dig, PosX pos_x, PosY pos_y)
         strW = getStrWidth("  ");
     }
 
+    
+
     alignSimbols(getStrWidth(str) + strW + getDigWidth(dig), height, pos_x, pos_y);
 
     setX = x;
