@@ -374,9 +374,20 @@ boolean Key::dayReduration()
     return reDay;
 }
 
-void Key::skipEnable(boolean &skip)
+boolean Key::setVoltage()
 {
     if (justPressed() && getNum == 4)
+    {
+        screen = voltage;
+        return true;
+    }
+
+    return false;
+}
+
+void Key::skipEnable(boolean &skip)
+{
+    if (screen == lamp && ok())
     {
         autoMove = false;
 
@@ -384,12 +395,11 @@ void Key::skipEnable(boolean &skip)
         {
             skip = true;
         }
+
         else
         {
             skip = false;
         }
-
-        screen = lamp;
 
         writeSkip = true;
     }

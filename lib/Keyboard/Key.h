@@ -32,7 +32,8 @@ private:
         watch,
         speed,
         interval,
-        bright
+        bright,
+        voltage
     } screen = start;
 
     enum Direction
@@ -89,7 +90,7 @@ public:
 
     void menuScreen(Screen start, Screen end);
 
-    boolean autoOk(Screen screen );
+    boolean autoOk(Screen screen);
     void setScreens();
     boolean chekSet(Screen screen);
     void keyCommands();
@@ -101,6 +102,8 @@ public:
 
     void skipEnable(boolean &skip);
     void manualSwitchLight();
+
+    boolean setVoltage();
 
     boolean ok();
     boolean valChange();

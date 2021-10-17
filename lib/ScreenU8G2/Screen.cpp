@@ -696,11 +696,15 @@ void Screen::allBrightScreen(Bright &bright, Key &key)
                 setHeight(u8g2_font_courB08_tf);
 
                 setY = nextY(lampAmount, i);
-                strDigAlign(lightColor[i] , bright.maxBright[i], PosX::rightHalf, PosY::custom);
+                strDigAlign(lightColor[i], bright.maxBright[i], PosX::rightHalf, PosY::custom);
             }
 
         } while (nextPage());
     }
+}
+
+void Screen::voltageScreen(Key &key)
+{
 }
 
 void Screen::screens(Watch &watch, Switchers &switchers, Key &key, Pot &pot)

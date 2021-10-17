@@ -83,6 +83,8 @@ public:
     void allBrightScreen(Pot &pot, Key &key);
     void allBrightScreen(Bright &bright, Key &key);
 
+    void voltageScreen(Key &key);
+
     void startScreen(Watch &watch, Key &key);
 
     void screens(Watch &watch, Switchers &switchers, Key &key, Pot &pot);
