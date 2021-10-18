@@ -84,7 +84,15 @@ public:
 
     byte nextY(byte num, byte id);
 
-    byte getDigWidth(byte value);
+    byte getDigWidth(int value);
+    // template <typename T>
+    // byte getDigWidth(T value)
+    // {
+    //     char val[4];
+    //     String(value).toCharArray(val, 4);
+
+    //     return getStrWidth(val);
+    // }
 
     void alignSimbols(byte WH, byte H, PosX pos_x, PosY pos_y);
     void frameAlign(byte W, byte H, PosX pos_x, PosY pos_y);
@@ -93,7 +101,15 @@ public:
     void strDigAlign(const char *string, byte dig, PosX pos_x, PosY pos_y);
     void strDigAlign(const String string, byte dig, PosX pos_x, PosY pos_y);
 
-    void digAlign(byte dig, PosX pos_x, PosY pos_y);
+    // template <typename T>
+    void digAlign(int dig, PosX pos_x, PosY pos_y);
+    // {
+    //     alignSimbols(getDigWidth(dig), height, pos_x, pos_y);
+
+    //     setCursor(x, y);
+    //     print((int)dig);
+    // }
+
     void setPosition(const char *format, PosX pos_x, PosY pos_y);
     void textAlign(const char *string, PosX pos_x, PosY pos_y);
     void stringAlign(String str, byte size, PosX pos_x, PosY pos_y);
@@ -103,7 +119,7 @@ public:
     void moveString(const char *string, PosX pos_x, PosY pos_y, byte id);
     void escapeBar();
 
-    void blinkFrame(byte value, boolean dig, PosX pos_x, PosY pos_y, boolean tempBlock);
+    void blinkFrame(int value, boolean dig, PosX pos_x, PosY pos_y, boolean tempBlock);
     void blinkFrame(const char *format, byte digAmount, PosX pos_x, PosY pos_y, boolean tempBlock);
 };
 

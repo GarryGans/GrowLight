@@ -136,6 +136,7 @@ void Bright::manualChangeBright(Watch &watch, Key &key)
     {
         if (key.buttonSwitch[key.id])
         {
+            key.screen == key.voltage;
             changeMaxBright(bright[key.id], pin[key.id], key, watch, minManualBright, maxManualBright);
         }
 

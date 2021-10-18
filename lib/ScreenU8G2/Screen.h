@@ -12,6 +12,7 @@
 #include <Pot.h>
 #include <Bright.h>
 #include <EFX.h>
+#include <Voltage.h>
 
 // class Screen : public U8G2_SH1106_128X64_NONAME_1_HW_I2C
 class Screen : public EFX
@@ -83,7 +84,7 @@ public:
     void allBrightScreen(Pot &pot, Key &key);
     void allBrightScreen(Bright &bright, Key &key);
 
-    void voltageScreen(Key &key);
+    void voltageScreen(Bright &bright, Voltage &voltage, Key &key);
 
     void startScreen(Watch &watch, Key &key);
 

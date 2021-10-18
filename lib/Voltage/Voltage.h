@@ -2,14 +2,15 @@
 #define Voltage_H
 
 #include <Arduino.h>
+#include <Data.h>
 
 class Voltage
 {
     friend class Screen;
 
 private:
-    byte volt;
-    int ampere;
+    byte volt[lampAmount];
+    int ampere[lampAmount];
 
 public:
     Voltage();

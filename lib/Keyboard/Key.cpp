@@ -29,7 +29,7 @@ Key::Screen Key::changeScreen()
 {
     if (direction == FORWARD)
     {
-        screen = (Screen)(Key::screen + 1);
+        screen = (Screen)(screen + 1);
     }
 
     else if (direction == BACK)

@@ -137,7 +137,7 @@ byte EFX::nextY(byte num, byte id)
     return Y;
 }
 
-byte EFX::getDigWidth(byte value)
+byte EFX::getDigWidth(int value)
 {
     char val[4];
     String(value).toCharArray(val, 4);
@@ -256,8 +256,6 @@ void EFX::strDigAlign(const String string, byte dig, PosX pos_x, PosY pos_y)
         strW = getStrWidth("  ");
     }
 
-    
-
     alignSimbols(getStrWidth(str) + strW + getDigWidth(dig), height, pos_x, pos_y);
 
     setX = x;
@@ -269,7 +267,8 @@ void EFX::strDigAlign(const String string, byte dig, PosX pos_x, PosY pos_y)
     print(dig);
 }
 
-void EFX::digAlign(byte dig, PosX pos_x, PosY pos_y)
+// template <typename T>
+void EFX::digAlign(int dig, PosX pos_x, PosY pos_y)
 {
     alignSimbols(getDigWidth(dig), height, pos_x, pos_y);
 
@@ -302,7 +301,7 @@ void EFX::frameAlign(byte W, byte H, PosX pos_x, PosY pos_y)
     drawFrame(x, y, W, H);
 }
 
-void EFX::blinkFrame(byte value, boolean dig, PosX pos_x, PosY pos_y, boolean tempBlock)
+void EFX::blinkFrame(int value, boolean dig, PosX pos_x, PosY pos_y, boolean tempBlock)
 {
     if (!tempBlock)
     {

@@ -703,8 +703,40 @@ void Screen::allBrightScreen(Bright &bright, Key &key)
     }
 }
 
-void Screen::voltageScreen(Key &key)
+void Screen::voltageScreen(Bright &bright, Voltage &voltage, Key &key)
 {
+    if (key.screen == key.voltage)
+    {
+        firstPage();
+        do
+        {
+            setHeight(u8g2_font_pressstart2p_8f);
+
+            moveString("PWM", PosX::leftSpace, PosY::upSpace, 4);
+
+            setHeight(u8g2_font_ncenB18_tf);
+
+            digAlign(bright.maxBright[key.id], PosX::leftHalf, PosY::center);
+
+            blinkFrame(bright.maxBright[key.id], false, PosX::leftHalf, PosY::centerFrame, key.valChange());
+
+            setHeight(u8g2_font_pressstart2p_8f);
+
+            moveString("MW", PosX::rightSpace, PosY::upSpace, 4);
+
+            setHeight(u8g2_font_ncenB18_tf);
+
+            digAlign(voltage.ampere[key.id], PosX::rightHalf, PosY::center);
+
+            blinkFrame(voltage.ampere[key.id], false, PosX::rightHalf, PosY::centerFrame, key.valChange());
+
+        } while (nextPage());
+
+        if (timer.ready())
+        {
+            key.screen = key.manual;
+        }
+    }
 }
 
 void Screen::screens(Watch &watch, Switchers &switchers, Key &key, Pot &pot)
