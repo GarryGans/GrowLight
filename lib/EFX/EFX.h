@@ -85,14 +85,6 @@ public:
     byte nextY(byte num, byte id);
 
     byte getDigWidth(int value);
-    // template <typename T>
-    // byte getDigWidth(T value)
-    // {
-    //     char val[4];
-    //     String(value).toCharArray(val, 4);
-
-    //     return getStrWidth(val);
-    // }
 
     void alignSimbols(byte WH, byte H, PosX pos_x, PosY pos_y);
     void frameAlign(byte W, byte H, PosX pos_x, PosY pos_y);
@@ -101,14 +93,7 @@ public:
     void strDigAlign(const char *string, byte dig, PosX pos_x, PosY pos_y);
     void strDigAlign(const String string, byte dig, PosX pos_x, PosY pos_y);
 
-    // template <typename T>
     void digAlign(int dig, PosX pos_x, PosY pos_y);
-    // {
-    //     alignSimbols(getDigWidth(dig), height, pos_x, pos_y);
-
-    //     setCursor(x, y);
-    //     print((int)dig);
-    // }
 
     void setPosition(const char *format, PosX pos_x, PosY pos_y);
     void textAlign(const char *string, PosX pos_x, PosY pos_y);

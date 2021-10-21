@@ -229,13 +229,9 @@ void Pot::changeBright(Key &key, Watch &watch)
 
 boolean Pot::setAllBrigh(Key &key)
 {
-    if (key.allBrigh())
+    if (key.allBrigh(allBrigh, 0,99))
     {
-        if (key.act == key.MINUS && allBrigh > 0)
-            allBrigh--;
-
-        else if (key.act == key.PLUS && allBrigh < maxAllBright)
-            allBrigh++;
+        
     }
 
     if (key.screen == key.bright)

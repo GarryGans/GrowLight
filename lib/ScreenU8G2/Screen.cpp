@@ -731,11 +731,6 @@ void Screen::voltageScreen(Bright &bright, Voltage &voltage, Key &key)
             blinkFrame(voltage.ampere[key.id], false, PosX::rightHalf, PosY::centerFrame, key.valChange());
 
         } while (nextPage());
-
-        if (timer.ready())
-        {
-            key.screen = key.manual;
-        }
     }
 }
 

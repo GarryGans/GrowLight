@@ -132,16 +132,19 @@ void Bright::changeMaxBright(byte &bright, byte pin, Key &key, Watch &watch, byt
 
 void Bright::manualChangeBright(Watch &watch, Key &key)
 {
-    if (key.screen == key.manual)
+    if (key.screen == key.manual || key.screen == key.voltage)
     {
         if (key.buttonSwitch[key.id])
         {
-            key.screen == key.voltage;
+            key.screen = key.voltage;
+
             changeMaxBright(bright[key.id], pin[key.id], key, watch, minManualBright, maxManualBright);
+            maxBright[key.id] = bright[key.id];
         }
 
         else
         {
+            key.screen = key.manual;
             resetBright(pin[key.id], bright[key.id]);
         }
     }
@@ -227,21 +230,7 @@ void Bright::changeBright(Key &key, Watch &watch)
 
 boolean Bright::setAllBrigh(Key &key)
 {
-    if (key.allBrigh())
-    {
-        if (key.act == key.MINUS && allBrigh > 0)
-            allBrigh--;
-
-        else if (key.act == key.PLUS && allBrigh < maxAllBright)
-            allBrigh++;
-    }
-
-    if (key.screen == key.bright)
-    {
-        return true;
-    }
-
-    return false;
+    return key.allBrigh(allBrigh, 0, 99);
 }
 
 void Bright::commands(Watch &watch, Key &key)

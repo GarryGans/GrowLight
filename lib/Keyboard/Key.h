@@ -48,12 +48,13 @@ private:
         MINUS
     } act;
 
-    boolean reset;
     boolean autoMove;
 
     boolean buttonSwitch[lampAmount];
     boolean reduration[lampAmount];
     boolean reDay;
+
+    boolean resetCounter;
 
     boolean resetManualPot;
     boolean resetManualBright;
@@ -107,6 +108,8 @@ public:
 
     boolean ok();
     boolean valChange();
+    // boolean valChange(int &val, int min, int max);
+
     boolean navigation();
 
     boolean spectrumReDuration();
@@ -114,7 +117,10 @@ public:
     boolean dayReduration();
     boolean setWatch();
     void setSpeed();
-    boolean allBrigh();
+    boolean allBrigh(byte &val, byte min, byte max);
+
+    template <typename T>
+    boolean valChange(T &val, T min, T max);
 };
 
 #endif

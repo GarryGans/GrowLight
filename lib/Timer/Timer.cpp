@@ -24,19 +24,6 @@ boolean Timer::minusCounter(byte &counter)
     return false;
 }
 
-// boolean Timer::ready(byte counter)
-// {
-//     static byte count = counter;
-
-//     if (minusCounter(count))
-//     {
-//         count = counter;
-//         return true;
-//     }
-
-//     return false;
-// }
-
 boolean Timer::ready(byte counter, boolean reset)
 {
     static byte count;
@@ -46,13 +33,13 @@ boolean Timer::ready(byte counter, boolean reset)
     if (reset || !flag)
     {
         count = counter;
-        Serial.println("good");
         flag = true;
     }
 
     if (minusCounter(count))
     {
         count = counter;
+        flag = false;
         return true;
     }
 

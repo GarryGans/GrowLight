@@ -16,7 +16,7 @@ boolean Key::autoOk(Screen screen)
 {
     if (this->screen == screen)
     {
-        if (timer.ready(5, reset))
+        if (timer.ready(5, resetCounter))
         {
             return true;
         }
@@ -158,7 +158,6 @@ boolean Key::valChange()
         if (getNum == 6)
         {
             act = MINUS;
-            reset = true;
 
             return true;
         }
@@ -166,7 +165,29 @@ boolean Key::valChange()
         else if (getNum == 15)
         {
             act = PLUS;
-            reset = true;
+
+            return true;
+        }
+    }
+
+    return false;
+}
+
+template <typename T>
+boolean Key::valChange(T &val, T min, T max)
+{
+    if (onHold() || justPressed())
+    {
+        if (getNum == 6 && val > min)
+        {
+            val--;
+
+            return true;
+        }
+
+        else if (getNum == 15 && val < max)
+        {
+            val++;
 
             return true;
         }
@@ -407,7 +428,7 @@ void Key::skipEnable(boolean &skip)
 
 void Key::manualSwitchLight()
 {
-    if (justPressed() && getNum == 1)
+    if (isHold() && getNum == 1)
     {
         if (chekSet(manual))
         {
@@ -426,40 +447,54 @@ void Key::manualSwitchLight()
         }
     }
 
-    if (screen == manual && ok())
+    if (screen == manual)
     {
-        if (!buttonSwitch[id])
+        if (justPressed() && getNum == 1)
         {
-            buttonSwitch[id] = true;
-        }
+            if (!buttonSwitch[id])
+            {
+                buttonSwitch[id] = true;
+            }
 
-        else
-        {
-            buttonSwitch[id] = false;
+            else
+            {
+                buttonSwitch[id] = false;
+            }
         }
+    }
+
+    if (screen == voltage && ok())
+    {
+        writeBright = true;
     }
 }
 
-boolean Key::allBrigh()
+boolean Key::allBrigh(byte &val, byte min, byte max)
 {
-    if (valChange())
+    if (valChange(val, min, max))
     {
         if (screen == lamp)
         {
             screen = bright;
         }
 
-        return true;
+        resetCounter = true;
+    }
+    
+    else
+    {
+        resetCounter = false;
     }
 
-    else if (autoOk(bright) && !reset)
+    if (autoOk(bright))
     {
         writeAllBright = true;
         screen = lamp;
     }
-    else
+
+    if (screen == bright)
     {
-        reset = false;
+        return true;
     }
 
     return false;
