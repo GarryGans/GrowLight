@@ -32,6 +32,8 @@ private:
     int interval_addr;
     int speed_addr;
 
+    byte zero = 0;
+
 public:
     Memory();
     ~Memory();
@@ -39,9 +41,12 @@ public:
     void begin(Watch &watch, Pot &pot);
     void begin(Watch &watch, Bright &bright);
 
-    void read(int &addr, unsigned int &var, unsigned int minValue, unsigned int maxValue);
-    void read(int &addr, byte &var, byte minValue, byte maxValue);
-    void read(int &addr, boolean &var, boolean minValue, boolean maxValue);
+    template <typename type>
+    void read(int &addr, type &var, type minValue, type maxValue);
+
+    // void read(int &addr, unsigned int &var, unsigned int minValue, unsigned int maxValue);
+    // void read(int &addr, byte &var, byte minValue, byte maxValue);
+    // void read(int &addr, boolean &var, boolean minValue, boolean maxValue);
 
     void readEachSkip(Watch &watch);
 

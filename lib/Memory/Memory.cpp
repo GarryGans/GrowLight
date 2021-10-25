@@ -8,7 +8,8 @@ Memory::~Memory()
 {
 }
 
-void Memory::read(int &addr, unsigned int &var, unsigned int minValue, unsigned int maxValue)
+template <typename type>
+void Memory::read(int &addr, type &var, type minValue, type maxValue)
 {
     addr = startAddr;
 
@@ -19,27 +20,38 @@ void Memory::read(int &addr, unsigned int &var, unsigned int minValue, unsigned 
     startAddr = addr + sizeof(var);
 }
 
-void Memory::read(int &addr, byte &var, byte minValue, byte maxValue)
-{
-    addr = startAddr;
+// void Memory::read(int &addr, unsigned int &var, unsigned int minValue, unsigned int maxValue)
+// {
+//     addr = startAddr;
 
-    EEPROM.get(addr, var);
+//     EEPROM.get(addr, var);
 
-    var = constrain(var, minValue, maxValue);
+//     var = constrain(var, minValue, maxValue);
 
-    startAddr = addr + sizeof(var);
-}
+//     startAddr = addr + sizeof(var);
+// }
 
-void Memory::read(int &addr, boolean &var, boolean minValue, boolean maxValue)
-{
-    addr = startAddr;
+// void Memory::read(int &addr, byte &var, byte minValue, byte maxValue)
+// {
+//     addr = startAddr;
 
-    EEPROM.get(addr, var);
+//     EEPROM.get(addr, var);
 
-    var = constrain(var, minValue, maxValue);
+//     var = constrain(var, minValue, maxValue);
 
-    startAddr = addr + sizeof(var);
-}
+//     startAddr = addr + sizeof(var);
+// }
+
+// void Memory::read(int &addr, boolean &var, boolean minValue, boolean maxValue)
+// {
+//     addr = startAddr;
+
+//     EEPROM.get(addr, var);
+
+//     var = constrain(var, minValue, maxValue);
+
+//     startAddr = addr + sizeof(var);
+// }
 
 void Memory::readEachSkip(Watch &watch)
 {
@@ -53,10 +65,14 @@ void Memory::readEachTime(Watch &watch)
 {
     for (byte id = 0; id < lampAmount; id++)
     {
-        read(startHour_addr[id], watch.startHour[id], 0, 23);
-        read(startMinute_addr[id], watch.startMinute[id], 0, 59);
-        read(finishHour_addr[id], watch.finishHour[id], 0, 23);
-        read(finishMinute_addr[id], watch.finishMinute[id], 0, 59);
+        byte zero = 0,
+             min = 59,
+             hour = 23;
+
+        read(startHour_addr[id], watch.startHour[id], zero, hour);
+        read(startMinute_addr[id], watch.startMinute[id], zero, min);
+        read(finishHour_addr[id], watch.finishHour[id], zero, hour);
+        read(finishMinute_addr[id], watch.finishMinute[id], zero, min);
     }
 }
 
@@ -233,9 +249,10 @@ void Memory::begin(Watch &watch, Pot &pot)
     readEachBright(pot);
     readEachTime(watch);
     readEachSkip(watch);
-    read(speed_addr, pot.speed, 0, 99);
-    read(interval_addr, watch.interval, 0, 99);
-    read(allBright_addr, pot.allBrigh, 0, pot.maxAllBright);
+    byte max = 99;
+    read(speed_addr, pot.speed, zero, max);
+    // read(interval_addr, watch.interval,  int(zero),  int(max));
+    read(allBright_addr, pot.allBrigh, zero, pot.maxAllBright);
 }
 
 void Memory::begin(Watch &watch, Bright &bright)
@@ -243,7 +260,8 @@ void Memory::begin(Watch &watch, Bright &bright)
     readEachBright(bright);
     readEachTime(watch);
     readEachSkip(watch);
-    read(speed_addr, bright.speed, 0, 255);
-    read(interval_addr, watch.interval, 0, 255);
-    read(allBright_addr, bright.allBrigh, 0, bright.maxAllBright);
+    byte max = 255;
+    read(speed_addr, bright.speed, zero, max);
+    read(interval_addr, watch.interval, int(zero), int(max));
+    read(allBright_addr, bright.allBrigh, zero, bright.maxAllBright);
 }

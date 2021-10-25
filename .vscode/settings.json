@@ -1,0 +1,16 @@
+{
+    "files.associations": {
+        "vector": "cpp",
+        "bitset": "cpp",
+        "exception": "cpp",
+        "ios": "cpp",
+        "istream_helpers": "cpp",
+        "locale": "cpp",
+        "string": "cpp",
+        "cstring": "cpp",
+        "iosfwd": "cpp",
+        "support": "cpp",
+        "istream": "cpp",
+        "serstream": "cpp"
+    }
+}

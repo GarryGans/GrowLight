@@ -14,18 +14,21 @@
 #include <EFX.h>
 #include <Voltage.h>
 
+#include <time.h>
+
 // class Screen : public U8G2_SH1106_128X64_NONAME_1_HW_I2C
 class Screen : public EFX
 
 {
 private:
+    // EFX efx;
     Timer timer;
     String WavelengthSMD[lampAmount];
     String lightColor[lampAmount];
-    const char *state[2] = {"OFF", "ON"};
+    const String state[2] = {"OFF", "ON"};
     // const char *advise[2] = {"Set SunTime", "Set MaxBright"};
 
-    char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+    const String daysOfTheWeek[7] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
 public:
     Screen(String WavelengthSMD[], String lightColor[]);

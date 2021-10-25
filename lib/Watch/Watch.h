@@ -47,7 +47,7 @@ private:
     boolean brightDown[lampAmount];
 
     int intervalDefault = 0;
-    unsigned int interval;
+     int interval;
 
     byte startHour[lampAmount];
     byte startMinute[lampAmount];

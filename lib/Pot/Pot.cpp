@@ -49,7 +49,7 @@ void Pot::autoChangeBright(Watch &watch, Key &key, byte i)
         {
             setMinBright(pot[i], bright[i], riseBright[i]);
 
-            if (timer.riseReady(speed, i) && bright[i] < maxBright[i])
+            if (timer.wait(speed * 10) && bright[i] < maxBright[i])
             {
                 pot[i].increase(1);
                 bright[i] = pot[i].get();
@@ -58,7 +58,7 @@ void Pot::autoChangeBright(Watch &watch, Key &key, byte i)
 
         if (watch.brightDown[i])
         {
-            if (timer.riseReady(speed, i) && bright[i] > setBright[i])
+            if (timer.wait(speed * 10) && bright[i] > setBright[i])
             {
                 pot[i].decrease(1);
                 bright[i] = pot[i].get();
@@ -229,9 +229,8 @@ void Pot::changeBright(Key &key, Watch &watch)
 
 boolean Pot::setAllBrigh(Key &key)
 {
-    if (key.allBrigh(allBrigh, 0,99))
+    if (key.allBrigh(allBrigh, 0, 99))
     {
-        
     }
 
     if (key.screen == key.bright)

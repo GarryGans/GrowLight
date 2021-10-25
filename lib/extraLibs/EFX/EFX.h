@@ -4,19 +4,25 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include <U8g2lib.h>
-
 #include <Timer.h>
+// #include <Vector.h>
+#include <ArduinoSTL.h>
+#include <vector>
+
+using namespace std;
 
 // class EFX : public U8G2_SSD1306_128X64_NONAME_1_HW_I2C
 class EFX : public U8G2_SH1106_128X64_NONAME_1_HW_I2C
-
 {
 private:
     Timer timer;
-    Timer run[10];
 
-    const byte screenWidth = 128;
-    const byte screenHeight = 64;
+    Timer run;
+
+    unsigned long blinkMil = 500;
+
+    byte screenWidth = getWidth();
+    byte screenHeight = getHeight();
 
     byte borderW;
     byte borderH;
@@ -29,12 +35,15 @@ private:
 
     byte blockWidth;
 
-    byte move_x[10];
-    boolean move[10];
-    boolean moveLeft[10];
-    boolean moveRight[10];
-    byte start_x[10];
-    byte start_y[10];
+    boolean escBar;
+
+    // byte id = 0;
+    // byte move_x;
+    // boolean move;
+    // boolean moveLeft;
+    // boolean moveRight;
+    // byte start_x;
+    // byte start_y;
 
     int icon;
     int lock = 79;
@@ -79,12 +88,26 @@ public:
         custom
     } pos_y;
 
+    struct moveStr
+    {
+        String string;
+        PosX pos_x;
+        PosY pos_y;
+        int speed;
+        bool operator==(const moveStr &) const;
+    };
+
+    vector<moveStr> strMov;
+    // moveStr strTemp;
+    // moveStr str;
+
     EFX();
     ~EFX();
 
     byte nextY(byte num, byte id);
 
-    byte getDigWidth(int value);
+    template <typename type>
+    byte getDigWidth(type value);
 
     void alignSimbols(byte WH, byte H, PosX pos_x, PosY pos_y);
     void frameAlign(byte W, byte H, PosX pos_x, PosY pos_y);
@@ -93,18 +116,25 @@ public:
     void strDigAlign(const char *string, byte dig, PosX pos_x, PosY pos_y);
     void strDigAlign(const String string, byte dig, PosX pos_x, PosY pos_y);
 
-    void digAlign(int dig, PosX pos_x, PosY pos_y);
+    template <typename type>
+    void digAlign(type dig, PosX pos_x, PosY pos_y);
+    void digAlign(byte dig, PosX pos_x, PosY pos_y);
 
     void setPosition(const char *format, PosX pos_x, PosY pos_y);
+    void setPosition(const String format, PosX pos_x, PosY pos_y);
+
     void textAlign(const char *string, PosX pos_x, PosY pos_y);
-    void stringAlign(String str, byte size, PosX pos_x, PosY pos_y);
+
+    void stringAlign(String str, PosX pos_x, PosY pos_y);
+
     void setHeight(const uint8_t *font);
 
-    void mover(byte &move_x, byte deep_x, byte id);
-    void moveString(const char *string, PosX pos_x, PosY pos_y, byte id);
+    void mover(byte &move_x, byte deep_x, boolean &moveLeft, boolean &moveRight, byte start_x);
+    void moveString(const String string, PosX pos_x, PosY pos_y, int speed = 50);
     void escapeBar();
 
     void blinkFrame(int value, boolean dig, PosX pos_x, PosY pos_y, boolean tempBlock);
+
     void blinkFrame(const char *format, byte digAmount, PosX pos_x, PosY pos_y, boolean tempBlock);
 };
 

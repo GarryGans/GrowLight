@@ -10,7 +10,7 @@ Timer::~Timer()
 
 boolean Timer::minusCounter(byte &counter)
 {
-    if (wait(prewCounter, sec))
+    if (wait(sec))
     {
         if (counter > 0)
         {
@@ -26,52 +26,50 @@ boolean Timer::minusCounter(byte &counter)
 
 boolean Timer::ready(byte counter, boolean reset)
 {
-    static byte count;
+    // static boolean first;
 
-    static boolean flag;
-
-    if (reset || !flag)
+    if (reset || !first2)
     {
         count = counter;
-        flag = true;
+        first2 = true;
     }
 
     if (minusCounter(count))
     {
         count = counter;
-        flag = false;
+        first2 = false;
         return true;
     }
 
     return false;
 }
 
-boolean Timer::wait(unsigned long &prew, unsigned long set)
+boolean Timer::wait(unsigned long set)
 {
+    if (!first)
+    {
+        first = true;
+        prew = millis();
+    }
+
     if (millis() - prew >= set)
     {
-        prew = millis();
+        // prew = millis();
+        first = false;
         return true;
     }
+
     return false;
 }
 
-boolean Timer::riseReady(byte speed, byte id)
+boolean Timer::alternation(unsigned long set)
 {
-    return wait(prewBright[id], speed * 10);
-}
+    // static boolean blink;
 
-boolean Timer::blinkReady()
-{
-    if (millis() - prewBlink >= blinkMil)
+    if (wait(set))
     {
-        blink = wait(prewBlink, blinkMil * 2);
+        blink = wait(set * 2);
     }
 
     return blink;
-}
-
-boolean Timer::moveReady()
-{
-    return move = wait(prewMove, sec / 20);
 }

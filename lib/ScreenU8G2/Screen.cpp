@@ -99,7 +99,7 @@ void Screen::bottomLine(Watch &watch, Key &key, Pot &pot)
     {
         setHeight(u8g2_font_HelvetiPixelOutline_tr);
 
-        moveString("SKIP", PosX::center, PosY::downSpace, 2);
+        moveString("SKIP", PosX::center, PosY::downSpace);
     }
 
     else if (key.screen == key.manual)
@@ -126,7 +126,7 @@ void Screen::bottomLine(Watch &watch, Key &key, Bright &bright)
     {
         setHeight(u8g2_font_crox4h_tf);
 
-        moveString("SKIP", PosX::center, PosY::downSpace, 3);
+        moveString("SKIP", PosX::center, PosY::downSpace, 10);
     }
 
     else if (key.screen == key.manual)
@@ -151,16 +151,16 @@ void Screen::lampInfo(Watch &watch, Key &key)
 {
     setHeight(u8g2_font_courB08_tf);
 
-    char string[12];
-    String(WavelengthSMD[key.id]).toCharArray(string, 12);
+    // char string[12];
+    // String(WavelengthSMD[key.id]).toCharArray(string, 12);
 
-    moveString(string, PosX::center, PosY::upHalf, 0);
+    moveString(WavelengthSMD[key.id], PosX::center, PosY::upHalf);
 
     setHeight(u8g2_font_crox5tb_tf);
 
-    stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
+    stringAlign(lightColor[key.id], PosX::leftHalf, PosY::center);
 
-    stringAlign(state[watch.autoSwitch[key.id] || key.buttonSwitch[key.id]], 4, PosX::rightHalf, PosY::center);
+    stringAlign(state[watch.autoSwitch[key.id] || key.buttonSwitch[key.id]], PosX::rightHalf, PosY::center);
 }
 
 void Screen::headerTime(Watch &watch)
@@ -184,8 +184,7 @@ void Screen::headerDate(Watch &watch)
 
     printDate(now.day(), now.month(), now.year());
 
-    // setY = 16;
-    textAlign(daysOfTheWeek[now.dayOfTheWeek()], PosX::leftHalf, PosY::upHalf);
+    stringAlign(daysOfTheWeek[now.dayOfTheWeek()], PosX::leftHalf, PosY::upHalf);
 }
 
 void Screen::setScreen(Pot &pot, Key &key)
@@ -197,11 +196,11 @@ void Screen::setScreen(Pot &pot, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Set Set", PosX::center, PosY::upSpace, 4);
+            moveString("Set Set", PosX::center, PosY::upSpace);
 
             setHeight(u8g2_font_ncenB18_tf);
 
-            stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
+            stringAlign(lightColor[key.id], PosX::leftHalf, PosY::center);
 
             digAlign(pot.setBright[key.id], PosX::rightHalf, PosY::center);
 
@@ -220,11 +219,11 @@ void Screen::setScreen(Bright &brigth, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Set Set", PosX::center, PosY::upSpace, 4);
+            moveString("Set Set", PosX::center, PosY::upSpace);
 
             setHeight(u8g2_font_ncenB18_tf);
 
-            stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
+            stringAlign(lightColor[key.id], PosX::leftHalf, PosY::center);
 
             digAlign(brigth.setBright[key.id], PosX::rightHalf, PosY::center);
 
@@ -243,11 +242,11 @@ void Screen::riseScreen(Pot &pot, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Set Rise", PosX::center, PosY::upSpace, 4);
+            moveString("Set Rise", PosX::center, PosY::upSpace);
 
             setHeight(u8g2_font_ncenB18_tf);
 
-            stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
+            stringAlign(lightColor[key.id], PosX::leftHalf, PosY::center);
 
             digAlign(pot.riseBright[key.id], PosX::rightHalf, PosY::center);
 
@@ -266,11 +265,11 @@ void Screen::riseScreen(Bright &brigth, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Set Rise", PosX::center, PosY::upSpace, 4);
+            moveString("Set Rise", PosX::center, PosY::upSpace, 10);
 
             setHeight(u8g2_font_ncenB18_tf);
 
-            stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
+            stringAlign(lightColor[key.id], PosX::leftHalf, PosY::center);
 
             digAlign(brigth.riseBright[key.id], PosX::rightHalf, PosY::center);
 
@@ -289,11 +288,11 @@ void Screen::maxBrightScreen(Pot &pot, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Set MaxBright", PosX::center, PosY::upSpace, 4);
+            moveString("Set MaxBright", PosX::center, PosY::upSpace);
 
             setHeight(u8g2_font_ncenB18_tf);
 
-            stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
+            stringAlign(lightColor[key.id], PosX::leftHalf, PosY::center);
 
             digAlign(pot.maxBright[key.id], PosX::rightHalf, PosY::center);
 
@@ -312,11 +311,11 @@ void Screen::maxBrightScreen(Bright &bright, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Set MaxBright", PosX::center, PosY::upSpace, 4);
+            moveString("Set MaxBright", PosX::center, PosY::upSpace);
 
             setHeight(u8g2_font_ncenB18_tf);
 
-            stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
+            stringAlign(lightColor[key.id], PosX::leftHalf, PosY::center);
 
             digAlign(bright.maxBright[key.id], PosX::rightHalf, PosY::center);
 
@@ -353,7 +352,7 @@ void Screen::timerScreen(Watch &watch, Key &key)
         {
             setHeight(u8g2_font_ncenB18_tf);
 
-            stringAlign(lightColor[key.id], 4, PosX::leftHalf, PosY::center);
+            stringAlign(lightColor[key.id], PosX::leftHalf, PosY::center);
 
             setHeight(u8g2_font_profont22_tn);
 
@@ -452,6 +451,10 @@ void Screen::blinkDate(Key &key, Watch &watch)
 
     printDate(watch.day, watch.month, watch.year);
 
+    // time_t rawTime;
+
+    // Date now = watch.date();
+
     // textAlign(daysOfTheWeek[now.dayOfTheWeek()], PosX::center, PosY::center);
 
     switch (watch.cursorDateTime)
@@ -484,13 +487,6 @@ void Screen::setWatchScreen(Watch &watch, Key &key)
             blinkTime(key, watch);
 
         } while (nextPage());
-
-        // if (timer.unfrize())
-        // {
-        //     key.setDateTime = true;
-        //     key.screen = key.lamp;
-        //     key.autoMove = true;
-        // }
     }
 }
 
@@ -547,7 +543,7 @@ void Screen::intervalScreen(Watch &watch, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Interval", PosX::center, PosY::upSpace, 4);
+            moveString("Interval", PosX::center, PosY::upSpace);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -568,7 +564,7 @@ void Screen::riseSpeedScreen(Pot &pot, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Sun Speed", PosX::center, PosY::upSpace, 4);
+            moveString("Sun Speed", PosX::center, PosY::upSpace);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -589,7 +585,7 @@ void Screen::riseSpeedScreen(Bright &bright, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Sun Speed", PosX::center, PosY::upSpace, 4);
+            moveString("Sun Speed", PosX::center, PosY::upSpace);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -610,17 +606,9 @@ void Screen::sunTimeScreen(Watch &watch, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Set SunTime", PosX::center, PosY::upSpace, 1);
+            moveString("Set SunTime", PosX::center, PosY::upSpace);
             blinkSunTime(key, watch);
         } while (nextPage());
-
-        // if (timer.unfrize())
-        // {
-        //     key.writeDay = true;
-        //     key.correctDay = true;
-        //     key.screen = key.lamp;
-        //     key.autoMove = true;
-        // }
     }
 }
 
@@ -638,6 +626,8 @@ void Screen::startScreen(Watch &watch, Key &key)
 
         } while (nextPage());
 
+        // static Timer timer;
+
         if (timer.ready())
         {
             key.screen = key.lamp;
@@ -654,7 +644,7 @@ void Screen::allBrightScreen(Pot &pot, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("BRIGHT", PosX::leftSpace, PosY::upSpace, 4);
+            moveString("BRIGHT", PosX::leftSpace, PosY::upSpace);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -683,7 +673,7 @@ void Screen::allBrightScreen(Bright &bright, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("BRIGHT", PosX::leftSpace, PosY::upSpace, 4);
+            moveString("BRIGHT", PosX::leftSpace, PosY::upSpace);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -712,7 +702,7 @@ void Screen::voltageScreen(Bright &bright, Voltage &voltage, Key &key)
         {
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("PWM", PosX::leftSpace, PosY::upSpace, 4);
+            moveString("PWM", PosX::leftSpace, PosY::upSpace);
 
             setHeight(u8g2_font_ncenB18_tf);
 
@@ -722,7 +712,7 @@ void Screen::voltageScreen(Bright &bright, Voltage &voltage, Key &key)
 
             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("MW", PosX::rightSpace, PosY::upSpace, 4);
+            moveString("MW", PosX::rightSpace, PosY::upSpace);
 
             setHeight(u8g2_font_ncenB18_tf);
 

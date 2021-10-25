@@ -132,15 +132,27 @@ byte EFX::nextY(byte num, byte id)
 {
     byte Y;
 
-    Y = (screenHeight / num) - ((screenHeight / num) - height) / 2 + (screenHeight / num) * id;
+    Y = (screenHeight / num + height) / 2 + (screenHeight / num) * id;
 
     return Y;
 }
 
-byte EFX::getDigWidth(int value)
+template <typename type>
+byte EFX::getDigWidth(type value)
 {
-    char val[4];
-    String(value).toCharArray(val, 4);
+    byte count;
+
+    if (value == 0)
+    {
+        count = 1;
+    }
+    else
+    {
+        count = byte(log10(value) + 1);
+    }
+
+    char val[count];
+    String(value).toCharArray(val, count);
 
     return getStrWidth(val);
 }
@@ -191,11 +203,11 @@ void EFX::textAlign(const char *string, PosX pos_x, PosY pos_y)
     print(string);
 }
 
-void EFX::stringAlign(String str, byte size, PosX pos_x, PosY pos_y)
+void EFX::stringAlign(String str, PosX pos_x, PosY pos_y)
 {
-    char light[size];
+    char light[str.length() + 1];
 
-    String(str).toCharArray(light, size);
+    String(str).toCharArray(light, str.length() + 1);
 
     textAlign(light, pos_x, pos_y);
 }
@@ -214,15 +226,19 @@ void EFX::digStringAlign(byte dig, const char *string, PosX pos_x, PosY pos_y)
 
 void EFX::strDigAlign(const char *string, byte dig, PosX pos_x, PosY pos_y)
 {
+    String space;
+
     byte strW;
 
     if (getStrWidth(string) > getStrWidth("WW"))
     {
-        strW = getStrWidth(string) + getStrWidth("W");
+        space = " ";
+        strW = getStrWidth(" ");
     }
     else
     {
-        strW = getStrWidth(string);
+        space = "  ";
+        strW = getStrWidth("  ");
     }
 
     alignSimbols(getStrWidth(string) + strW + getDigWidth(dig), height, pos_x, pos_y);
@@ -232,7 +248,7 @@ void EFX::strDigAlign(const char *string, byte dig, PosX pos_x, PosY pos_y)
     setCursor(x, y);
 
     print(string);
-    print(" ");
+    print(space);
     print(dig);
 }
 
@@ -267,8 +283,16 @@ void EFX::strDigAlign(const String string, byte dig, PosX pos_x, PosY pos_y)
     print(dig);
 }
 
-// template <typename T>
-void EFX::digAlign(int dig, PosX pos_x, PosY pos_y)
+template <typename type>
+void EFX::digAlign(type dig, PosX pos_x, PosY pos_y)
+{
+    alignSimbols(getDigWidth(dig), height, pos_x, pos_y);
+
+    setCursor(x, y);
+    print(dig);
+}
+
+void EFX::digAlign(byte dig, PosX pos_x, PosY pos_y)
 {
     alignSimbols(getDigWidth(dig), height, pos_x, pos_y);
 
@@ -279,6 +303,16 @@ void EFX::digAlign(int dig, PosX pos_x, PosY pos_y)
 void EFX::setPosition(const char *format, PosX pos_x, PosY pos_y)
 {
     alignSimbols(getStrWidth(format), height, pos_x, pos_y);
+
+    setCursor(x, y);
+}
+
+void EFX::setPosition(const String format, PosX pos_x, PosY pos_y)
+{
+    char str[format.length() + 1];
+    String(format).toCharArray(str, format.length() + 1);
+
+    alignSimbols(getStrWidth(str), height, pos_x, pos_y);
 
     setCursor(x, y);
 }
@@ -305,7 +339,7 @@ void EFX::blinkFrame(int value, boolean dig, PosX pos_x, PosY pos_y, boolean tem
 {
     if (!tempBlock)
     {
-        if (timer.blinkReady())
+        if (timer.alternation(blinkMil))
         {
             if (dig)
             {
@@ -325,7 +359,7 @@ void EFX::blinkFrame(const char *format, byte digAmount, PosX pos_x, PosY pos_y,
 {
     if (!tempBlock)
     {
-        if (timer.blinkReady())
+        if (timer.alternation())
         {
             width = getMaxCharWidth() * digAmount;
 
@@ -342,67 +376,150 @@ void EFX::blinkFrame(const char *format, byte digAmount, PosX pos_x, PosY pos_y,
     }
 }
 
-void EFX::mover(byte &move_x, byte deep_x, byte id)
+void EFX::mover(byte &move_x, byte deep_x, boolean &moveLeft, boolean &moveRight, byte start_x)
 {
-    if (moveLeft[id])
+    if (moveLeft)
     {
         move_x--;
-        if (move_x == start_x[id] - deep_x)
+        if (move_x == start_x - deep_x)
         {
-            moveLeft[id] = false;
-            moveRight[id] = true;
+            moveLeft = false;
+            moveRight = true;
         }
     }
-    else if (moveRight[id])
+    else if (moveRight)
     {
         move_x++;
-        if (move_x == deep_x + start_x[id])
+        if (move_x == deep_x + start_x)
         {
-            moveRight[id] = false;
-            moveLeft[id] = true;
+            moveRight = false;
+            moveLeft = true;
         }
     }
 }
 
-void EFX::moveString(const char *string, PosX pos_x, PosY pos_y, byte id)
+bool EFX::moveStr::operator==(const moveStr &s) const
 {
-    setPosition(string, pos_x, pos_y);
+    // boolean str;
+    // if (strcmp(string, s.string) == 0)
+    // {
+    //     str = true;
+    // }
+    // else
+    // {
+    //     str = false;
+    // }
 
-    if (!move[id])
+    return (string == s.string && pos_x == s.pos_x && pos_y == s.pos_y && speed == s.speed);
+    // boolean(strcmp(string, s.string) == 0 ? true : false) &&
+}
+
+void EFX::moveString(const String string, PosX pos_x, PosY pos_y, int speed)
+{
+    static byte id;
+    static byte move_x;
+    static boolean move;
+    static boolean moveLeft;
+    static boolean moveRight;
+    static byte start_x;
+    // static byte start_y;
+
+    moveStr strNow;
+
+    // strNow = {string,
+    //            speed,
+    //            pos_x,
+    //            pos_y};
+
+    // strNow.string = new char[strlen(string)];
+    // strcpy(strNow.string, string);
+
+    strNow.string = string;
+    strNow.speed = speed;
+    strNow.pos_x = pos_x;
+    strNow.pos_y = pos_y;
+
+    // String s1, s2;
+    // s1.compareTo(s2);
+
+    if (strMov.empty())
     {
-        move[id] = true;
-        move_x[id] = start_x[id] = x;
-        moveLeft[id] = true;
-        moveRight[id] = false;
+        strMov.push_back(strNow);
+        // strMov.push_back(strMov[1]);
+
+        Serial.println("empty");
+        Serial.println(strNow.string);
     }
 
-    if (start_x[id] != x)
+    for (byte i = 0; i < strMov.size(); i++)
     {
-        start_x[id] = x;
-
-        if (move_x[id] > 2 * start_x[id])
+        if (strMov[i] == strNow)
         {
-            move_x[id] = 2 * start_x[id];
-            moveRight[id] = false;
-            moveLeft[id] = true;
+            id = i;
         }
     }
 
-    setCursor(move_x[id], y);
+    if (strNow == strMov[id])
+    {
+        // Serial.println("ok");
+        // Serial.println(id);
+        // Serial.println(strMov.size());
+        // Serial.println(strMov[id].string);
+        // Serial.println(strNow.string);
+
+        // Serial.println(strNow.string);
+        // Serial.println(strlen(string));
+    }
+    else
+    {
+        strMov.push_back(strNow);
+
+        Serial.println("new");
+        Serial.println(strMov[strMov.size() - 1].string);
+    }
+
+    // delete strNow.string;
+
+    setPosition(string, pos_x, pos_y);
+
+    if (!move)
+    {
+        move = true;
+        move_x = start_x = x;
+        moveLeft = true;
+        moveRight = false;
+    }
+
+    if (start_x != x)
+    {
+        start_x = x;
+
+        if (move_x > 2 * start_x)
+        {
+            move_x = 2 * start_x;
+            moveRight = false;
+            moveLeft = true;
+        }
+    }
+
+    setCursor(move_x, y);
     print(string);
 
-    if (run[id].moveReady())
+    // static Timer timer[10];
+    // vector<Timer> timer;
+
+    if (run.wait(speed))
     {
-        mover(move_x[id], start_x[id], id);
+        mover(move_x, start_x, moveLeft, moveRight, start_x);
     }
 }
 
 void EFX::escapeBar()
 {
-    if (!timer.escBar)
+    if (!escBar)
     {
         blockWidth = screenWidth / timer.maxEscapeCounter;
-        timer.escBar = true;
+        escBar = true;
     }
 
     width = blockWidth * (timer.maxEscapeCounter - timer.escapeCounter);
@@ -410,6 +527,6 @@ void EFX::escapeBar()
 
     if (width == blockWidth * timer.maxEscapeCounter)
     {
-        timer.escBar = false;
+        escBar = false;
     }
 }

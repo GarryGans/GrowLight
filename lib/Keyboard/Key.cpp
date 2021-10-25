@@ -471,19 +471,10 @@ void Key::manualSwitchLight()
 
 boolean Key::allBrigh(byte &val, byte min, byte max)
 {
-    if (valChange(val, min, max))
+    if (screen == lamp && valChange(val, min, max))
     {
-        if (screen == lamp)
-        {
-            screen = bright;
-        }
-
+        screen = bright;
         resetCounter = true;
-    }
-    
-    else
-    {
-        resetCounter = false;
     }
 
     if (autoOk(bright))
@@ -494,6 +485,15 @@ boolean Key::allBrigh(byte &val, byte min, byte max)
 
     if (screen == bright)
     {
+        if (valChange(val, min, max))
+        {
+            resetCounter = true;
+        }
+        else
+        {
+            resetCounter = false;
+        }
+
         return true;
     }
 
