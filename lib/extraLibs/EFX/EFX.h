@@ -116,8 +116,6 @@ public:
 
     void sameScreen();
 
-    void fillStruct(String string, PosX pos_x, PosY pos_y, int speed);
-
     byte nextY(byte num, byte id);
 
     template <typename type>

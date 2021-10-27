@@ -423,10 +423,6 @@ void EFX::sameScreen()
     }
 }
 
-void EFX::fillStruct(String string, PosX pos_x, PosY pos_y, int speed)
-{
-}
-
 bool EFX::moveStr::operator==(const moveStr &s) const
 {
     return (string == s.string && pos_x == s.pos_x && pos_y == s.pos_y && speed == s.speed);
@@ -448,7 +444,7 @@ void EFX::moveString(const String string, PosX pos_x, PosY pos_y, int speed)
     {
         stringPoint spNow;
         spNow.move = false;
-        
+
         strMov.push_back(strNow);
         sp.push_back(spNow);
         ti.push_back(timer);
