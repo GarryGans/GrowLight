@@ -11,6 +11,13 @@
         "iosfwd": "cpp",
         "support": "cpp",
         "istream": "cpp",
-        "serstream": "cpp"
+        "serstream": "cpp",
+        "associative_base": "cpp",
+        "complex": "cpp",
+        "functional": "cpp",
+        "iterator": "cpp",
+        "iterator_base": "cpp",
+        "utility": "cpp",
+        "valarray": "cpp"
     }
 }

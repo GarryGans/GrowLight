@@ -44,10 +44,6 @@ public:
     template <typename type>
     void read(int &addr, type &var, type minValue, type maxValue);
 
-    // void read(int &addr, unsigned int &var, unsigned int minValue, unsigned int maxValue);
-    // void read(int &addr, byte &var, byte minValue, byte maxValue);
-    // void read(int &addr, boolean &var, boolean minValue, boolean maxValue);
-
     void readEachSkip(Watch &watch);
 
     void readEachTime(Watch &watch);

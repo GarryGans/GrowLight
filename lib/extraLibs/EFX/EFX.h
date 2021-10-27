@@ -37,18 +37,26 @@ private:
 
     boolean escBar;
 
-    // byte id = 0;
-    // byte move_x;
-    // boolean move;
-    // boolean moveLeft;
-    // boolean moveRight;
-    // byte start_x;
-    // byte start_y;
+    byte id = 0;
 
     int icon;
     int lock = 79;
     int unlock = 68;
     byte WH = 48;
+
+    struct stringPoint
+    {
+        byte move_x;
+        boolean move;
+        boolean moveLeft;
+        boolean moveRight;
+        byte start_x;
+        //  byte start_y;
+    };
+
+    vector<stringPoint> sp;
+
+    vector<Timer> ti;
 
 public:
     byte setX;
@@ -103,6 +111,8 @@ public:
 
     EFX();
     ~EFX();
+
+    void fillStruct(String string, PosX pos_x, PosY pos_y, int speed);
 
     byte nextY(byte num, byte id);
 

@@ -191,7 +191,7 @@ void EFX::setHeight(const uint8_t *font)
 
     // else
     // {
-    //     Serial.println("undefiner");
+    // Serial.println("undefiner");
     // }
 }
 
@@ -398,57 +398,32 @@ void EFX::mover(byte &move_x, byte deep_x, boolean &moveLeft, boolean &moveRight
     }
 }
 
+void EFX::fillStruct(String string, PosX pos_x, PosY pos_y, int speed)
+{
+}
+
 bool EFX::moveStr::operator==(const moveStr &s) const
 {
-    // boolean str;
-    // if (strcmp(string, s.string) == 0)
-    // {
-    //     str = true;
-    // }
-    // else
-    // {
-    //     str = false;
-    // }
-
     return (string == s.string && pos_x == s.pos_x && pos_y == s.pos_y && speed == s.speed);
-    // boolean(strcmp(string, s.string) == 0 ? true : false) &&
 }
 
 void EFX::moveString(const String string, PosX pos_x, PosY pos_y, int speed)
 {
-    static byte id;
-    static byte move_x;
-    static boolean move;
-    static boolean moveLeft;
-    static boolean moveRight;
-    static byte start_x;
-    // static byte start_y;
-
     moveStr strNow;
-
-    // strNow = {string,
-    //            speed,
-    //            pos_x,
-    //            pos_y};
-
-    // strNow.string = new char[strlen(string)];
-    // strcpy(strNow.string, string);
 
     strNow.string = string;
     strNow.speed = speed;
     strNow.pos_x = pos_x;
     strNow.pos_y = pos_y;
 
-    // String s1, s2;
-    // s1.compareTo(s2);
+    stringPoint spNow;
+    spNow.move = false;
 
     if (strMov.empty())
     {
         strMov.push_back(strNow);
-        // strMov.push_back(strMov[1]);
-
-        Serial.println("empty");
-        Serial.println(strNow.string);
+        sp.push_back(spNow);
+        ti.push_back(timer);
     }
 
     for (byte i = 0; i < strMov.size(); i++)
@@ -459,58 +434,43 @@ void EFX::moveString(const String string, PosX pos_x, PosY pos_y, int speed)
         }
     }
 
-    if (strNow == strMov[id])
-    {
-        // Serial.println("ok");
-        // Serial.println(id);
-        // Serial.println(strMov.size());
-        // Serial.println(strMov[id].string);
-        // Serial.println(strNow.string);
-
-        // Serial.println(strNow.string);
-        // Serial.println(strlen(string));
-    }
-    else
+    if (!(strNow == strMov[id]))
     {
         strMov.push_back(strNow);
+        sp.push_back(spNow);
+        ti.push_back(timer);
 
-        Serial.println("new");
-        Serial.println(strMov[strMov.size() - 1].string);
+        id = strMov.size() - 1;
     }
-
-    // delete strNow.string;
 
     setPosition(string, pos_x, pos_y);
 
-    if (!move)
+    if (!sp[id].move)
     {
-        move = true;
-        move_x = start_x = x;
-        moveLeft = true;
-        moveRight = false;
+        sp[id].move = true;
+        sp[id].move_x = sp[id].start_x = x;
+        sp[id].moveLeft = true;
+        sp[id].moveRight = false;
     }
 
-    if (start_x != x)
-    {
-        start_x = x;
+    // if (sp[id].start_x != x)
+    // {
+    //     sp[id].start_x = x;
 
-        if (move_x > 2 * start_x)
-        {
-            move_x = 2 * start_x;
-            moveRight = false;
-            moveLeft = true;
-        }
-    }
+    //     if (sp[id].move_x > 2 * sp[id].start_x)
+    //     {
+    //         sp[id].move_x = 2 * sp[id].start_x;
+    //         sp[id].moveLeft = true;
+    //         sp[id].moveRight = false;
+    //     }
+    // }
 
-    setCursor(move_x, y);
+    setCursor(sp[id].move_x, y);
     print(string);
 
-    // static Timer timer[10];
-    // vector<Timer> timer;
-
-    if (run.wait(speed))
+    if (ti[id].wait(speed))
     {
-        mover(move_x, start_x, moveLeft, moveRight, start_x);
+        mover(sp[id].move_x, sp[id].start_x, sp[id].moveLeft, sp[id].moveRight, sp[id].start_x);
     }
 }
 

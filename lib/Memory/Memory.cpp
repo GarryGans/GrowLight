@@ -20,39 +20,6 @@ void Memory::read(int &addr, type &var, type minValue, type maxValue)
     startAddr = addr + sizeof(var);
 }
 
-// void Memory::read(int &addr, unsigned int &var, unsigned int minValue, unsigned int maxValue)
-// {
-//     addr = startAddr;
-
-//     EEPROM.get(addr, var);
-
-//     var = constrain(var, minValue, maxValue);
-
-//     startAddr = addr + sizeof(var);
-// }
-
-// void Memory::read(int &addr, byte &var, byte minValue, byte maxValue)
-// {
-//     addr = startAddr;
-
-//     EEPROM.get(addr, var);
-
-//     var = constrain(var, minValue, maxValue);
-
-//     startAddr = addr + sizeof(var);
-// }
-
-// void Memory::read(int &addr, boolean &var, boolean minValue, boolean maxValue)
-// {
-//     addr = startAddr;
-
-//     EEPROM.get(addr, var);
-
-//     var = constrain(var, minValue, maxValue);
-
-//     startAddr = addr + sizeof(var);
-// }
-
 void Memory::readEachSkip(Watch &watch)
 {
     for (byte id = 0; id < lampAmount; id++)
