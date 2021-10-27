@@ -434,24 +434,7 @@ bool EFX::moveStr::operator==(const moveStr &s) const
 
 void EFX::moveString(const String string, PosX pos_x, PosY pos_y, int speed)
 {
-    moveStr strNow;
-    strNow.string = string;
-    strNow.speed = speed;
-    strNow.pos_x = pos_x;
-    strNow.pos_y = pos_y;
-
-    stringPoint spNow;
-    spNow.move = false;
-
-    if (strMov.empty() || !(strNow == strMov[id]))
-    {
-        strMov.push_back(strNow);
-        sp.push_back(spNow);
-        ti.push_back(timer);
-
-        Serial.println("new");
-        Serial.println(strMov[strMov.size() - 1].string);
-    }
+    moveStr strNow = {string, speed, pos_x, pos_y};
 
     for (byte i = 0; i < strMov.size(); i++)
     {
@@ -459,6 +442,20 @@ void EFX::moveString(const String string, PosX pos_x, PosY pos_y, int speed)
         {
             id = i;
         }
+    }
+
+    if (strMov.empty() || !(strNow == strMov[id]))
+    {
+        stringPoint spNow;
+        spNow.move = false;
+        
+        strMov.push_back(strNow);
+        sp.push_back(spNow);
+        ti.push_back(timer);
+
+        Serial.println("new");
+        Serial.println(strMov[strMov.size() - 1].string);
+        id = strMov.size() - 1;
     }
 
     setPosition(string, pos_x, pos_y);

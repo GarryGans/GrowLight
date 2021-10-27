@@ -99,9 +99,10 @@ public:
     struct moveStr
     {
         String string;
+        int speed;
         PosX pos_x;
         PosY pos_y;
-        int speed;
+
         bool operator==(const moveStr &) const;
     };
 
