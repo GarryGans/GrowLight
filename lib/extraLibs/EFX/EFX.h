@@ -58,10 +58,10 @@ private:
 
     vector<Timer> ti;
 
-public:
     byte setX;
     byte setY;
 
+public:
     enum class PosX
     {
         center,
@@ -106,11 +106,14 @@ public:
     };
 
     vector<moveStr> strMov;
-    // moveStr strTemp;
-    // moveStr str;
 
     EFX();
     ~EFX();
+
+    void customX(byte x);
+    void customY(byte y);
+
+    void sameScreen();
 
     void fillStruct(String string, PosX pos_x, PosY pos_y, int speed);
 

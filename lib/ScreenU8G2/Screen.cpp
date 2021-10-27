@@ -656,7 +656,7 @@ void Screen::allBrightScreen(Pot &pot, Key &key)
             {
                 setHeight(u8g2_font_courB08_tf);
 
-                setY = nextY(lampAmount, i);
+                customY(nextY(lampAmount, i));
                 strDigAlign(lightColor[i], pot.maxBright[i], PosX::rightHalf, PosY::custom);
             }
 
@@ -685,7 +685,7 @@ void Screen::allBrightScreen(Bright &bright, Key &key)
             {
                 setHeight(u8g2_font_courB08_tf);
 
-                setY = nextY(lampAmount, i);
+                customY(nextY(lampAmount, i));
                 strDigAlign(lightColor[i], bright.maxBright[i], PosX::rightHalf, PosY::custom);
             }
 

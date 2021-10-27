@@ -9,6 +9,16 @@ EFX::~EFX()
 {
 }
 
+void EFX::customX(byte x)
+{
+    setX = x;
+}
+
+void EFX::customY(byte y)
+{
+    setY = y;
+}
+
 void EFX::alignSimbols(byte W, byte H, PosX pos_x, PosY pos_y)
 {
     switch (pos_x)
@@ -398,6 +408,21 @@ void EFX::mover(byte &move_x, byte deep_x, boolean &moveLeft, boolean &moveRight
     }
 }
 
+void EFX::sameScreen()
+{
+    if (sp[id].start_x != x)
+    {
+        sp[id].start_x = x;
+
+        if (sp[id].move_x > 2 * sp[id].start_x)
+        {
+            sp[id].move_x = 2 * sp[id].start_x;
+            sp[id].moveLeft = true;
+            sp[id].moveRight = false;
+        }
+    }
+}
+
 void EFX::fillStruct(String string, PosX pos_x, PosY pos_y, int speed)
 {
 }
@@ -410,7 +435,6 @@ bool EFX::moveStr::operator==(const moveStr &s) const
 void EFX::moveString(const String string, PosX pos_x, PosY pos_y, int speed)
 {
     moveStr strNow;
-
     strNow.string = string;
     strNow.speed = speed;
     strNow.pos_x = pos_x;
@@ -419,11 +443,14 @@ void EFX::moveString(const String string, PosX pos_x, PosY pos_y, int speed)
     stringPoint spNow;
     spNow.move = false;
 
-    if (strMov.empty())
+    if (strMov.empty() || !(strNow == strMov[id]))
     {
         strMov.push_back(strNow);
         sp.push_back(spNow);
         ti.push_back(timer);
+
+        Serial.println("new");
+        Serial.println(strMov[strMov.size() - 1].string);
     }
 
     for (byte i = 0; i < strMov.size(); i++)
@@ -432,15 +459,6 @@ void EFX::moveString(const String string, PosX pos_x, PosY pos_y, int speed)
         {
             id = i;
         }
-    }
-
-    if (!(strNow == strMov[id]))
-    {
-        strMov.push_back(strNow);
-        sp.push_back(spNow);
-        ti.push_back(timer);
-
-        id = strMov.size() - 1;
     }
 
     setPosition(string, pos_x, pos_y);
@@ -452,18 +470,6 @@ void EFX::moveString(const String string, PosX pos_x, PosY pos_y, int speed)
         sp[id].moveLeft = true;
         sp[id].moveRight = false;
     }
-
-    // if (sp[id].start_x != x)
-    // {
-    //     sp[id].start_x = x;
-
-    //     if (sp[id].move_x > 2 * sp[id].start_x)
-    //     {
-    //         sp[id].move_x = 2 * sp[id].start_x;
-    //         sp[id].moveLeft = true;
-    //         sp[id].moveRight = false;
-    //     }
-    // }
 
     setCursor(sp[id].move_x, y);
     print(string);

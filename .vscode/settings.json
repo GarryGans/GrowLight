@@ -18,6 +18,7 @@
         "iterator": "cpp",
         "iterator_base": "cpp",
         "utility": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "char_traits": "cpp"
     }
 }
