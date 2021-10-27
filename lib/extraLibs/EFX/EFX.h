@@ -99,9 +99,9 @@ public:
     struct moveStr
     {
         String string;
-        int speed;
         PosX pos_x;
         PosY pos_y;
+        int speed;
 
         bool operator==(const moveStr &) const;
     };
@@ -145,9 +145,9 @@ public:
     void moveString(const String string, PosX pos_x, PosY pos_y, int speed = 50);
     void escapeBar();
 
-    void blinkFrame(int value, boolean dig, PosX pos_x, PosY pos_y, boolean tempBlock);
+    void blinkFrame(int value, PosX pos_x, PosY pos_y, boolean tempBlock = 0, boolean dig = 0 );
 
-    void blinkFrame(const char *format, byte digAmount, PosX pos_x, PosY pos_y, boolean tempBlock);
+    void blinkFrame(const char *format, byte digAmount, PosX pos_x, PosY pos_y, boolean tempBlock = false);
 };
 
 #endif

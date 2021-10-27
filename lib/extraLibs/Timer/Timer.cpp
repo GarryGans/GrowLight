@@ -68,7 +68,14 @@ boolean Timer::alternation(unsigned long set)
 
     if (wait(set))
     {
-        blink = wait(set * 2);
+        if (!blink)
+        {
+            blink = true;
+        }
+        else
+        {
+            blink = false;
+        }
     }
 
     return blink;

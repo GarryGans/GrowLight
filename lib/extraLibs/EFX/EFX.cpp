@@ -345,7 +345,7 @@ void EFX::frameAlign(byte W, byte H, PosX pos_x, PosY pos_y)
     drawFrame(x, y, W, H);
 }
 
-void EFX::blinkFrame(int value, boolean dig, PosX pos_x, PosY pos_y, boolean tempBlock)
+void EFX::blinkFrame(int value, PosX pos_x, PosY pos_y, boolean tempBlock, boolean dig)
 {
     if (!tempBlock)
     {
@@ -430,7 +430,7 @@ bool EFX::moveStr::operator==(const moveStr &s) const
 
 void EFX::moveString(const String string, PosX pos_x, PosY pos_y, int speed)
 {
-    moveStr strNow = {string, speed, pos_x, pos_y};
+    moveStr strNow = {string, pos_x, pos_y, speed};
 
     for (byte i = 0; i < strMov.size(); i++)
     {

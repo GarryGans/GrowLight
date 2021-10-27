@@ -204,7 +204,7 @@ void Screen::setScreen(Pot &pot, Key &key)
 
             digAlign(pot.setBright[key.id], PosX::rightHalf, PosY::center);
 
-            blinkFrame(pot.setBright[key.id], false, PosX::rightHalf, PosY::centerFrame, key.valChange());
+            blinkFrame(pot.setBright[key.id],  PosX::rightHalf, PosY::centerFrame, key.valChange());
 
         } while (nextPage());
     }
@@ -227,7 +227,7 @@ void Screen::setScreen(Bright &brigth, Key &key)
 
             digAlign(brigth.setBright[key.id], PosX::rightHalf, PosY::center);
 
-            blinkFrame(brigth.setBright[key.id], false, PosX::rightHalf, PosY::centerFrame, key.valChange());
+            blinkFrame(brigth.setBright[key.id],  PosX::rightHalf, PosY::centerFrame, key.valChange());
 
         } while (nextPage());
     }
@@ -250,7 +250,7 @@ void Screen::riseScreen(Pot &pot, Key &key)
 
             digAlign(pot.riseBright[key.id], PosX::rightHalf, PosY::center);
 
-            blinkFrame(pot.riseBright[key.id], false, PosX::rightHalf, PosY::centerFrame, key.valChange());
+            blinkFrame(pot.riseBright[key.id],  PosX::rightHalf, PosY::centerFrame, key.valChange());
 
         } while (nextPage());
     }
@@ -273,7 +273,7 @@ void Screen::riseScreen(Bright &brigth, Key &key)
 
             digAlign(brigth.riseBright[key.id], PosX::rightHalf, PosY::center);
 
-            blinkFrame(brigth.riseBright[key.id], false, PosX::rightHalf, PosY::centerFrame, key.valChange());
+            blinkFrame(brigth.riseBright[key.id],  PosX::rightHalf, PosY::centerFrame, key.valChange());
 
         } while (nextPage());
     }
@@ -296,7 +296,7 @@ void Screen::maxBrightScreen(Pot &pot, Key &key)
 
             digAlign(pot.maxBright[key.id], PosX::rightHalf, PosY::center);
 
-            blinkFrame(pot.maxBright[key.id], false, PosX::rightHalf, PosY::centerFrame, key.valChange());
+            blinkFrame(pot.maxBright[key.id], PosX::rightHalf, PosY::centerFrame, key.valChange());
 
         } while (nextPage());
     }
@@ -319,7 +319,7 @@ void Screen::maxBrightScreen(Bright &bright, Key &key)
 
             digAlign(bright.maxBright[key.id], PosX::rightHalf, PosY::center);
 
-            blinkFrame(bright.maxBright[key.id], false, PosX::rightHalf, PosY::centerFrame, key.valChange());
+            blinkFrame(bright.maxBright[key.id],  PosX::rightHalf, PosY::centerFrame, key.valChange());
 
         } while (nextPage());
     }
@@ -549,7 +549,7 @@ void Screen::intervalScreen(Watch &watch, Key &key)
 
             digStringAlign(watch.interval, " m", PosX::center, PosY::center);
 
-            blinkFrame(watch.interval, false, PosX::customFrame, PosY::centerFrame, key.valChange());
+            blinkFrame(watch.interval,  PosX::customFrame, PosY::centerFrame, key.valChange());
 
         } while (nextPage());
     }
@@ -570,7 +570,7 @@ void Screen::riseSpeedScreen(Pot &pot, Key &key)
 
             digStringAlign(pot.speed, " bp", PosX::center, PosY::center);
 
-            blinkFrame(pot.speed, false, PosX::customFrame, PosY::centerFrame, key.valChange());
+            blinkFrame(pot.speed,  PosX::customFrame, PosY::centerFrame, key.valChange());
 
         } while (nextPage());
     }
@@ -591,7 +591,7 @@ void Screen::riseSpeedScreen(Bright &bright, Key &key)
 
             digStringAlign(bright.speed, " bp", PosX::center, PosY::center);
 
-            blinkFrame(bright.speed, false, PosX::customFrame, PosY::centerFrame, key.valChange());
+            blinkFrame(bright.speed,  PosX::customFrame, PosY::centerFrame, key.valChange());
 
         } while (nextPage());
     }
@@ -650,7 +650,7 @@ void Screen::allBrightScreen(Pot &pot, Key &key)
 
             digAlign(pot.allBrigh, PosX::leftHalf, PosY::center);
 
-            blinkFrame(pot.allBrigh, false, PosX::leftHalf, PosY::centerFrame, key.valChange());
+            blinkFrame(pot.allBrigh,  PosX::leftHalf, PosY::centerFrame, key.valChange());
 
             for (byte i = 0; i < lampAmount; i++)
             {
@@ -679,7 +679,7 @@ void Screen::allBrightScreen(Bright &bright, Key &key)
 
             digAlign(bright.allBrigh, PosX::leftHalf, PosY::center);
 
-            blinkFrame(bright.allBrigh, false, PosX::leftHalf, PosY::centerFrame, key.valChange());
+            blinkFrame(bright.allBrigh, PosX::leftHalf, PosY::centerFrame);
 
             for (byte i = 0; i < lampAmount; i++)
             {
@@ -708,7 +708,7 @@ void Screen::voltageScreen(Bright &bright, Voltage &voltage, Key &key)
 
             digAlign(bright.maxBright[key.id], PosX::leftHalf, PosY::center);
 
-            blinkFrame(bright.maxBright[key.id], false, PosX::leftHalf, PosY::centerFrame, key.valChange());
+            blinkFrame(bright.maxBright[key.id], PosX::leftHalf, PosY::centerFrame, key.valChange());
 
             setHeight(u8g2_font_pressstart2p_8f);
 
@@ -718,7 +718,7 @@ void Screen::voltageScreen(Bright &bright, Voltage &voltage, Key &key)
 
             digAlign(voltage.ampere[key.id], PosX::rightHalf, PosY::center);
 
-            blinkFrame(voltage.ampere[key.id], false, PosX::rightHalf, PosY::centerFrame, key.valChange());
+            blinkFrame(voltage.ampere[key.id], PosX::rightHalf, PosY::centerFrame, key.valChange());
 
         } while (nextPage());
     }
