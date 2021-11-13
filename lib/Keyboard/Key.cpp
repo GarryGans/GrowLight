@@ -16,7 +16,9 @@ boolean Key::autoOk(Screen screen)
 {
     if (this->screen == screen)
     {
-        if (timer.ready(5, resetCounter))
+        static byte a = 5;
+
+        if (timer.ready(a, resetCounter))
         {
             return true;
         }
@@ -92,12 +94,14 @@ void Key::autoScreenMove()
 {
     if (screen == lamp || screen == start)
     {
-        if (autoMove && timer.ready(5, navigation()))
+        static byte a = 5;
+
+        if (autoMove && timer.ready(a, navigation()))
         {
             idChange();
         }
 
-        if (!autoMove && timer.ready(5, navigation()))
+        if (!autoMove && timer.ready(a, navigation()))
         {
             autoMove = true;
         }
