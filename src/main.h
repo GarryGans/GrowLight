@@ -5,7 +5,7 @@
 #include <Watch.h>
 #include <Key.h>
 #include <Memory.h>
-#include <Pot.h>
+// #include <Pot.h>
 #include <Bright.h>
 
 #define holdSpeed 50

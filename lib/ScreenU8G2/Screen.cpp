@@ -79,12 +79,12 @@ void Screen::iGorLogo()
     } while (nextPage());
 }
 
-void Screen::brightInfo(Pot &pot, Key &key)
-{
-    setHeight(u8g2_font_courB08_tn);
+// void Screen::brightInfo(Pot &pot, Key &key)
+// {
+//     setHeight(u8g2_font_courB08_tn);
 
-    digAlign(pot.bright[key.id], PosX::rightHalf, PosY::downSpace);
-}
+//     digAlign(pot.bright[key.id], PosX::rightHalf, PosY::downSpace);
+// }
 
 void Screen::brightInfo(Bright &bright, Key &key)
 {
@@ -93,32 +93,32 @@ void Screen::brightInfo(Bright &bright, Key &key)
     digAlign(bright.bright[key.id], PosX::rightHalf, PosY::downSpace);
 }
 
-void Screen::bottomLine(Watch &watch, Key &key, Pot &pot)
-{
-    if (watch.skip[key.id] && key.screen != key.manual)
-    {
-        setHeight(u8g2_font_HelvetiPixelOutline_tr);
+// void Screen::bottomLine(Watch &watch, Key &key, Pot &pot)
+// {
+//     if (watch.skip[key.id] && key.screen != key.manual)
+//     {
+//         setHeight(u8g2_font_HelvetiPixelOutline_tr);
 
-        moveString("SKIP", PosX::center, PosY::downSpace);
-    }
+//         moveString("SKIP", PosX::center, PosY::downSpace);
+//     }
 
-    else if (key.screen == key.manual)
-    {
-        setHeight(u8g2_font_pixelmordred_tf);
-        textAlign("MANUAL", PosX::leftSpace, PosY::downSpace);
+//     else if (key.screen == key.manual)
+//     {
+//         setHeight(u8g2_font_pixelmordred_tf);
+//         textAlign("MANUAL", PosX::leftSpace, PosY::downSpace);
 
-        brightInfo(pot, key);
-    }
+//         brightInfo(pot, key);
+//     }
 
-    else
-    {
-        setHeight(u8g2_font_courB08_tn);
-        setPosition("00:00-00:00", PosX::leftSpace, PosY::downSpace);
+//     else
+//     {
+//         setHeight(u8g2_font_courB08_tn);
+//         setPosition("00:00-00:00", PosX::leftSpace, PosY::downSpace);
 
-        printSpecTime(watch, key.id);
-        brightInfo(pot, key);
-    }
-}
+//         printSpecTime(watch, key.id);
+//         brightInfo(pot, key);
+//     }
+// }
 
 void Screen::bottomLine(Watch &watch, Key &key, Bright &bright)
 {
@@ -187,28 +187,28 @@ void Screen::headerDate(Watch &watch)
     stringAlign(daysOfTheWeek[now.dayOfTheWeek()], PosX::leftHalf, PosY::upHalf);
 }
 
-void Screen::setScreen(Pot &pot, Key &key)
-{
-    if (key.screen == key.setBright)
-    {
-        firstPage();
-        do
-        {
-            setHeight(u8g2_font_pressstart2p_8f);
+// void Screen::setScreen(Pot &pot, Key &key)
+// {
+//     if (key.screen == key.setBright)
+//     {
+//         firstPage();
+//         do
+//         {
+//             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Set Set", PosX::center, PosY::upSpace);
+//             moveString("Set Set", PosX::center, PosY::upSpace);
 
-            setHeight(u8g2_font_ncenB18_tf);
+//             setHeight(u8g2_font_ncenB18_tf);
 
-            stringAlign(lightColor[key.id], PosX::leftHalf, PosY::center);
+//             stringAlign(lightColor[key.id], PosX::leftHalf, PosY::center);
 
-            digAlign(pot.setBright[key.id], PosX::rightHalf, PosY::center);
+//             digAlign(pot.setBright[key.id], PosX::rightHalf, PosY::center);
 
-            blinkFrame(pot.setBright[key.id], PosX::rightHalf, PosY::centerFrame, key.valChange());
+//             blinkFrame(pot.setBright[key.id], PosX::rightHalf, PosY::centerFrame, key.valChange());
 
-        } while (nextPage());
-    }
-}
+//         } while (nextPage());
+//     }
+// }
 
 void Screen::setScreen(Bright &brigth, Key &key)
 {
@@ -233,28 +233,28 @@ void Screen::setScreen(Bright &brigth, Key &key)
     }
 }
 
-void Screen::riseScreen(Pot &pot, Key &key)
-{
-    if (key.screen == key.riseBright)
-    {
-        firstPage();
-        do
-        {
-            setHeight(u8g2_font_pressstart2p_8f);
+// void Screen::riseScreen(Pot &pot, Key &key)
+// {
+//     if (key.screen == key.riseBright)
+//     {
+//         firstPage();
+//         do
+//         {
+//             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Set Rise", PosX::center, PosY::upSpace);
+//             moveString("Set Rise", PosX::center, PosY::upSpace);
 
-            setHeight(u8g2_font_ncenB18_tf);
+//             setHeight(u8g2_font_ncenB18_tf);
 
-            stringAlign(lightColor[key.id], PosX::leftHalf, PosY::center);
+//             stringAlign(lightColor[key.id], PosX::leftHalf, PosY::center);
 
-            digAlign(pot.riseBright[key.id], PosX::rightHalf, PosY::center);
+//             digAlign(pot.riseBright[key.id], PosX::rightHalf, PosY::center);
 
-            blinkFrame(pot.riseBright[key.id], PosX::rightHalf, PosY::centerFrame, key.valChange());
+//             blinkFrame(pot.riseBright[key.id], PosX::rightHalf, PosY::centerFrame, key.valChange());
 
-        } while (nextPage());
-    }
-}
+//         } while (nextPage());
+//     }
+// }
 
 void Screen::riseScreen(Bright &brigth, Key &key)
 {
@@ -279,28 +279,28 @@ void Screen::riseScreen(Bright &brigth, Key &key)
     }
 }
 
-void Screen::maxBrightScreen(Pot &pot, Key &key)
-{
-    if (key.screen == key.maxBright)
-    {
-        firstPage();
-        do
-        {
-            setHeight(u8g2_font_pressstart2p_8f);
+// void Screen::maxBrightScreen(Pot &pot, Key &key)
+// {
+//     if (key.screen == key.maxBright)
+//     {
+//         firstPage();
+//         do
+//         {
+//             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Set MaxBright", PosX::center, PosY::upSpace);
+//             moveString("Set MaxBright", PosX::center, PosY::upSpace);
 
-            setHeight(u8g2_font_ncenB18_tf);
+//             setHeight(u8g2_font_ncenB18_tf);
 
-            stringAlign(lightColor[key.id], PosX::leftHalf, PosY::center);
+//             stringAlign(lightColor[key.id], PosX::leftHalf, PosY::center);
 
-            digAlign(pot.maxBright[key.id], PosX::rightHalf, PosY::center);
+//             digAlign(pot.maxBright[key.id], PosX::rightHalf, PosY::center);
 
-            blinkFrame(pot.maxBright[key.id], PosX::rightHalf, PosY::centerFrame, key.valChange());
+//             blinkFrame(pot.maxBright[key.id], PosX::rightHalf, PosY::centerFrame, key.valChange());
 
-        } while (nextPage());
-    }
-}
+//         } while (nextPage());
+//     }
+// }
 
 void Screen::maxBrightScreen(Bright &bright, Key &key)
 {
@@ -325,14 +325,14 @@ void Screen::maxBrightScreen(Bright &bright, Key &key)
     }
 }
 
-void Screen::brightScreen(Pot &pot, Key &key)
-{
-    maxBrightScreen(pot, key);
+// void Screen::brightScreen(Pot &pot, Key &key)
+// {
+//     maxBrightScreen(pot, key);
 
-    riseScreen(pot, key);
+//     riseScreen(pot, key);
 
-    setScreen(pot, key);
-}
+//     setScreen(pot, key);
+// }
 
 void Screen::brightScreen(Bright &bright, Key &key)
 {
@@ -388,19 +388,19 @@ void Screen::timerScreen(Watch &watch, Key &key)
     }
 }
 
-void Screen::lampScreen(Watch &watch, Switchers &switchers, Key &key, Pot &pot)
-{
-    if (key.screen == key.lamp || key.screen == key.manual)
-    {
-        firstPage();
-        do
-        {
-            headerTime(watch);
-            lampInfo(watch, key);
-            bottomLine(watch, key, pot);
-        } while (nextPage());
-    }
-}
+// void Screen::lampScreen(Watch &watch, Switchers &switchers, Key &key, Pot &pot)
+// {
+//     if (key.screen == key.lamp || key.screen == key.manual)
+//     {
+//         firstPage();
+//         do
+//         {
+//             headerTime(watch);
+//             lampInfo(watch, key);
+//             bottomLine(watch, key, pot);
+//         } while (nextPage());
+//     }
+// }
 
 void Screen::lampScreen(Watch &watch, Switchers &switchers, Key &key, Bright &bright)
 {
@@ -555,26 +555,26 @@ void Screen::intervalScreen(Watch &watch, Key &key)
     }
 }
 
-void Screen::riseSpeedScreen(Pot &pot, Key &key)
-{
-    if (key.screen == key.speed)
-    {
-        firstPage();
-        do
-        {
-            setHeight(u8g2_font_pressstart2p_8f);
+// void Screen::riseSpeedScreen(Pot &pot, Key &key)
+// {
+//     if (key.screen == key.speed)
+//     {
+//         firstPage();
+//         do
+//         {
+//             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("Sun Speed", PosX::center, PosY::upSpace);
+//             moveString("Sun Speed", PosX::center, PosY::upSpace);
 
-            setHeight(u8g2_font_ncenB18_tf);
+//             setHeight(u8g2_font_ncenB18_tf);
 
-            digStringAlign(pot.speed, " bp", PosX::center, PosY::center);
+//             digStringAlign(pot.speed, " bp", PosX::center, PosY::center);
 
-            blinkFrame(pot.speed, PosX::customFrame, PosY::centerFrame, key.valChange());
+//             blinkFrame(pot.speed, PosX::customFrame, PosY::centerFrame, key.valChange());
 
-        } while (nextPage());
-    }
-}
+//         } while (nextPage());
+//     }
+// }
 
 void Screen::riseSpeedScreen(Bright &bright, Key &key)
 {
@@ -637,34 +637,34 @@ void Screen::startScreen(Watch &watch, Key &key)
     }
 }
 
-void Screen::allBrightScreen(Pot &pot, Key &key)
-{
-    if (pot.setAllBrigh(key))
-    {
-        firstPage();
-        do
-        {
-            setHeight(u8g2_font_pressstart2p_8f);
+// void Screen::allBrightScreen(Pot &pot, Key &key)
+// {
+//     if (pot.setAllBrigh(key))
+//     {
+//         firstPage();
+//         do
+//         {
+//             setHeight(u8g2_font_pressstart2p_8f);
 
-            moveString("BRIGHT", PosX::leftSpace, PosY::upSpace);
+//             moveString("BRIGHT", PosX::leftSpace, PosY::upSpace);
 
-            setHeight(u8g2_font_ncenB18_tf);
+//             setHeight(u8g2_font_ncenB18_tf);
 
-            digAlign(pot.allBrigh, PosX::leftHalf, PosY::center);
+//             digAlign(pot.allBrigh, PosX::leftHalf, PosY::center);
 
-            blinkFrame(pot.allBrigh, PosX::leftHalf, PosY::centerFrame, key.valChange());
+//             blinkFrame(pot.allBrigh, PosX::leftHalf, PosY::centerFrame, key.valChange());
 
-            for (byte i = 0; i < lampAmount; i++)
-            {
-                setHeight(u8g2_font_courB08_tf);
+//             for (byte i = 0; i < lampAmount; i++)
+//             {
+//                 setHeight(u8g2_font_courB08_tf);
 
-                customY(nextY(lampAmount, i));
-                strDigAlign(lightColor[i], pot.maxBright[i], PosX::rightHalf, PosY::custom);
-            }
+//                 customY(nextY(lampAmount, i));
+//                 strDigAlign(lightColor[i], pot.maxBright[i], PosX::rightHalf, PosY::custom);
+//             }
 
-        } while (nextPage());
-    }
-}
+//         } while (nextPage());
+//     }
+// }
 
 void Screen::allBrightScreen(Bright &bright, Key &key)
 {
@@ -726,19 +726,19 @@ void Screen::voltageScreen(Bright &bright, Voltage &voltage, Key &key)
     }
 }
 
-void Screen::screens(Watch &watch, Switchers &switchers, Key &key, Pot &pot)
-{
-    lampScreen(watch, switchers, key, pot);
-    brightScreen(pot, key);
-    allBrightScreen(pot, key);
+// void Screen::screens(Watch &watch, Switchers &switchers, Key &key, Pot &pot)
+// {
+//     lampScreen(watch, switchers, key, pot);
+//     brightScreen(pot, key);
+//     allBrightScreen(pot, key);
 
-    startScreen(watch, key);
-    setWatchScreen(watch, key);
-    sunTimeScreen(watch, key);
-    timerScreen(watch, key);
-    riseSpeedScreen(pot, key);
-    intervalScreen(watch, key);
-}
+//     startScreen(watch, key);
+//     setWatchScreen(watch, key);
+//     sunTimeScreen(watch, key);
+//     timerScreen(watch, key);
+//     riseSpeedScreen(pot, key);
+//     intervalScreen(watch, key);
+// }
 
 void Screen::screens(Watch &watch, Switchers &switchers, Key &key, Bright &bright)
 {

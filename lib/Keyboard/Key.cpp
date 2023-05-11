@@ -246,7 +246,7 @@ boolean Key::chekSet(Screen screen)
             break;
 
         case manual:
-            resetManualPot = true;
+            // resetManualPot = true;
             resetManualBright = true;
 
             for (byte i = 0; i < lampAmount; i++)
@@ -444,7 +444,7 @@ void Key::manualSwitchLight()
         {
             autoMove = false;
 
-            resetManualPot = true;
+            // resetManualPot = true;
             resetManualBright = true;
 
             screen = manual;

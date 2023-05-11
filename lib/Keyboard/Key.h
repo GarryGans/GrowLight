@@ -10,7 +10,7 @@ class Key : public AmperkaKB
 {
     friend class Screen;
     friend class Switchers;
-    friend class Pot;
+    // friend class Pot;
     friend class Watch;
     friend class Memory;
     friend class Bright;
@@ -56,7 +56,7 @@ private:
 
     boolean resetCounter;
 
-    boolean resetManualPot;
+    // boolean resetManualPot;
     boolean resetManualBright;
 
     boolean writeBright;

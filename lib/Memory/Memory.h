@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include <EEPROM.h>
 #include <Watch.h>
-#include <Pot.h>
+// #include <Pot.h>
 #include <Key.h>
 #include <Bright.h>
 
@@ -38,7 +38,7 @@ public:
     Memory();
     ~Memory();
 
-    void begin(Watch &watch, Pot &pot);
+    // void begin(Watch &watch, Pot &pot);
     void begin(Watch &watch, Bright &bright);
 
     template <typename type>
@@ -48,7 +48,7 @@ public:
 
     void readEachTime(Watch &watch);
 
-    void readEachBright(Pot &pot);
+    // void readEachBright(Pot &pot);
     void readEachBright(Bright &bright);
 
     void write(int &addr, byte &var);
@@ -62,13 +62,13 @@ public:
 
     void writeEachTime(Watch &watch);
 
-    void writeBright(Pot &pot, byte id);
+    // void writeBright(Pot &pot, byte id);
     void writeBright(Bright &bright, byte id);
 
-    void writeEachBright(Pot &pot);
+    // void writeEachBright(Pot &pot);
     void writeEachBright(Bright &bright);
 
-    void writeChanges(Watch &watch, Pot &pot, Key &key);
+    // void writeChanges(Watch &watch, Pot &pot, Key &key);
     void writeChanges(Watch &watch, Bright &bright, Key &key);
 };
 
